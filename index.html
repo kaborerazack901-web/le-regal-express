@@ -3,39 +3,97 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Le Régal Express - Somgandé | La Daishi du Choukounya</title>
+<title>Le Regal Express - Ouagadougou</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#FFF8F0;color:#222}
-header{background:#D32F2F;color:#fff;padding:15px;text-align:center;position:sticky;top:0;z-index:10}
-header h1{margin:0;font-size:28px}
-header p{margin:5px 0 0}
-.hero{background:#FFEB3B;padding:25px 15px;text-align:center}
-.hero h2{margin:0;font-size:24px;color:#D32F2F}
-.btn{background:#25D366;color:#fff;padding:13px 20px;border-radius:30px;text-decoration:none;font-weight:bold;display:inline-block;margin-top:10px}
-.menu{padding:20px 15px;max-width:900px;margin:auto}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
-.card{background:#fff;border-radius:15px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.1);text-align:center;padding-bottom:10px}
-.card img{width:100%;height:160px;object-fit:cover}
-.card h3{margin:10px 5px 5px;font-size:16px}
-.card p{margin:0 5px;color:#D32F2F;font-weight:bold}
-.card a{background:#D32F2F;color:#fff;padding:8px 15px;border-radius:20px;text-decoration:none;display:inline-block;margin-top:8px;font-size:14px}
-footer{background:#222;color:#fff;text-align:center;padding:20px}
-@media(max-width:500px){.grid{grid-template-columns:1fr}}
+* { margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+body { background:#FFF8F0; color:#222; }
+header { background:#8B0000; color:white; text-align:center; padding:25px 15px; }
+header img { width:110px; height:110px; object-fit:cover; border-radius:50%; border:4px solid #FFC107; background:white; }
+header h1 { font-size:32px; margin-top:10px; letter-spacing:1px; }
+header p { color:#FFC107; font-weight:600; margin-top:5px; }
+.hero { text-align:center; padding:35px 15px; background:white; }
+.hero h2 { font-size:26px; color:#8B0000; }
+.hero p { margin:10px 0 20px; color:#555; }
+.btn { display:inline-block; background:#25D366; color:white; padding:13px 25px; border-radius:30px; text-decoration:none; font-weight:700; }
+.menu { max-width:1000px; margin:0 auto; padding:20px 15px 40px; }
+.menu h2 { text-align:center; color:#8B0000; margin-bottom:20px; font-size:26px; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px; }
+.card { background:white; border-radius:15px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.08); text-align:center; padding-bottom:15px; }
+.card img { width:100%; height:200px; object-fit:cover; }
+.card h3 { margin:12px 0 5px; color:#222; }
+.card p { color:#777; font-size:14px; padding:0 10px; }
+.price { color:#8B0000; font-weight:800; font-size:18px; margin:8px 0; }
+.order { display:inline-block; background:#8B0000; color:white; padding:9px 18px; border-radius:20px; text-decoration:none; font-size:14px; font-weight:600; }
+footer { background:#222; color:white; text-align:center; padding:25px 15px; }
+footer a { color:#25D366; text-decoration:none; font-weight:700; }
 </style>
 </head>
 <body>
-<header><h1>LE RÉGAL EXPRESS</h1><p>La Daishi du Choukounya - Somgandé, Ouaga</p></header>
-<div class="hero"><h2>🔥 Choukounya Chaud, Livraison Rapide ! 🔥</h2><p>Commande en 1 clic sur WhatsApp</p><a class="btn" href="https://wa.me/22655441010?text=Bonjour%20Le%20R%C3%A9gal%20Express%2C%20je%20veux%20commander">📲 Commander sur WhatsApp</a></div>
-<div class="menu"><h2 style="text-align:center">Notre Menu</h2><div class="grid">
-<div class="card"><img src="plat1.jpg.png"><h3>Choukounya Classique</h3><p>1 500 F</p><a href="https://wa.me/22655441010?text=Je%20veux%20Choukounya%20Classique">Commander</a></div>
-<div class="card"><img src="plat2.jpg.png"><h3>Choukounya Spécial</h3><p>2 000 F</p><a href="https://wa.me/22655441010?text=Je%20veux%20Choukounya%20Sp%C3%A9cial">Commander</a></div>
-<div class="card"><img src="plat3.jpg.png"><h3>Choukounya + Frites</h3><p>2 500 F</p><a href="https://wa.me/22655441010?text=Je%20veux%20Choukounya%20Frites">Commander</a></div>
-<div class="card"><img src="plat4.jpg.png"><h3>Daishi Mixte</h3><p>2 500 F</p><a href="https://wa.me/22655441010?text=Je%20veux%20Daishi%20Mixte">Commander</a></div>
-<div class="card"><img src="plat5.jpg.png"><h3>Brochettes</h3><p>2 000 F</p><a href="https://wa.me/22655441010?text=Je%20veux%20Brochettes">Commander</a></div>
-<div class="card"><img src="plat6.jpg.png"><h3>Menu Famille</h3><p>5 000 F</p><a href="https://wa.me/22655441010?text=Je%20veux%20Menu%20Famille">Commander</a></div>
-<div class="card"><img src="plat7.jpg.png"><h3>Menu Régal</h3><p>3 500 F</p><a href="https://wa.me/22655441010?text=Je%20veux%20Menu%20R%C3%A9gal">Commander</a></div>
-</div></div>
-<footer><p>📍 Somgandé, Ouagadougou<br>📞 55 44 10 10<br>Ouvert 7j/7 - 10h à 23h</p></footer>
+
+<header>
+<img src="logo.png" alt="Le Regal Express">
+<h1>LE REGAL EXPRESS</h1>
+<p>Le goût royal, livré vite à Ouagadougou</p>
+</header>
+
+<div class="hero">
+<h2>Bienvenue chez Le Regal Express</h2>
+<p>Plats délicieux, faits avec amour. Commandez en 1 clic sur WhatsApp.</p>
+<a class="btn" href="https://wa.me/22670000000?text=Bonjour%20Le%20Regal%20Express%2C%20je%20veux%20commander">📲 Commander sur WhatsApp</a>
+</div>
+
+<div class="menu">
+<h2>🍽️ Notre Menu</h2>
+<div class="grid">
+
+<div class="card">
+<img src="plat1.jpg.png" alt="Poulet Choukouya Attieke">
+<h3>Poulet Choukouya + Attiéké</h3>
+<p>Poulet grillé au feu de bois, notre spécialité.</p>
+<div class="price">8 500 FCFA</div>
+<a class="order" href="https://wa.me/22670000000?text=Je%20veux%20commander%20Poulet%20Choukouya%20Attieke%208500">Commander</a>
+</div>
+
+<div class="card">
+<img src="plat2.jpg.png" alt="Poulet Mayo Attieke">
+<h3>Poulet Mayo + Attiéké</h3>
+<p>Poulet tendre à la sauce mayo, un délice.</p>
+<div class="price">9 000 FCFA</div>
+<a class="order" href="https://wa.me/22670000000?text=Je%20veux%20commander%20Poulet%20Mayo%20Attieke%209000">Commander</a>
+</div>
+
+<div class="card">
+<img src="plat3.jpg.png" alt="Pastel">
+<h3>Pastel</h3>
+<p>Pastel doré et croustillant, fait maison.</p>
+<div class="price">2 500 FCFA</div>
+<a class="order" href="https://wa.me/22670000000?text=Je%20veux%20commander%20Pastel%202500">Commander</a>
+</div>
+
+<div class="card">
+<img src="plat4.jpg.png" alt="Poulet Mayo Attieke Alloco">
+<h3>Poulet Mayo + Attiéké + Alloco</h3>
+<p>Le menu complet, pour les gros appétits.</p>
+<div class="price">10 500 FCFA</div>
+<a class="order" href="https://wa.me/22670000000?text=Je%20veux%20commander%20Mayo%20Attieke%20Alloco%2010500">Commander</a>
+</div>
+
+<div class="card">
+<img src="plat5.jpg.png" alt="Poulet Mayo Alloco">
+<h3>Poulet Mayo + Alloco</h3>
+<p>Le favori de nos clients, généreux et savoureux.</p>
+<div class="price">11 000 FCFA</div>
+<a class="order" href="https://wa.me/22670000000?text=Je%20veux%20commander%20Poulet%20Mayo%20Alloco%2011000">Commander</a>
+</div>
+
+</div>
+</div>
+
+<footer>
+<p>📍 Ouagadougou, Burkina Faso</p>
+<p>📞 WhatsApp : <a href="https://wa.me/22670000000">Cliquez ici pour commander</a></p>
+<p style="margin-top:10px; font-size:13px; opacity:0.7;">© 2026 Le Regal Express - Tous droits réservés</p>
+</footer>
+
 </body>
 </html>
