@@ -1,99 +1,95 @@
 <!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Le Regal Express - Ouagadougou</title>
+<html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Le Régal Express - Somgandé | La Daïshi du Choukouya</title>
 <style>
-* { margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', Arial, sans-serif; }
-body { background:#FFF8F0; color:#222; }
-header { background:#8B0000; color:white; text-align:center; padding:25px 15px; }
-header img { width:130px; height:130px; object-fit:cover; border-radius:50%; border:4px solid #FFC107; background:white; }
-header h1 { font-size:32px; margin-top:10px; letter-spacing:1px; }
-header p { color:#FFC107; font-weight:600; margin-top:5px; }
-.hero { text-align:center; padding:35px 15px; background:white; }
-.hero h2 { font-size:26px; color:#8B0000; }
-.hero p { margin:10px 0 20px; color:#555; }
-.btn { display:inline-block; background:#25D366; color:white; padding:13px 25px; border-radius:30px; text-decoration:none; font-weight:700; }
-.menu { max-width:1000px; margin:0 auto; padding:20px 15px 40px; }
-.menu h2 { text-align:center; color:#8B0000; margin-bottom:20px; font-size:26px; }
-.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px; }
-.card { background:white; border-radius:15px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.08); text-align:center; padding-bottom:15px; }
-.card img { width:100%; height:200px; object-fit:cover; }
-.card h3 { margin:12px 0 5px; color:#222; }
-.card p { color:#777; font-size:14px; padding:0 10px; }
-.price { color:#8B0000; font-weight:800; font-size:18px; margin:8px 0; }
-.order { display:inline-block; background:#8B0000; color:white; padding:9px 18px; border-radius:20px; text-decoration:none; font-size:14px; font-weight:600; }
-footer { background:#222; color:white; text-align:center; padding:25px 15px; }
-footer a { color:#25D366; text-decoration:none; font-weight:700; }
-</style>
-</head>
+*{box-sizing:border-box}body{margin:0;font-family:system-ui;background:#FFF8F0;color:#1a1a1a}
+header{background:#0A2342;color:#fff;padding:12px 16px;position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;z-index:20}
+header img{height:52px;border-radius:50%;border:2px solid #FFC107}
+.btn{background:#FF6B00;color:#fff;border:0;padding:11px 18px;border-radius:999px;font-weight:800;cursor:pointer}
+.btn-gold{background:#FFC107;color:#111}.btn-outline{background:#fff;color:#111;border:1px solid #ddd}
+.hero{background:#0A2342;color:#fff;padding:30px 16px 40px;text-align:center}
+.hero img{width:210px;height:210px;border-radius:50%;border:4px solid #FFC107;object-fit:cover;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.hero h1{font-size:32px;margin:12px 0 4px}.hero h1 span{color:#FFC107}
+.socials{display:flex;justify-content:center;gap:10px;margin:14px 0}.socials a{background:#fff;color:#111;padding:9px 14px;border-radius:999px;text-decoration:none;font-weight:700;font-size:14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px;max-width:1000px;margin:auto}
+@media(max-width:600px){.grid{grid-template-columns:1fr}}
+.card{background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,.08)}
+.card img{width:100%;height:180px;object-fit:cover}.card-body{padding:14px}
+.price{font-weight:900;color:#FF6B00;font-size:20px}.qty{display:flex;gap:8px;align-items:center;margin:10px 0}
+.qty button{width:32px;height:32px;border-radius:50%;border:1px solid #ddd;background:#fff;font-size:18px}
+.cart,.avis,.map{max-width:1000px;margin:0 auto 20px;background:#fff;border-radius:18px;padding:16px}
+input,select{width:100%;padding:12px;border:1px solid #ddd;border-radius:12px;margin:6px 0}
+.steps{display:flex;gap:6px;flex-wrap:wrap}.step{padding:8px 10px;border-radius:999px;background:#eee;font-size:13px}.step.active{background:#111;color:#fff}.step.done{background:#22c55e;color:#fff}
+.avis-card{border:1px solid #eee;border-radius:14px;padding:12px;margin:8px 0}
+.stars{color:#FFC107;font-size:18px}
+.whatsapp-float{position:fixed;bottom:18px;right:18px;background:#25D366;color:#fff;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;text-decoration:none;box-shadow:0 8px 20px rgba(0,0,0,.3);z-index:99}
+footer{background:#0A2342;color:#fff;text-align:center;padding:20px}
+</style></head>
 <body>
-
-<header>
-<img src="logo.png.jpg" alt="La Daishi du Choukouya - Le Regal Express">
-<h1>LE REGAL EXPRESS</h1>
-<p>Le goût royal, livré vite à Ouagadougou</p>
-</header>
+<header><div style="display:flex;gap:10px;align-items:center"><img src="logo.png.jpg" alt="Le Régal Express"><div><b>LE RÉGAL EXPRESS</b><br><small style="color:#FFC107">SOMGANDÉ • LA DAÏSHI DU CHOUKOUYA</small></div></div>
+<div><button class="btn btn-outline" onclick="showLogin()">Connexion</button> <button class="btn" onclick="document.getElementById('menu').scrollIntoView()">Commander 🛵</button></div></header>
 
 <div class="hero">
-<h2>Bienvenue chez Le Regal Express</h2>
-<p>Plats délicieux, faits avec amour. Commandez en 1 clic sur WhatsApp.</p>
-<a class="btn" href="https://wa.me/22665471996?text=Bonjour%20Le%20Regal%20Express%2C%20je%20veux%20commander">📲 Commander sur WhatsApp</a>
+<img src="logo.png.jpg" alt="Logo La Daïshi du Choukouya">
+<h1>LE RÉGAL <span>EXPRESS</span></h1><p>🏆 La Daïshi du Choukouya 🏅</p><p>Poulet Choukouya • Poulet Mayo • Pastel • Alloco</p>
+<p>📍 Somgandé, Secteur 19 - Près du Groupe Scolaire Ihsan<br>📞 WhatsApp 65 47 19 96 • Orange Money 55 44 10 10</p>
+<div class="socials">
+<a href="https://www.tiktok.com/@regal_35express" target="_blank">🎵 TikTok @regal_35express</a>
+<a href="https://www.facebook.com/" target="_blank">📘 Facebook</a>
+<a href="https://www.instagram.com/" target="_blank">📸 Instagram</a>
+</div>
+<button class="btn btn-gold" onclick="document.getElementById('menu').scrollIntoView()">Voir le Menu & Commander →</button>
 </div>
 
-<div class="menu">
-<h2>🍽️ Notre Menu</h2>
-<div class="grid">
+<div id="menu" class="grid"></div>
 
-<div class="card">
-<img src="plat1.jpg.png" alt="Poulet Choukouya Attieke">
-<h3>Poulet Choukouya + Attiéké</h3>
-<p>Poulet grillé au feu de bois, notre spécialité.</p>
-<div class="price">8 500 FCFA</div>
-<a class="order" href="https://wa.me/22665471996?text=Je%20veux%20commander%20Poulet%20Choukouya%20Attieke%208500">Commander</a>
+<div class="cart">
+<h2>🛒 Votre Commande</h2><div id="cartList">Panier vide</div>
+<h3>Total : <span id="total">0</span> FCFA</h3>
+<input id="nom" placeholder="Votre nom *"><input id="tel" placeholder="Votre téléphone WhatsApp *">
+<select id="type"><option value="Livraison">Livraison à domicile</option><option value="Sur place / À emporter">Sur place / À emporter</option></select>
+<input id="adresse" placeholder="Quartier, rue, repère - ex: Somgandé, près de GSI">
+<button class="btn btn-outline" onclick="geo()">📍 Utiliser ma position GPS</button>
+<input id="txid" placeholder="ID transaction Orange Money *">
+<div style="background:#FFF3CD;padding:12px;border-radius:12px;margin:10px 0"><b>💳 Paiement Orange Money :</b> Composez <b>*144*10*55441010#</b> et payez le total. Puis collez votre ID.</div>
+<button class="btn" style="width:100%;padding:15px" onclick="commander()">Valider & Envoyer sur WhatsApp ✅</button>
+<h3>Suivi de commande</h3><div class="steps"><div class="step" id="s1">1. Reçue</div><div class="step" id="s2">2. Validée</div><div class="step" id="s3">3. Prête</div><div class="step" id="s4">4. Livreur en route</div><div class="step" id="s5">5. Livrée</div></div>
+<p id="suiviTxt">Aucune commande en cours.</p>
 </div>
 
-<div class="card">
-<img src="plat2.jpg.png" alt="Poulet Mayo Attieke">
-<h3>Poulet Mayo + Attiéké</h3>
-<p>Poulet tendre à la sauce mayo, un délice.</p>
-<div class="price">9 000 FCFA</div>
-<a class="order" href="https://wa.me/22665471996?text=Je%20veux%20commander%20Poulet%20Mayo%20Attieke%209000">Commander</a>
+<div class="avis">
+<h2>⭐ Avis Clients - 4.9/5</h2>
+<div class="avis-card"><div class="stars">⭐⭐⭐⭐⭐</div><b>Awa - Somgandé</b><p>"Le meilleur Choukouya de Somgandé, la viande est tendre, le piment juste parfait. Je commande chaque semaine !"</p></div>
+<div class="avis-card"><div class="stars">⭐⭐⭐⭐⭐</div><b>Ibrahim - Karpala</b><p>"Poulet Mayo + Alloco à 11.000F, grosse portion, livraison rapide. Le Régal Express c'est du sérieux."</p></div>
+<div class="avis-card"><div class="stars">⭐⭐⭐⭐⭐</div><b>Mariam - GSI</b><p>"Pastel croustillant, bien servi. J'ai commandé sur WhatsApp, 30 min après c'était là. Bravo Daïshi !"</p></div>
+<p>Tu as aimé ? Laisse ton avis sur WhatsApp, on l'ajoute ici !</p>
 </div>
 
-<div class="card">
-<img src="plat3.jpg.png" alt="Pastel">
-<h3>Pastel</h3>
-<p>Pastel doré et croustillant, fait maison.</p>
-<div class="price">2 500 FCFA</div>
-<a class="order" href="https://wa.me/22665471996?text=Je%20veux%20commander%20Pastel%202500">Commander</a>
+<div class="map">
+<h2>📍 Nous Trouver - Somgandé</h2><p>Somgandé, Secteur 19, Ouagadougou - Près du Groupe Scolaire Ihsan (GSI)</p>
+<iframe src="https://www.google.com/maps?q=Somgandé,+Ouagadougou&output=embed" width="100%" height="280" style="border:0;border-radius:14px" loading="lazy"></iframe><br><br>
+<a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=Somgandé,+Ouagadougou" target="_blank">🧭 Lancer l'Itinéraire vers Le Régal Express</a>
+<a class="btn btn-outline" href="https://wa.me/22665471996" target="_blank">WhatsApp 65 47 19 96</a>
 </div>
 
-<div class="card">
-<img src="plat4.jpg.png" alt="Poulet Mayo Attieke Alloco">
-<h3>Poulet Mayo + Attiéké + Alloco</h3>
-<p>Le menu complet, pour les gros appétits.</p>
-<div class="price">10 500 FCFA</div>
-<a class="order" href="https://wa.me/22665471996?text=Je%20veux%20commander%20Mayo%20Attieke%20Alloco%2010500">Commander</a>
-</div>
+<div class="cart"><h2>👩‍🍳 Espace Admin - Gérante</h2><p>Admin : <b>admin@regalexpress.bf / admin123</b></p><div id="adminList">Connectez-vous pour voir les commandes.</div></div>
+<footer>© 2026 Le Régal Express - Somgandé • TikTok @regal_35express • Paiement : *144*10*55441010# • WhatsApp : 65 47 19 96</footer>
+<a class="whatsapp-float" href="https://wa.me/22665471996?text=Bonjour%20Le%20R%C3%A9gal%20Express%2C%20je%20veux%20commander" target="_blank">💬</a>
 
-<div class="card">
-<img src="plat5.jpg.png" alt="Poulet Mayo Alloco">
-<h3>Poulet Mayo + Alloco</h3>
-<p>Le favori de nos clients, généreux et savoureux.</p>
-<div class="price">11 000 FCFA</div>
-<a class="order" href="https://wa.me/22665471996?text=Je%20veux%20commander%20Poulet%20Mayo%20Alloco%2011000">Commander</a>
-</div>
-
-</div>
-</div>
-
-<footer>
-<p>📍 Ouagadougou, Burkina Faso</p>
-<p>📞 Appel : 55 44 10 10 | WhatsApp : <a href="https://wa.me/22665471996">65 47 19 96</a></p>
-<p style="margin-top:10px; font-size:13px; opacity:0.7;">© 2026 Le Regal Express - La Daishi du Choukouya</p>
-</footer>
-
-</body>
-</html>
+<script>
+const MENU=[
+{id:1,nom:"Poulet Choukouya + Attiéké",prix:8500,desc:"🏆 La Star - Poulet braisé épicé, oignons, piment, attiéké",img:"plat1.jpg.png"},
+{id:2,nom:"Poulet Mayo + Attiéké",prix:9000,desc:"Poulet grillé, sauce mayo, attiéké",img:"plat3.jpg.png"},
+{id:3,nom:"Pastel",prix:2500,desc:"Pastel doré et croustillant, fait maison",img:"plat5.jpg.png"},
+{id:4,nom:"Poulet Mayo + Attiéké + Alloco",prix:10500,desc:"Le menu complet, pour les gros appétits",img:"plat6.jpg.png"},
+{id:5,nom:"Poulet Mayo + Alloco",prix:11000,desc:"Le favori de nos clients, généreux et savoureux",img:"plat7.jpg.png"},
+];
+let panier={}, statut=0;
+function render(){document.getElementById('menu').innerHTML=MENU.map(m=>`<div class="card"><img src="${m.img}"><div class="card-body"><h3>${m.nom}</h3><p>${m.desc}</p><div class="price">${m.prix.toLocaleString()} FCFA</div><div class="qty"><button onclick="chg(${m.id},-1)">-</button><b>${panier[m.id]||0}</b><button onclick="chg(${m.id},1)">+</button><button class="btn" onclick="chg(${m.id},1)">Ajouter</button></div></div></div>`).join('');let html='',total=0;for(let id in panier){if(panier[id]>0){let m=MENU.find(x=>x.id==id);total+=m.prix*panier[id];html+=`${m.nom} x ${panier[id]} = ${(m.prix*panier[id]).toLocaleString()} FCFA<br>`}}document.getElementById('cartList').innerHTML=html||'Panier vide';document.getElementById('total').innerText=total.toLocaleString();}
+function chg(id,d){panier[id]=Math.max(0,(panier[id]||0)+d);render()}
+function geo(){if(navigator.geolocation){navigator.geolocation.getCurrentPosition(p=>{document.getElementById('adresse').value=`GPS: ${p.coords.latitude}, ${p.coords.longitude}`;alert('Position ajoutée ✅')})}}
+function showLogin(){let e=prompt('Email:');let p=prompt('Mot de passe:');if(e=='admin@regalexpress.bf'&&p=='admin123'){alert('Bienvenue Admin Le Régal Express 👩‍🍳');document.getElementById('adminList').innerHTML='Mode Admin activé. Les commandes arrivent sur WhatsApp.'}else{alert('Bienvenue Client ✅ Vous pouvez commander.')}}
+function commander(){let nom=document.getElementById('nom').value,tel=document.getElementById('tel').value,tx=document.getElementById('txid').value,adr=document.getElementById('adresse').value,type=document.getElementById('type').value;if(!nom||!tel||!tx)return alert('Remplissez nom, téléphone et ID transaction');let items=Object.keys(panier).filter(k=>panier[k]>0).map(k=>{let m=MENU.find(x=>x.id==k);return `${m.nom} x ${panier[k]}`}).join(', ');let total=document.getElementById('total').innerText;let msg=`🔥 NOUVELLE COMMANDE - LE REGAL EXPRESS\nNom: ${nom}\nTel: ${tel}\nType: ${type}\nAdresse/GPS: ${adr}\nCommande: ${items}\nTotal: ${total} FCFA\nID Transaction: ${tx}`;window.open(`https://wa.me/22665471996?text=${encodeURIComponent(msg)}`,'_blank');statut=1;majSuivi();alert('Commande envoyée sur WhatsApp ✅')}
+function majSuivi(){let labels=['Reçue','Validée','Prête','Livreur en route','Livrée'];for(let i=1;i<=5;i++){let el=document.getElementById('s'+i);el.className='step'+(i<statut?' done':i==statut?' active':'')}document.getElementById('suiviTxt').innerText='Statut actuel : '+labels[statut-1]}
+render();
+</script></body></html>
