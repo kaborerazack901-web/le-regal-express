@@ -2,109 +2,40 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Le Régal Express - Somgandé | La Daïshi du Choukouya</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le Régal Express - Somgandé | La Daishi du Choukounya</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:system-ui;background:#FFF8F0;color:#1a1a1a}
-header{background:#0A2342;color:#fff;padding:12px 16px;position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;z-index:20}
-.btn{background:#FF6B00;color:#fff;border:0;padding:11px 18px;border-radius:999px;font-weight:800;cursor:pointer}
-.btn-gold{background:#FFC107;color:#111}
-.btn-outline{background:#fff;color:#111;border:1px solid #ddd}
-.hero{background:#0A2342;color:#fff;padding:30px 16px 40px;text-align:center}
-.hero h1{font-size:32px;margin:12px 0 4px}
-.hero h1 span{color:#FFC107}
-.socials{display:flex;justify-content:center;gap:10px;margin:14px 0;flex-wrap:wrap}
-.socials a{background:#fff;color:#111;padding:9px 14px;border-radius:999px;text-decoration:none;font-weight:700;font-size:14px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px;max-width:1000px;margin:auto}
-@media(max-width:600px){.grid{grid-template-columns:1fr}}
-.card{background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,.08)}
-.card img{width:100%;height:220px;object-fit:cover}
-.card-body{padding:14px}
-.price{font-weight:900;color:#FF6B00;font-size:20px}
-.qty{display:flex;gap:8px;align-items:center;margin:10px 0}
-.qty button{width:32px;height:32px;border-radius:50%;border:1px solid #ddd;background:#fff;font-size:18px}
-.cart,.avis,.map{max-width:1000px;margin:0 auto 20px;background:#fff;border-radius:18px;padding:16px}
-input,select{width:100%;padding:12px;border:1px solid #ddd;border-radius:12px;margin:6px 0}
-.steps{display:flex;gap:6px;flex-wrap:wrap}
-.step{padding:8px 10px;border-radius:999px;background:#eee;font-size:13px}
-.step.active{background:#111;color:#fff}
-.step.done{background:#22c55e;color:#fff}
-.avis-card{border:1px solid #eee;border-radius:14px;padding:12px;margin:8px 0}
-.stars{color:#FFC107;font-size:18px}
-.whatsapp-float{position:fixed;bottom:18px;right:18px;background:#25D366;color:#fff;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;text-decoration:none;box-shadow:0 8px 20px rgba(0,0,0,.3);z-index:99}
-footer{background:#0A2342;color:#fff;text-align:center;padding:20px}
+body{margin:0;font-family:Arial,sans-serif;background:#FFF8F0;color:#222}
+header{background:#D32F2F;color:#fff;padding:15px;text-align:center;position:sticky;top:0;z-index:10}
+header h1{margin:0;font-size:28px}
+header p{margin:5px 0 0}
+.hero{background:#FFEB3B;padding:25px 15px;text-align:center}
+.hero h2{margin:0;font-size:24px;color:#D32F2F}
+.btn{background:#25D366;color:#fff;padding:13px 20px;border-radius:30px;text-decoration:none;font-weight:bold;display:inline-block;margin-top:10px}
+.menu{padding:20px 15px;max-width:900px;margin:auto}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.card{background:#fff;border-radius:15px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.1);text-align:center;padding-bottom:10px}
+.card img{width:100%;height:160px;object-fit:cover}
+.card h3{margin:10px 5px 5px;font-size:16px}
+.card p{margin:0 5px;color:#D32F2F;font-weight:bold}
+.card a{background:#D32F2F;color:#fff;padding:8px 15px;border-radius:20px;text-decoration:none;display:inline-block;margin-top:8px;font-size:14px}
+footer{background:#222;color:#fff;text-align:center;padding:20px}
+@media(max-width:500px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<header>
-<div><b>LE RÉGAL EXPRESS</b><br><small style="color:#FFC107">SOMGANDÉ • LA DAÏSHI DU CHOUKOUYA</small></div>
-<div><button class="btn" onclick="document.getElementById('menu').scrollIntoView()">Commander 🛵</button></div>
-</header>
-<div class="hero">
-<h1>LE RÉGAL <span>EXPRESS</span></h1>
-<p>🏆 La Daïshi du Choukouya 🏅</p>
-<p>Choukouya • Mayo • Riz Sénégalais • Garba • Kebab • Pastel</p>
-<p>📍 Somgandé, Secteur 19 - Près du Groupe Scolaire Ihsan<br>📞 WhatsApp 65 47 19 96 • Orange Money 55 44 10 10</p>
-<div class="socials">
-<a href="https://www.tiktok.com/@regal_35express" target="_blank">🎵 TikTok @regal_35express</a>
-<a href="https://www.facebook.com/" target="_blank">📘 Facebook</a>
-<a href="https://www.instagram.com/" target="_blank">📸 Instagram</a>
-</div>
-<button class="btn btn-gold" onclick="document.getElementById('menu').scrollIntoView()">Voir le Menu & Commander →</button>
-</div>
-<div id="menu" class="grid"></div>
-<div class="cart">
-<h2>🛒 Votre Commande</h2>
-<div id="cartList">Panier vide</div>
-<h3>Total : <span id="total">0</span> FCFA</h3>
-<input id="nom" placeholder="Votre nom *">
-<input id="tel" placeholder="Votre téléphone WhatsApp *">
-<select id="type"><option value="Livraison">Livraison à domicile</option><option value="Sur place / À emporter">Sur place / À emporter</option></select>
-<input id="adresse" placeholder="Quartier, rue, repère - ex: Somgandé, près de GSI">
-<button class="btn btn-outline" onclick="geo()">📍 Utiliser ma position GPS</button>
-<input id="txid" placeholder="ID transaction Orange Money *">
-<div style="background:#FFF3CD;padding:12px;border-radius:12px;margin:10px 0"><b>💳 Paiement Orange Money :</b> Composez <b>*144*10*55441010#</b> et payez le total.</div>
-<button class="btn" style="width:100%;padding:15px" onclick="commander()">Valider & Envoyer sur WhatsApp ✅</button>
-<h3>Suivi de commande</h3>
-<div class="steps"><div class="step" id="s1">1. Reçue</div><div class="step" id="s2">2. Validée</div><div class="step" id="s3">3. Prête</div><div class="step" id="s4">4. Livreur en route</div><div class="step" id="s5">5. Livrée</div></div>
-<p id="suiviTxt">Aucune commande en cours.</p>
-</div>
-<div class="avis">
-<h2>⭐ Avis Clients - 4.9/5</h2>
-<div class="avis-card"><div class="stars">⭐⭐⭐⭐⭐</div><b>Awa - Somgandé</b><p>"Le meilleur Choukouya de Somgandé, la viande est tendre, le piment juste parfait."</p></div>
-<div class="avis-card"><div class="stars">⭐⭐⭐⭐⭐</div><b>Ibrahim - Karpala</b><p>"Riz Sénégalais à 10.000F mais ça vaut le prix, grosse portion, livraison rapide."</p></div>
-<div class="avis-card"><div class="stars">⭐⭐⭐⭐⭐</div><b>Mariam - GSI</b><p>"Garba propre, bien servi. J'ai commandé sur WhatsApp, 30 min après c'était là."</p></div>
-</div>
-<div class="map">
-<h2>📍 Nous Trouver - Somgandé</h2>
-<p>Somgandé, Secteur 19, Ouagadougou - Près du Groupe Scolaire Ihsan (GSI)</p>
-<iframe src="https://www.google.com/maps?q=Somgandé,+Ouagadougou&output=embed" width="100%" height="280" style="border:0;border-radius:14px" loading="lazy"></iframe><br><br>
-<a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=Somgandé,+Ouagadougou" target="_blank">🧭 Lancer l'Itinéraire</a>
-<a class="btn btn-outline" href="https://wa.me/22665471996" target="_blank">WhatsApp 65 47 19 96</a>
-</div>
-<footer>© 2026 Le Régal Express - Somgandé • TikTok @regal_35express • Paiement : *144*10*55441010# • WhatsApp : 65 47 19 96</footer>
-<a class="whatsapp-float" href="https://wa.me/22665471996?text=Bonjour%20Le%20R%C3%A9gal%20Express%2C%20je%20veux%20commander" target="_blank">💬</a>
-<script>
-const MENU=[
-{id:1,nom:"Poulet Choukouya Seul",prix:8500,desc:"🏆 La Star - Poulet braisé, sauces, crudités",img:"https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=800"},
-{id:2,nom:"Poulet Mayo Seul",prix:9000,desc:"Poulet grillé, sauce mayo, oignons, poivrons",img:"https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?w=800"},
-{id:3,nom:"Poulet Choukouya + Alloco",prix:10500,desc:"Choukouya + Alloco doré",img:"https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=800"},
-{id:4,nom:"Poulet Mayo + Alloco",prix:11000,desc:"Mayo + Alloco doré",img:"https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?w=800"},
-{id:5,nom:"Plat Complet Choukouya",prix:10500,desc:"Choukouya + Attiéké + Alloco",img:"https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800"},
-{id:6,nom:"Plat Complet Mayo",prix:11000,desc:"Mayo + Attiéké + Alloco",img:"https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800"},
-{id:7,nom:"Riz Sénégalais",prix:10000,desc:"Riz gras, poulet, légumes - Grosse portion - 10.000F",img:"https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=800"},
-{id:8,nom:"Garba",prix:5000,desc:"Attiéké, poisson thon, oignons, piment",img:"https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800"},
-{id:9,nom:"Kebab",prix:10000,desc:"Pain, viande grillée, sauce, salade tomate",img:"https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=800"},
-{id:10,nom:"Pastel / Chausson",prix:2500,desc:"Croustillant, farci - Prix à confirmer",img:"https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800"},
-];
-let panier={}, statut=0;
-function render(){document.getElementById('menu').innerHTML=MENU.map(m=>`<div class="card"><img src="${m.img}"><div class="card-body"><h3>${m.nom}</h3><p>${m.desc}</p><div class="price">${m.prix.toLocaleString()} FCFA</div><div class="qty"><button onclick="chg(${m.id},-1)">-</button><b>${panier[m.id]||0}</b><button onclick="chg(${m.id},1)">+</button><button class="btn" onclick="chg(${m.id},1)">Ajouter</button></div></div></div>`).join('');let html='',total=0;for(let id in panier){if(panier[id]>0){let m=MENU.find(x=>x.id==id);total+=m.prix*panier[id];html+=`${m.nom} x ${panier[id]} = ${(m.prix*panier[id]).toLocaleString()} FCFA<br>`}}document.getElementById('cartList').innerHTML=html||'Panier vide';document.getElementById('total').innerText=total.toLocaleString();}
-function chg(id,d){panier[id]=Math.max(0,(panier[id]||0)+d);render()}
-function geo(){if(navigator.geolocation){navigator.geolocation.getCurrentPosition(p=>{document.getElementById('adresse').value=`GPS: ${p.coords.latitude}, ${p.coords.longitude}`;alert('Position ajoutée ✅')})}}
-function commander(){let nom=document.getElementById('nom').value,tel=document.getElementById('tel').value,tx=document.getElementById('txid').value,adr=document.getElementById('adresse').value,type=document.getElementById('type').value;if(!nom||!tel||!tx)return alert('Remplissez nom, téléphone et ID transaction');let items=Object.keys(panier).filter(k=>panier[k]>0).map(k=>{let m=MENU.find(x=>x.id==k);return `${m.nom} x ${panier[k]}`}).join(', ');let total=document.getElementById('total').innerText;let msg=`🔥 NOUVELLE COMMANDE - LE REGAL EXPRESS\nNom: ${nom}\nTel: ${tel}\nType: ${type}\nAdresse/GPS: ${adr}\nCommande: ${items}\nTotal: ${total} FCFA\nID Transaction: ${tx}`;window.open(`https://wa.me/22665471996?text=${encodeURIComponent(msg)}`,'_blank');statut=1;majSuivi();alert('Commande envoyée sur WhatsApp ✅')}
-function majSuivi(){let labels=['Reçue','Validée','Prête','Livreur en route','Livrée'];for(let i=1;i<=5;i++){let el=document.getElementById('s'+i);el.className='step'+(i<statut?' done':i==statut?' active':'')}document.getElementById('suiviTxt').innerText='Statut actuel : '+labels[statut-1]}
-render();
-</script>
+<header><h1>LE RÉGAL EXPRESS</h1><p>La Daishi du Choukounya - Somgandé, Ouaga</p></header>
+<div class="hero"><h2>🔥 Choukounya Chaud, Livraison Rapide ! 🔥</h2><p>Commande en 1 clic sur WhatsApp</p><a class="btn" href="https://wa.me/22655441010?text=Bonjour%20Le%20R%C3%A9gal%20Express%2C%20je%20veux%20commander">📲 Commander sur WhatsApp</a></div>
+<div class="menu"><h2 style="text-align:center">Notre Menu</h2><div class="grid">
+<div class="card"><img src="plat1.jpg"><h3>Choukounya Classique</h3><p>1 500 F</p><a href="https://wa.me/22655441010?text=Je%20veux%20Choukounya%20Classique">Commander</a></div>
+<div class="card"><img src="plat2.jpg"><h3>Choukounya Spécial</h3><p>2 000 F</p><a href="https://wa.me/22655441010?text=Je%20veux%20Choukounya%20Sp%C3%A9cial">Commander</a></div>
+<div class="card"><img src="plat3.jpg"><h3>Choukounya + Frites</h3><p>2 500 F</p><a href="https://wa.me/22655441010?text=Je%20veux%20Choukounya%20Frites">Commander</a></div>
+<div class="card"><img src="plat4.jpg"><h3>Daishi Mixte</h3><p>2 500 F</p><a href="https://wa.me/22655441010?text=Je%20veux%20Daishi%20Mixte">Commander</a></div>
+<div class="card"><img src="plat5.jpg"><h3>Brochettes</h3><p>2 000 F</p><a href="https://wa.me/22655441010?text=Je%20veux%20Brochettes">Commander</a></div>
+<div class="card"><img src="plat6.jpg"><h3>Menu Famille</h3><p>5 000 F</p><a href="https://wa.me/22655441010?text=Je%20veux%20Menu%20Famille">Commander</a></div>
+<div class="card"><img src="plat7.jpg"><h3>Menu Régal</h3><p>3 500 F</p><a href="https://wa.me/22655441010?text=Je%20veux%20Menu%20R%C3%A9gal">Commander</a></div>
+</div></div>
+<footer><p>📍 Somgandé, Ouagadougou<br>📞 55 44 10 10<br>Ouvert 7j/7 - 10h à 23h</p></footer>
 </body>
 </html>
