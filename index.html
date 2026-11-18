@@ -81,8 +81,8 @@ const MENU=[
 {id:1,nom:"Poulet Choukouya + Attiéké",prix:8500,desc:"🏆 La Star - Poulet braisé épicé, oignons, piment, attiéké",img:"plat1.jpg.png"},
 {id:2,nom:"Poulet Mayo + Attiéké",prix:9000,desc:"Poulet grillé, sauce mayo, attiéké",img:"plat3.jpg.png"},
 {id:3,nom:"Pastel",prix:2500,desc:"Pastel doré et croustillant, fait maison",img:"plat5.jpg.png"},
-{id:4,nom:"Poulet Mayo + Attiéké + Alloco",prix:10500,desc:"Le menu complet, pour les gros appétits",img:"plat6.jpg.png"},
-{id:5,nom:"Poulet Mayo + Alloco",prix:11000,desc:"Le favori de nos clients, généreux et savoureux",img:"plat7.jpg.png"},
+{id:4,nom:"Poulet Choukouya + Attiéké + Alloco",prix:10500,desc:"Le menu complet, pour les gros appétits",img:"plat6.jpg.png"},
+{id:5,nom:"Poulet Mayo + Attiéké + Alloco",prix:11000,desc:"Le favori de nos clients, généreux et savoureux",img:"plat7.jpg.png"},
 ];
 let panier={}, statut=0;
 function render(){document.getElementById('menu').innerHTML=MENU.map(m=>`<div class="card"><img src="${m.img}"><div class="card-body"><h3>${m.nom}</h3><p>${m.desc}</p><div class="price">${m.prix.toLocaleString()} FCFA</div><div class="qty"><button onclick="chg(${m.id},-1)">-</button><b>${panier[m.id]||0}</b><button onclick="chg(${m.id},1)">+</button><button class="btn" onclick="chg(${m.id},1)">Ajouter</button></div></div></div>`).join('');let html='',total=0;for(let id in panier){if(panier[id]>0){let m=MENU.find(x=>x.id==id);total+=m.prix*panier[id];html+=`${m.nom} x ${panier[id]} = ${(m.prix*panier[id]).toLocaleString()} FCFA<br>`}}document.getElementById('cartList').innerHTML=html||'Panier vide';document.getElementById('total').innerText=total.toLocaleString();}
