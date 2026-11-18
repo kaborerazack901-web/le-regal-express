@@ -28,23 +28,63 @@ footer{background:#0A2342;color:#fff;text-align:center;padding:20px}
 .banner-jour{background:linear-gradient(90deg,#FF6B00,#FFC107);color:#fff;padding:14px 16px;text-align:center;font-weight:800}
 .admin-card{border:1px solid #eee;border-radius:12px;padding:12px;margin:8px 0;background:#FFF8F0}
 .tabs{display:flex;gap:8px;margin:10px 0;flex-wrap:wrap}.tabs button{flex:1;padding:12px;border-radius:999px;border:1px solid #ddd;background:#fff;font-weight:800;cursor:pointer}.tabs button.active{background:#0A2342;color:#fff}
-.track{border-left:4px solid #FF6B00;padding-left:12px;margin:10px 0}
 .code-box{background:#0A2342;color:#FFC107;padding:14px;border-radius:12px;text-align:center;font-size:22px;font-weight:900;letter-spacing:2px;margin:10px 0}
+#gate{position:fixed;inset:0;background:#0A2342;z-index:200;display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto}
+#gate .box{background:#fff;border-radius:20px;padding:22px;width:100%;max-width:460px}
+.role-btn{border:2px solid #ddd;border-radius:14px;padding:14px;cursor:pointer;text-align:center;margin:6px 0}
+.role-btn.sel{border-color:#FF6B00;background:#FFF8F0}
+.pwd-strength{font-size:12px;margin-top:-4px}
 </style></head>
 <body>
-<header><div style="display:flex;gap:10px;align-items:center"><img src="logo.png.jpg" alt="Le Régal Express"><div><b>LE RÉGAL EXPRESS</b><br><small style="color:#FFC107">SOMGANDÉ • LA DAÏSHI DU CHOUKOUYA</small></div></div>
-<div><button class="btn btn-outline" onclick="showLogin()">Connexion</button> <button class="btn" onclick="document.getElementById('menu').scrollIntoView()">Commander 🛵</button></div></header>
+
+<!-- ===== PORTE D'ENTRÉE - CHOIX DU RÔLE ===== -->
+<div id="gate"><div class="box">
+<img src="logo.png.jpg" style="width:90px;height:90px;border-radius:50%;display:block;margin:auto;border:3px solid #FFC107;object-fit:cover">
+<h2 style="text-align:center;color:#0A2342">Bienvenue au Régal Express 👑</h2>
+<p style="text-align:center;font-size:14px;color:#555">Qui es-tu ? Choisis ton espace.</p>
+
+<div id="choixRole">
+<div class="role-btn" id="roleClient" onclick="choisirRole('client')">🍽️ <b>Je suis CLIENT</b><br><small>Commander, suivre mon plat</small></div>
+<div class="role-btn" id="roleLivreur" onclick="choisirRole('livreur')">🛵 <b>Je suis LIVREUR</b><br><small>Livrer les commandes prêtes</small></div>
+<div class="role-btn" id="roleAdmin" onclick="choisirRole('admin')">👩‍🍳 <b>Je suis GÉRANTE / ADMIN</b><br><small>Gérer tout le restaurant</small></div>
+</div>
+
+<div id="formInscription" style="display:none">
+<h3 id="titreForm">Inscription Client</h3>
+<input id="u_nom" placeholder="Nom *"><input id="u_prenom" placeholder="Prénom *">
+<input id="u_tel" placeholder="Téléphone WhatsApp * ex: 70 00 00 00">
+<input id="u_email" placeholder="Email * ex: nom@gmail.com">
+<div id="champQuartier"><input id="u_quartier" placeholder="Quartier * ex: Somgandé"><input id="u_adresse" placeholder="Adresse, repère"></div>
+<div id="champCodeLivreur" style="display:none"><p style="font-size:13px;background:#FFF3CD;padding:10px;border-radius:10px">Livreur : après inscription, tu recevras ton <b>Code Livreur LIV-XXXX</b>. Garde-le, c'est ton identifiant officiel.</p></div>
+<input id="u_pass" type="password" placeholder="Mot de passe coriace * (min 8 caractères, 1 chiffre, 1 majuscule)" oninput="checkPwd()">
+<p id="pwdMsg" class="pwd-strength"></p>
+<input id="u_pass2" type="password" placeholder="Confirme ton mot de passe *">
+<input id="u_code_verif" placeholder="Code de vérification SMS (pour test, mets 1234)">
+<p style="font-size:12px;color:#888">🔒 Mot de passe sécurisé. Téléphone vérifié par code. Tes données sont dans Supabase.</p>
+<button class="btn" onclick="inscrire()" style="width:100%;padding:15px">✅ Créer mon compte & Entrer</button>
+<button class="btn btn-outline" onclick="afficherConnexion()" style="width:100%;margin-top:8px">Déjà inscrit ? Se connecter</button>
+<button class="btn btn-outline" onclick="retourRole()" style="width:100%;margin-top:8px">← Changer de rôle</button>
+</div>
+
+<div id="formConnexion" style="display:none">
+<h3>Connexion</h3>
+<input id="c_tel" placeholder="Téléphone"><input id="c_pass" type="password" placeholder="Mot de passe">
+<button class="btn" onclick="seConnecter()" style="width:100%;padding:15px">🔓 Se connecter</button>
+<button class="btn btn-outline" onclick="retourInscription()" style="width:100%;margin-top:8px">← Retour inscription</button>
+</div>
+</div></div>
+
+<!-- ===== HEADER ===== -->
+<header><div style="display:flex;gap:10px;align-items:center"><img src="logo.png.jpg"><div><b>LE RÉGAL EXPRESS</b><br><small style="color:#FFC107" id="headerRole">ESPACE CLIENT • LA DAÏSHI DU CHOUKOUYA</small></div></div>
+<div><span id="userBadge" style="background:#FFC107;color:#111;padding:6px 10px;border-radius:999px;font-weight:800;font-size:13px"></span> <button class="btn btn-outline" onclick="deconnexion()">Déconnexion</button></div></header>
+
+<!-- ===== ESPACE CLIENT - VISIBLE QUE PAR CLIENT ===== -->
+<div id="vueClient">
 <div class="banner-jour" id="platJour">🍽️ Chargement...</div>
 <div class="hero">
-<img src="logo.png.jpg" alt="Logo La Daïshi du Choukouya">
-<h1>LE RÉGAL <span>EXPRESS</span></h1><p>🏆 La Daïshi du Choukouya 🏅</p><p>Poulet Choukouya • Poulet Mayo • Pastel • Alloco</p>
+<img src="logo.png.jpg"><h1>LE RÉGAL <span>EXPRESS</span></h1><p>🏆 La Daïshi du Choukouya 🏅</p><p>Poulet Choukouya • Poulet Mayo • Pastel • Alloco</p>
 <p>📍 Somgandé, Secteur 19 - Près du Groupe Scolaire Ihsan<br>📞 WhatsApp 65 47 19 96 • Orange Money 55 44 10 10</p>
-<div class="tabs" style="max-width:500px;margin:14px auto"><button id="tabJour" class="active" onclick="setPeriode('jour')">☀️ MENU JOUR</button><button id="tabSoir" onclick="setPeriode('soir')">🌙 MENU SOIR</button><button onclick="document.getElementById('suiviColis').scrollIntoView()">📦 SUIVRE MON COLIS</button></div>
-<div class="socials">
-<a href="https://www.tiktok.com/@regal_35express" target="_blank">🎵 TikTok @regal_35express</a>
-<a href="https://www.facebook.com/" target="_blank">📘 Facebook</a>
-<a href="https://www.instagram.com/" target="_blank">📸 Instagram</a>
-</div>
+<div class="tabs" style="max-width:400px;margin:14px auto"><button id="tabJour" class="active" onclick="setPeriode('jour')">☀️ MENU JOUR</button><button id="tabSoir" onclick="setPeriode('soir')">🌙 MENU SOIR</button></div>
 <button class="btn btn-gold" onclick="document.getElementById('menu').scrollIntoView()">Voir le Menu & Commander →</button>
 </div>
 <div id="menu" class="grid"></div>
@@ -52,93 +92,67 @@ footer{background:#0A2342;color:#fff;text-align:center;padding:20px}
 <h2>🛒 Votre Commande</h2><div id="cartList">Panier vide</div>
 <h3>Total plats : <span id="totalPlats">0</span> FCFA</h3>
 <h3>🚚 Zone de livraison</h3>
-<select id="zone" onchange="render()">
-<option value="Somgandé|500">Somgandé - 500 FCFA</option>
-<option value="Karpala|1000">Karpala - 1 000 FCFA</option>
-<option value="Centre-ville|1500">Centre-ville - 1 500 FCFA</option>
-<option value="Autre quartier|1500">Autre quartier - 1 500 FCFA</option>
-<option value="Sur place|0">Sur place / À emporter - 0 FCFA</option>
-</select>
+<select id="zone" onchange="render()"><option value="Somgandé|500">Somgandé - 500 FCFA</option><option value="Karpala|1000">Karpala - 1 000 FCFA</option><option value="Centre-ville|1500">Centre-ville - 1 500 FCFA</option><option value="Autre quartier|1500">Autre quartier - 1 500 FCFA</option><option value="Sur place|0">Sur place / À emporter - 0 FCFA</option></select>
 <p>🚚 Livraison : <b><span id="fraisLiv">500</span> FCFA</b> | <b>Total à payer : <span id="total">0</span> FCFA</b></p>
-<p style="font-size:12px;color:#888">Ta grille tarifaire complète arrive, je l'ajouterai ici.</p>
 <h3>⏰ Quand tu veux manger ?</h3>
 <select id="heureProg"><option value="Le plus vite possible">Le plus vite possible (30-45 min)</option><option value="12h00">Aujourd'hui à 12h00</option><option value="13h00">Aujourd'hui à 13h00</option><option value="18h00">Aujourd'hui à 18h00</option><option value="19h00">Aujourd'hui à 19h00</option><option value="20h00">Aujourd'hui à 20h00</option></select>
 <input id="nom" placeholder="Votre nom *"><input id="tel" placeholder="Votre téléphone WhatsApp *">
 <select id="type"><option value="Livraison">Livraison à domicile</option><option value="Sur place / À emporter">Sur place / À emporter</option></select>
-<input id="adresse" placeholder="Quartier, rue, repère - ex: Somgandé, près de GSI">
+<input id="adresse" placeholder="Quartier, rue, repère">
 <button class="btn btn-outline" onclick="geo()">📍 Utiliser ma position GPS</button>
 <input id="txid" placeholder="ID transaction Orange Money *">
 <div style="background:#FFF3CD;padding:12px;border-radius:12px;margin:10px 0"><b>💳 Paiement Orange Money :</b> Composez <b>*144*10*55441010#</b> et payez le total. Puis collez votre ID.</div>
-<label style="font-size:14px"><input type="checkbox" id="photoAvant" checked style="width:auto"> 📸 Oui, envoie-moi la photo de ma commande avant livraison</label>
+<label style="font-size:14px"><input type="checkbox" id="photoAvant" checked style="width:auto"> 📸 Oui, envoie-moi la photo avant livraison</label>
 <button class="btn" style="width:100%;padding:15px" onclick="commander()">Valider & Envoyer sur WhatsApp ✅</button>
-<button class="btn btn-gold" style="width:100%;padding:13px;margin-top:10px" onclick="recommander()">🔁 Recommander mon dernier plat en 1 clic</button>
+<button class="btn btn-gold" style="width:100%;padding:13px;margin-top:10px" onclick="recommander()">🔁 Recommander mon dernier plat</button>
 <p id="derniereCmd" style="text-align:center;font-size:13px;color:#666"></p>
-<h3>Suivi de commande</h3><div class="steps"><div class="step" id="s1">1. Reçue</div><div class="step" id="s2">2. Validée</div><div class="step" id="s3">3. Prête</div><div class="step" id="s4">4. Livreur en route</div><div class="step" id="s5">5. Livrée</div></div>
-<p id="suiviTxt">Aucune commande en cours.</p>
 </div>
 <div class="cart" id="suiviColis">
-<h2>📦 Suivre mon colis en temps réel</h2>
-<input id="suiviTel" placeholder="Ton téléphone ex: 70 00 00 00">
-<button class="btn" onclick="suivreColis()">🔍 Suivre mon colis</button>
-<div id="resultatSuivi"></div>
+<h2>📦 Suivre mon plat en temps réel - Comme un colis DHL</h2>
+<div id="resultatSuivi"><p>Commande et suis ici en direct.</p></div>
 <h3>✅ Confirmer la réception</h3>
 <input id="codeConfirmClient" placeholder="Code à 4 chiffres donné par le livreur">
-<button class="btn" style="background:#22c55e" onclick="confirmerReceptionClient()">✅ J'ai bien reçu mon colis</button>
-<p id="confirmTxt" style="font-size:13px;color:#666"></p>
-</div>
-<div class="cart" id="espaceLivreur">
-<h2>🛵 Espace Livreur</h2>
-<div class="tabs"><button id="lTabIns" class="active" onclick="showLivTab('ins')">📝 Inscription Livreur</button><button id="lTabDash" onclick="showLivTab('dash')">📦 Mes Livraisons</button></div>
-<div id="livIns">
-<p>Chaque livreur doit s'inscrire. Il recevra un <b>Code Identifiant</b> que la gérante utilise pour le suivre.</p>
-<input id="livNom" placeholder="Nom *"><input id="livPrenom" placeholder="Prénom *">
-<input id="livTel" placeholder="Téléphone * ex: 70 00 00 00"><input id="livEmail" placeholder="Adresse e-mail * ex: livreur@gmail.com">
-<button class="btn" onclick="inscrireLivreur()">✅ S'inscrire comme livreur</button>
-<div id="livCodeResult"></div>
-</div>
-<div id="livDash" style="display:none">
-<input id="livCodeLogin" placeholder="Ton Code Livreur ex: LIV-4821"><button class="btn btn-outline" onclick="loginLivreur()">Voir mes livraisons</button>
-<div id="livMissions"></div>
-<h3>📍 Mettre à jour une livraison</h3>
-<input id="livCodeSuivi" placeholder="Code de confirmation du client (4 chiffres)">
-<select id="livEtape"><option>Colis préparé</option><option>Pris par le livreur</option><option>En route vers le client</option><option>Arrivé chez le client</option><option>Livré - Confirmé</option></select>
-<button class="btn" onclick="majEtapeLivreur()">📲 Mettre à jour + Notifier le client</button>
-</div>
+<button class="btn" style="background:#22c55e" onclick="confirmerReceptionClient()">✅ J'ai bien reçu mon plat</button>
+<p id="confirmTxt"></p>
 </div>
 <div class="cart">
 <h2>🎁 Parrainage - Gagne 500F</h2>
-<p>Invite un ami, vous gagnez <b>500F chacun</b> !</p>
 <p>Ton code : <b id="codeParrain" style="color:#FF6B00">DAISHI-XXXX</b></p>
 <input id="parrainInvite" placeholder="Numéro de ton ami"><button class="btn" onclick="parrainer()">📲 Inviter mon ami</button>
 <input id="codeParrainUtilise" placeholder="Code parrain de ton ami">
 </div>
-<div class="avis">
-<h2>⭐ Avis Clients - 4.9/5</h2>
-<div class="avis-card"><div class="stars">⭐⭐⭐⭐⭐</div><b>Awa - Somgandé</b><p>"Le meilleur Choukouya de Somgandé !"</p></div>
-<div class="avis-card"><div class="stars">⭐⭐⭐⭐⭐</div><b>Ibrahim - Karpala</b><p>"Poulet Mayo + Alloco, grosse portion, livraison rapide."</p></div>
-<div class="avis-card"><div class="stars">⭐⭐⭐⭐⭐</div><b>Mariam - GSI</b><p>"Pastel croustillant, 30 min après c'était là."</p></div>
+<div class="avis"><h2>⭐ Avis Clients - 4.9/5</h2><div class="avis-card"><div class="stars">⭐⭐⭐⭐⭐</div><b>Awa - Somgandé</b><p>"Le meilleur Choukouya de Somgandé !"</p></div><div class="avis-card"><div class="stars">⭐⭐⭐⭐⭐</div><b>Ibrahim - Karpala</b><p>"Poulet Mayo + Alloco, grosse portion."</p></div></div>
+<div class="map"><h2>📍 Nous Trouver - Somgandé</h2><p>Somgandé, Secteur 19 - Près du Groupe Scolaire Ihsan (GSI)</p><iframe src="https://www.google.com/maps?q=Somgandé,+Ouagadougou&output=embed" width="100%" height="280" style="border:0;border-radius:14px" loading="lazy"></iframe></div>
 </div>
-<div class="map">
-<h2>📍 Nous Trouver - Somgandé</h2><p>Somgandé, Secteur 19 - Près du Groupe Scolaire Ihsan (GSI)</p>
-<iframe src="https://www.google.com/maps?q=Somgandé,+Ouagadougou&output=embed" width="100%" height="280" style="border:0;border-radius:14px" loading="lazy"></iframe><br><br>
-<a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=Somgandé,+Ouagadougou" target="_blank">🧭 Itinéraire</a>
-<a class="btn btn-outline" href="https://wa.me/22665471996" target="_blank">WhatsApp 65 47 19 96</a>
+
+<!-- ===== ESPACE LIVREUR - VISIBLE QUE PAR LIVREUR ===== -->
+<div id="vueLivreur" style="display:none">
+<div class="cart">
+<h2>🛵 Espace Livreur - Bonjour <span id="livNomAffiche"></span></h2>
+<p>Ton Code Livreur : <b id="livCodeAffiche" style="color:#FF6B00;font-size:20px"></b> • C'est avec ce code que la gérante te reconnaît.</p>
+<div class="code-box" id="livStatutBox">🟢 EN LIGNE - En attente de commandes prêtes</div>
+<h3>📦 Commandes PRÊTES à livrer - Uniquement celles-là</h3>
+<p style="font-size:13px;color:#666">Tu ne vois QUE les commandes prêtes. Tu ne vois pas les autres clients, ni les prix secrets, ni les modifications de la gérante.</p>
+<div id="livMissions"></div>
+<button class="btn" onclick="chargerMissionsLivreur()">🔄 Actualiser les commandes prêtes</button>
 </div>
-<div class="cart"><h2>👩‍🍳 Espace Admin - Gérante</h2><p>Admin : <b>admin@regalexpress.bf / admin123</b></p>
+</div>
+
+<!-- ===== ESPACE ADMIN - VISIBLE QUE PAR GÉRANTE ===== -->
+<div id="vueAdmin" style="display:none">
+<div class="cart"><h2>👩‍🍳 Espace Gérante - Tu vois TOUT</h2>
 <div class="tabs"><button id="aTabPlats" class="active" onclick="showAdminTab('plats')">🍽️ Menus Jour / Soir</button><button id="aTabCmd" onclick="showAdminTab('cmd')">📦 Commandes</button><button id="aTabLiv" onclick="showAdminTab('liv')">🛵 Livreurs & Suivi</button><button id="aTabHist" onclick="showAdminTab('hist')">📊 Historique</button></div>
-<div id="adminPlats"></div>
-<div id="adminCmd" style="display:none"></div>
-<div id="adminLiv" style="display:none"></div>
-<div id="adminHist" style="display:none"></div>
-<div id="adminList">Connectez-vous pour voir les commandes.</div>
+<div id="adminPlats"></div><div id="adminCmd" style="display:none"></div><div id="adminLiv" style="display:none"></div><div id="adminHist" style="display:none"></div>
 </div>
+</div>
+
 <footer>© 2026 Le Régal Express - Somgandé • TikTok @regal_35express • Paiement : *144*10*55441010# • WhatsApp : 65 47 19 96</footer>
 <a class="whatsapp-float" href="https://wa.me/22665471996?text=Bonjour%20Le%20R%C3%A9gal%20Express%2C%20je%20veux%20commander" target="_blank">💬</a>
+
 <script>
-// ✅ TES CLES DÉJÀ BRANCHÉES - NE TOUCHE PAS
 const SUPABASE_URL="https://ezbbgwzzmexfmcsjtoyh.supabase.co";
 const SUPABASE_KEY="sb_publishable_AC7ulunN2GPCYHXP6L6HFQ_bFFjxN26";
-let supabaseClient=null; try{supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY)}catch(e){console.log("Supabase:",e)}
+let supabaseClient=null; try{supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY)}catch(e){}
 let MENU=[
 {id:1,nom:"Poulet Choukouya + Attiéké",prix:8500,desc:"🏆 La Star - Poulet braisé épicé",img:"plat1.jpg.png",jour:true,soir:true,actif:true},
 {id:2,nom:"Poulet Mayo + Attiéké",prix:9000,desc:"Poulet grillé, sauce mayo",img:"plat3.jpg.png",jour:true,soir:true,actif:true},
@@ -146,22 +160,72 @@ let MENU=[
 {id:4,nom:"Poulet Choukouya + Attiéké + Alloco",prix:10500,desc:"Menu complet",img:"plat6.jpg.png",jour:true,soir:true,actif:true},
 {id:5,nom:"Poulet Mayo + Attiéké + Alloco",prix:11000,desc:"Le favori",img:"plat7.jpg.png",jour:false,soir:true,actif:true},
 ];
-let periode='jour'; let panier={}, statut=0;
+let periode='jour', panier={}, statut=0, utilisateurActuel=null, roleChoisi='client';
+function choisirRole(role){roleChoisi=role; document.querySelectorAll('.role-btn').forEach(b=>b.classList.remove('sel')); document.getElementById(role==='client'?'roleClient':role==='livreur'?'roleLivreur':'roleAdmin').classList.add('sel'); document.getElementById('choixRole').style.display='none'; document.getElementById('formInscription').style.display='block'; document.getElementById('titreForm').innerText=role==='client'?'Inscription CLIENT 🍽️':role==='livreur'?'Inscription LIVREUR PRO 🛵':'Inscription GÉRANTE 👩‍🍳'; document.getElementById('champQuartier').style.display=role==='livreur'?'none':'block'; document.getElementById('champCodeLivreur').style.display=role==='livreur'?'block':'none';}
+function retourRole(){document.getElementById('choixRole').style.display='block'; document.getElementById('formInscription').style.display='none'; document.getElementById('formConnexion').style.display='none';}
+function afficherConnexion(){document.getElementById('formInscription').style.display='none'; document.getElementById('formConnexion').style.display='block';}
+function retourInscription(){document.getElementById('formConnexion').style.display='none'; document.getElementById('formInscription').style.display='block';}
+function checkPwd(){let p=document.getElementById('u_pass').value; let msg=document.getElementById('pwdMsg'); if(p.length<8) msg.innerText='❌ Trop court - min 8 caractères'; else if(!/[A-Z]/.test(p)) msg.innerText='❌ Il faut 1 MAJUSCULE'; else if(!/[0-9]/.test(p)) msg.innerText='❌ Il faut 1 CHIFFRE'; else msg.innerText='✅ Mot de passe coriace, parfait !'; msg.style.color=msg.innerText.startsWith('✅')?'green':'red';}
+function estPwdFort(p){return p.length>=8 && /[A-Z]/.test(p) && /[0-9]/.test(p) && /[a-z]/.test(p);}
+
+async function inscrire(){
+  let nom=document.getElementById('u_nom').value.trim(), prenom=document.getElementById('u_prenom').value.trim(), tel=document.getElementById('u_tel').value.trim(), email=document.getElementById('u_email').value.trim(), pass=document.getElementById('u_pass').value, pass2=document.getElementById('u_pass2').value, codeVerif=document.getElementById('u_code_verif').value.trim(), quartier=document.getElementById('u_quartier').value.trim(), adresse=document.getElementById('u_adresse').value.trim();
+  if(!nom||!prenom||!tel||!email||!pass) return alert('Remplis Nom, Prénom, Téléphone, Email, Mot de passe');
+  if(!estPwdFort(pass)) return alert('Mot de passe pas assez fort ! Min 8 caractères, 1 MAJUSCULE, 1 minuscule, 1 chiffre. Ex: Regal2026');
+  if(pass!==pass2) return alert('Les 2 mots de passe ne correspondent pas');
+  if(!email.includes('@')||!email.includes('.')) return alert('Email invalide');
+  if(tel.replace(/\D/g,'').length<8) return alert('Téléphone invalide');
+  if(codeVerif!=='1234') return alert('Code de vérification incorrect. Pour le test, mets 1234. En vrai, ce sera un code SMS.');
+  // Si Admin, seul la gérante peut s'inscrire en admin
+  if(roleChoisi==='admin' && !(email==='admin@regalexpress.bf' && pass==='Admin2026!')) return alert('Accès Gérante uniquement. Email + mot de passe gérante requis.');
+  let codeLivreur = roleChoisi==='livreur' ? 'LIV-'+Math.floor(1000+Math.random()*9000) : null;
+  let codeParrain = roleChoisi==='client' ? 'DAISHI-'+Math.floor(1000+Math.random()*9000) : null;
+  let user={nom,prenom,tel,email,mot_de_passe:pass,role:roleChoisi,code_livreur:codeLivreur,code_parrain:codeParrain,quartier,adresse,statut_verif:'Vérifié'};
+  try{if(supabaseClient){let r=await supabaseClient.from('utilisateurs').insert([user]); if(r.error) console.log('Supabase:',r.error.message);}}catch(e){}
+  localStorage.setItem('utilisateur_regal',JSON.stringify(user));
+  // Sauvegarde aussi dans anciennes tables pour compatibilité
+  if(roleChoisi==='livreur'){let l=JSON.parse(localStorage.getItem('livreurs')||'[]'); l.push({nom,prenom,tel,email,code_livreur:codeLivreur}); localStorage.setItem('livreurs',JSON.stringify(l));}
+  entrerDansEspace(user);
+}
+async function seConnecter(){
+  let tel=document.getElementById('c_tel').value.trim(), pass=document.getElementById('c_pass').value;
+  // Admin test
+  if(tel==='admin@regalexpress.bf' || tel==='65471996'){ if(pass==='Admin2026!'||pass==='admin123'){ entrerDansEspace({nom:'Gérante',prenom:'Daïshi',tel:tel,email:'admin@regalexpress.bf',role:'admin'}); return; } }
+  let saved=JSON.parse(localStorage.getItem('utilisateur_regal')||'null');
+  if(saved && saved.tel===tel && saved.mot_de_passe===pass){ entrerDansEspace(saved); return; }
+  try{if(supabaseClient){let {data}=await supabaseClient.from('utilisateurs').select('*').eq('tel',tel).eq('mot_de_passe',pass).single(); if(data){entrerDansEspace(data); return;}}}catch(e){}
+  alert('Téléphone ou mot de passe incorrect. Ou inscris-toi d\'abord.');
+}
+function entrerDansEspace(user){
+  utilisateurActuel=user; localStorage.setItem('utilisateur_regal',JSON.stringify(user));
+  document.getElementById('gate').style.display='none';
+  document.getElementById('vueClient').style.display=user.role==='client'?'block':'none';
+  document.getElementById('vueLivreur').style.display=user.role==='livreur'?'block':'none';
+  document.getElementById('vueAdmin').style.display=user.role==='admin'?'block':'none';
+  document.getElementById('headerRole').innerText=user.role==='client'?'ESPACE CLIENT • LA DAÏSHI DU CHOUKOUYA':user.role==='livreur'?'ESPACE LIVREUR • '+user.code_livreur:'ESPACE GÉRANTE • ADMIN';
+  document.getElementById('userBadge').innerText=user.prenom+' '+user.nom+' • '+user.role.toUpperCase();
+  if(user.role==='client'){ document.getElementById('nom').value=user.prenom+' '+user.nom; document.getElementById('tel').value=user.tel; document.getElementById('adresse').value=(user.quartier||'')+' - '+(user.adresse||''); document.getElementById('codeParrain').innerText=user.code_parrain||'DAISHI-XXXX'; afficherSuiviClient(); }
+  if(user.role==='livreur'){ document.getElementById('livNomAffiche').innerText=user.prenom+' '+user.nom; document.getElementById('livCodeAffiche').innerText=user.code_livreur; chargerMissionsLivreur(); }
+  if(user.role==='admin'){ renderAdmin(); chargerCommandesAdmin(); }
+  alert('Bienvenue '+user.prenom+' ! Tu es sur ton espace '+user.role.toUpperCase()+' ✅'+(user.code_livreur?'\nTon code livreur : '+user.code_livreur:''));
+}
+function deconnexion(){localStorage.removeItem('utilisateur_regal'); location.reload();}
+
 function setPeriode(p){periode=p; document.getElementById('tabJour').className=p==='jour'?'active':''; document.getElementById('tabSoir').className=p==='soir'?'active':''; render();}
-let hNow=new Date().getHours(); if(hNow>=18){periode='soir';}
+let hNow=new Date().getHours(); if(hNow>=18) periode='soir';
 const PLATS_JOUR=["Poulet Choukouya + Attiéké - 8 500F","Poulet Mayo + Attiéké - 9 000F","Pastel - 2 500F","Poulet Choukouya + Attiéké + Alloco - 10 500F","Poulet Mayo + Attiéké + Alloco - 11 000F","Poulet Choukouya + Attiéké - 8 500F","Pastel - 2 500F"];
 let jour=new Date().getDay();
 document.getElementById('platJour').innerHTML="🔥 PLAT DU JOUR - "+["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"][jour]+" : <span style='background:#fff;color:#111;padding:4px 10px;border-radius:999px'>"+PLATS_JOUR[jour]+"</span>";
 function getFrais(){return parseInt(document.getElementById('zone').value.split('|')[1]||500)}
 function platsVisibles(){return MENU.filter(m=>m.actif && (periode==='jour'?m.jour:m.soir))}
-function render(){let list=platsVisibles();document.getElementById('menu').innerHTML=list.length?list.map(m=>`<div class="card"><img src="${m.img}"><div class="card-body"><h3>${m.nom}</h3><p>${m.desc}</p><div class="price">${m.prix.toLocaleString()} FCFA</div><div class="qty"><button onclick="chg(${m.id},-1)">-</button><b>${panier[m.id]||0}</b><button onclick="chg(${m.id},1)">+</button><button class="btn" onclick="chg(${m.id},1)">Ajouter</button></div></div></div>`).join(''):'<p style="text-align:center;padding:20px">Aucun plat disponible.</p>';let html='',totalPlats=0;for(let id in panier){if(panier[id]>0){let m=MENU.find(x=>x.id==id);if(!m) continue;totalPlats+=m.prix*panier[id];html+=`${m.nom} x ${panier[id]} = ${(m.prix*panier[id]).toLocaleString()} FCFA<br>`}}document.getElementById('cartList').innerHTML=html||'Panier vide';let frais=getFrais();document.getElementById('fraisLiv').innerText=frais.toLocaleString();document.getElementById('totalPlats').innerText=totalPlats.toLocaleString();document.getElementById('total').innerText=(totalPlats+frais).toLocaleString();}
+function render(){let list=platsVisibles();document.getElementById('menu').innerHTML=list.map(m=>`<div class="card"><img src="${m.img}"><div class="card-body"><h3>${m.nom}</h3><p>${m.desc}</p><div class="price">${m.prix.toLocaleString()} FCFA</div><div class="qty"><button onclick="chg(${m.id},-1)">-</button><b>${panier[m.id]||0}</b><button onclick="chg(${m.id},1)">+</button><button class="btn" onclick="chg(${m.id},1)">Ajouter</button></div></div></div>`).join('');let html='',totalPlats=0;for(let id in panier){if(panier[id]>0){let m=MENU.find(x=>x.id==id);totalPlats+=m.prix*panier[id];html+=`${m.nom} x ${panier[id]} = ${(m.prix*panier[id]).toLocaleString()} FCFA<br>`}}document.getElementById('cartList').innerHTML=html||'Panier vide';let frais=getFrais();document.getElementById('fraisLiv').innerText=frais.toLocaleString();document.getElementById('totalPlats').innerText=totalPlats.toLocaleString();document.getElementById('total').innerText=(totalPlats+frais).toLocaleString();}
 function chg(id,d){panier[id]=Math.max(0,(panier[id]||0)+d);render()}
 function geo(){if(navigator.geolocation){navigator.geolocation.getCurrentPosition(p=>{document.getElementById('adresse').value=`GPS: ${p.coords.latitude}, ${p.coords.longitude}`;alert('Position ajoutée ✅')})}}
-function showLogin(){let e=prompt('Email:');let p=prompt('Mot de passe:');if(e=='admin@regalexpress.bf'&&p=='admin123'){alert('Bienvenue Admin 👩‍🍳');document.getElementById('adminList').innerHTML='Mode Admin activé.';renderAdmin();chargerCommandesAdmin();chargerLivreursAdmin();}else{alert('Bienvenue Client ✅')}}
-let monCode='DAISHI-'+Math.floor(1000+Math.random()*9000);let savedCode=localStorage.getItem('codeParrain')||monCode;localStorage.setItem('codeParrain',savedCode);document.getElementById('codeParrain').innerText=savedCode;
-function parrainer(){let ami=document.getElementById('parrainInvite').value.trim();if(!ami) return alert('Mets le numéro de ton ami');let msg=`Salut ! Je te parraine au Régal Express 👑 Utilise mon code ${savedCode} et on gagne 500F chacun ! https://le-regal-express.vercel.app`;window.open(`https://wa.me/226${ami.replace(/\s/g,'')}?text=${encodeURIComponent(msg)}`,'_blank');}
+let monCode='DAISHI-'+Math.floor(1000+Math.random()*9000);
+function parrainer(){let ami=document.getElementById('parrainInvite').value.trim();if(!ami) return alert('Mets le numéro de ton ami');let msg=`Salut ! Je te parraine au Régal Express 👑 Utilise mon code ${utilisateurActuel?.code_parrain||monCode} et on gagne 500F chacun !`;window.open(`https://wa.me/226${ami.replace(/\s/g,'')}?text=${encodeURIComponent(msg)}`,'_blank');}
 function afficherDerniere(){let d=JSON.parse(localStorage.getItem('derniere_commande')||'null');if(d){document.getElementById('derniereCmd').innerText='Dernière commande : '+d.items+' - '+d.total+' FCFA';}}
-function recommander(){let d=JSON.parse(localStorage.getItem('derniere_commande')||'null');if(!d) return alert('Pas encore de commande.');panier={};d.ids.forEach(id=>panier[id]=1);render();alert('Même commande remise dans le panier ✅');}
+function recommander(){let d=JSON.parse(localStorage.getItem('derniere_commande')||'null');if(!d) return alert('Pas encore de commande.');panier={};d.ids.forEach(id=>panier[id]=1);render();alert('Même commande remise ✅');}
+
 async function commander(){
 let nom=document.getElementById('nom').value,tel=document.getElementById('tel').value,tx=document.getElementById('txid').value,adr=document.getElementById('adresse').value,type=document.getElementById('type').value;
 if(!nom||!tel||!tx)return alert('Remplissez nom, téléphone et ID transaction');
@@ -172,115 +236,79 @@ let codeConfirm=Math.floor(1000+Math.random()*9000).toString();
 let commande={nom_client:nom,tel:tel,items:items,ids:Object.keys(panier).filter(k=>panier[k]>0),total:parseInt(total.replace(/\D/g,'')),zone:zone,adresse:adr,transaction_id:tx,heure_souhaitee:heure,statut:'Reçue',code_confirmation:codeConfirm,etape:'Colis préparé',date:new Date().toISOString().slice(0,10),created_at:new Date().toISOString()};
 localStorage.setItem('derniere_commande',JSON.stringify(commande));
 let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]');hist.push(commande);localStorage.setItem('historique_commandes',JSON.stringify(hist));
-try{if(supabaseClient){let r=await supabaseClient.from('commandes').insert([{nom_client:nom,tel:tel,items:items,total:commande.total,zone:zone,adresse:adr,transaction_id:tx,heure_souhaitee:heure,statut:'Reçue',code_confirmation:codeConfirm,etape:'Colis préparé'}]); if(r.error) console.log(r.error.message); else console.log('Commande sauvée Supabase ✅');}}catch(e){console.log(e)}
-let msg=`🔥 NOUVELLE COMMANDE - LE REGAL EXPRESS\nNom: ${nom}\nTel: ${tel}\nType: ${type}\nZone: ${zone} - Livraison: ${frais} FCFA\nAdresse/GPS: ${adr}\nCommande: ${items}\nTotal: ${total} FCFA\nID Transaction: ${tx}\n⏰ Heure: ${heure}\n📸 Photo: ${photo}\n🎁 Code Parrain: ${codeP}\n🔐 Code de réception: ${codeConfirm}`;
-window.open(`https://wa.me/22665471996?text=${encodeURIComponent(msg)}`,'_blank');statut=1;majSuivi();afficherDerniere();alert('Commande envoyée ✅\nTon code de réception est : '+codeConfirm);}
-function majSuivi(){let labels=['Reçue','Validée','Prête','Livreur en route','Livrée'];for(let i=1;i<=5;i++){let el=document.getElementById('s'+i);el.className='step'+(i<statut?' done':i==statut?' active':'')}document.getElementById('suiviTxt').innerText='Statut actuel : '+labels[statut-1]}
-function showLivTab(t){document.getElementById('lTabIns').className=t==='ins'?'active':'';document.getElementById('lTabDash').className=t==='dash'?'active':'';document.getElementById('livIns').style.display=t==='ins'?'block':'none';document.getElementById('livDash').style.display=t==='dash'?'block':'none';}
-async function inscrireLivreur(){
-  let nom=document.getElementById('livNom').value.trim(), prenom=document.getElementById('livPrenom').value.trim(), tel=document.getElementById('livTel').value.trim(), email=document.getElementById('livEmail').value.trim();
-  if(!nom||!prenom||!tel||!email) return alert('Remplis Nom, Prénom, Téléphone, Email');
-  let code='LIV-'+Math.floor(1000+Math.random()*9000);
-  let livreur={nom,prenom,tel,email,code_livreur:code};
-  let list=JSON.parse(localStorage.getItem('livreurs')||'[]'); list.push(livreur); localStorage.setItem('livreurs',JSON.stringify(list)); localStorage.setItem('livreur_actuel',JSON.stringify(livreur));
-  try{if(supabaseClient){let r=await supabaseClient.from('livreurs').insert([livreur]); if(r.error) console.log(r.error.message);}}catch(e){}
-  document.getElementById('livCodeResult').innerHTML=`<div class="code-box">TON CODE : ${code}</div><p style="text-align:center">Montre ce code à la gérante.</p><button class="btn" onclick="copierCode('${code}')">📋 Copier mon code</button>`;
-  alert('Bienvenue '+prenom+' ! Ton code livreur est '+code);
-}
-function copierCode(c){navigator.clipboard.writeText(c); alert('Code copié : '+c);}
-function loginLivreur(){let code=document.getElementById('livCodeLogin').value.trim();let list=JSON.parse(localStorage.getItem('livreurs')||'[]');let l=list.find(x=>x.code_livreur===code);if(!l) return alert('Code introuvable.');localStorage.setItem('livreur_actuel',JSON.stringify(l));afficherMissions(l);alert('Bienvenue '+l.prenom+' !');}
-function afficherMissions(livreur){
+try{if(supabaseClient) await supabaseClient.from('commandes').insert([{nom_client:nom,tel:tel,items:items,total:commande.total,zone:zone,adresse:adr,transaction_id:tx,heure_souhaitee:heure,statut:'Reçue',code_confirmation:codeConfirm,etape:'Colis préparé'}]);}catch(e){}
+let msg=`🔥 NOUVELLE COMMANDE - LE REGAL EXPRESS\nNom: ${nom}\nTel: ${tel}\nZone: ${zone} - Livraison: ${frais} FCFA\nAdresse: ${adr}\nCommande: ${items}\nTotal: ${total} FCFA\nID: ${tx}\n⏰ Heure: ${heure}\n📸 Photo: ${photo}\n🎁 Parrain: ${codeP}\n🔐 Code réception: ${codeConfirm}`;
+window.open(`https://wa.me/22665471996?text=${encodeURIComponent(msg)}`,'_blank');statut=1;afficherSuiviClient();alert('Commande envoyée ✅\nTon code réception : '+codeConfirm+'\nGarde-le pour le livreur.');}
+function afficherSuiviClient(){
   let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]');
-  let mesLiv=hist.filter(h=>h.code_livreur===livreur.code_livreur);
-  document.getElementById('livMissions').innerHTML='<h3>Mes livraisons : '+mesLiv.length+'</h3>'+(mesLiv.length?mesLiv.map(h=>`<div class="admin-card">👤 ${h.nom_client} - ${h.tel}<br>🍽️ ${h.items}<br>📍 ${h.adresse}<br>Étape: <b>${h.etape||'Colis préparé'}</b><br>Code client: <b>${h.code_confirmation}</b></div>`).join(''):'<p>Aucune livraison assignée. La gérante va t\'assigner.</p>');
-}
-function majEtapeLivreur(){
-  let livreur=JSON.parse(localStorage.getItem('livreur_actuel')||'null'); if(!livreur) return alert('Connecte-toi d\'abord avec ton code livreur');
-  let etape=document.getElementById('livEtape').value; let codeCli=document.getElementById('livCodeSuivi').value.trim();
-  let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]');
-  let idx=-1; for(let i=hist.length-1;i>=0;i--){if(hist[i].code_livreur===livreur.code_livreur){idx=i;break;}}
-  if(idx===-1) return alert('Aucune livraison assignée.');
-  if(etape==='Livré - Confirmé' && hist[idx].code_confirmation!==codeCli) return alert('Mauvais code. Demande le vrai code au client.');
-  hist[idx].etape=etape; hist[idx].statut=etape; localStorage.setItem('historique_commandes',JSON.stringify(hist));
-  let c=hist[idx]; let telClean=c.tel.replace(/\s/g,''); if(!telClean.startsWith('226')) telClean='226'+telClean;
-  let msgs={'Colis préparé':`Ton colis est préparé 📦 ${c.nom_client}`, 'Pris par le livreur':`Ton colis a été pris par ${livreur.prenom} (${livreur.code_livreur}) 🛵`, 'En route vers le client':`Ton livreur ${livreur.prenom} est EN ROUTE vers toi 🛵`, 'Arrivé chez le client':`Ton livreur est ARRIVÉ 📍 Donne-lui ton code ${c.code_confirmation}`, 'Livré - Confirmé':`Merci ${c.nom_client} ❤️ Colis livré !`};
-  window.open(`https://wa.me/${telClean}?text=${encodeURIComponent(msgs[etape]||etape)}`,'_blank');
-  alert('Étape mise à jour : '+etape+' - Client notifié ✅'); afficherMissions(livreur);
-}
-function suivreColis(){
-  let tel=document.getElementById('suiviTel').value.trim(); if(!tel) return alert('Mets ton téléphone');
-  let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]');
-  let cmd=hist.slice().reverse().find(h=>h.tel.replace(/\s/g,'')===tel.replace(/\s/g,'')||h.tel.includes(tel));
-  if(!cmd){document.getElementById('resultatSuivi').innerHTML='<p>Aucun colis trouvé.</p>';return;}
+  let tel=utilisateurActuel?.tel||document.getElementById('tel').value;
+  let cmd=hist.slice().reverse().find(h=>h.tel===tel) || JSON.parse(localStorage.getItem('derniere_commande')||'null');
+  if(!cmd){document.getElementById('resultatSuivi').innerHTML='<p>Pas encore de commande. Commande d\'abord.</p>';return;}
   let etapes=['Colis préparé','Pris par le livreur','En route vers le client','Arrivé chez le client','Livré - Confirmé'];
   let idx=etapes.indexOf(cmd.etape||'Colis préparé'); if(idx<0) idx=0;
-  document.getElementById('resultatSuivi').innerHTML=`<div class="track"><b>📦 ${cmd.items}</b><br>Client: ${cmd.nom_client} - ${cmd.zone}<br>Livreur: ${cmd.nom_livreur||'En attente'} (${cmd.code_livreur||'-'})<br>Code réception: <b>${cmd.code_confirmation}</b></div>${etapes.map((e,i)=>`<div style="padding:8px;border-left:4px solid ${i<=idx?'#22c55e':'#ddd'};margin-left:8px">${i<=idx?'✅':'⏳'} ${e} ${i===idx?'<b>← TU ES ICI</b>':''}</div>`).join('')}`;
+  document.getElementById('resultatSuivi').innerHTML=`<div style="border-left:4px solid #FF6B00;padding-left:12px"><b>📦 ${cmd.items}</b><br>Zone: ${cmd.zone} - Total: ${cmd.total} F<br>Livreur: ${cmd.nom_livreur||'En attente'} (${cmd.code_livreur||'-'})<br>Code réception: <b>${cmd.code_confirmation}</b></div>${etapes.map((e,i)=>`<div style="padding:8px;border-left:4px solid ${i<=idx?'#22c55e':'#ddd'};margin-left:8px">${i<=idx?'✅':'⏳'} ${e} ${i===idx?'<b>← TU ES ICI</b>':''}</div>`).join('')}<button class="btn btn-outline" onclick="afficherSuiviClient()">🔄 Actualiser mon suivi</button>`;
 }
 function confirmerReceptionClient(){
   let code=document.getElementById('codeConfirmClient').value.trim(); if(!code) return alert('Mets le code donné par le livreur');
   let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]');
-  let idx=hist.findIndex(h=>h.code_confirmation===code);
-  if(idx===-1) return alert('Code invalide.');
+  let idx=hist.findIndex(h=>h.code_confirmation===code); if(idx===-1) return alert('Code invalide.');
   hist[idx].etape='Livré - Confirmé'; hist[idx].statut='Livrée'; localStorage.setItem('historique_commandes',JSON.stringify(hist));
   document.getElementById('confirmTxt').innerText='✅ Réception confirmée. Bon appétit !';
-  alert('Réception confirmée ✅');
-  window.open(`https://wa.me/22665471996?text=${encodeURIComponent('✅ COLIS REÇU\nClient: '+hist[idx].nom_client+'\nCommande: '+hist[idx].items+'\nCode: '+code)}`,'_blank');
+  window.open(`https://wa.me/22665471996?text=${encodeURIComponent('✅ COLIS REÇU\nClient: '+hist[idx].nom_client+'\nCommande: '+hist[idx].items)}`,'_blank');
+  afficherSuiviClient();
 }
-function showAdminTab(tab){
-  document.getElementById('aTabPlats').className=tab==='plats'?'active':'';document.getElementById('aTabCmd').className=tab==='cmd'?'active':'';document.getElementById('aTabLiv').className=tab==='liv'?'active':'';document.getElementById('aTabHist').className=tab==='hist'?'active':'';
-  document.getElementById('adminPlats').style.display=tab==='plats'?'block':'none';document.getElementById('adminCmd').style.display=tab==='cmd'?'block':'none';document.getElementById('adminLiv').style.display=tab==='liv'?'block':'none';document.getElementById('adminHist').style.display=tab==='hist'?'block':'none';
-  if(tab==='cmd') chargerCommandesAdmin(); if(tab==='liv') chargerLivreursAdmin(); if(tab==='hist') afficherHistorique();
+// ===== LIVREUR : VOIT QUE LES PRÊTES =====
+function chargerMissionsLivreur(){
+  let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]');
+  // Le livreur ne voit QUE les commandes PRÊTES ou qui lui sont assignées, pas les autres
+  let pretes=hist.filter(h=>h.statut==='Prête' || h.code_livreur===utilisateurActuel?.code_livreur);
+  if(!pretes.length){document.getElementById('livMissions').innerHTML='<p>Aucune commande prête pour le moment. Reste en ligne, la gérante va te notifier.</p>';return;}
+  document.getElementById('livMissions').innerHTML=pretes.map((c,i)=>{
+    let realIdx=hist.indexOf(c);
+    return `<div class="admin-card"><b>Commande #${realIdx+1} - ${c.nom_client} - ${c.tel}</b><br>🍽️ ${c.items}<br>📍 ${c.adresse} - Zone: ${c.zone}<br>⏰ Heure: ${c.heure_souhaitee}<br>Étape: <b>${c.etape}</b><br>
+    ${!c.code_livreur?`<button class="btn" onclick="livreurRecupere(${realIdx})">✅ J'ai récupéré cette commande</button>`:`<p>Assignée à toi (${c.code_livreur})</p>
+    <button class="btn btn-gold" onclick="livreurEnRoute(${realIdx})">🛵 Je suis en route</button>
+    <button class="btn" onclick="livreurArrive(${realIdx})">📍 Je suis arrivé chez le client</button>
+    <button class="btn" style="background:#22c55e" onclick="livreurLivre(${realIdx})">✔️ J'ai livré - Confirmer</button>`}
+    </div>`}).join('');
 }
-function renderAdmin(){
-  document.getElementById('adminPlats').innerHTML='<h3>🍽️ Plats - Jour / Soir</h3>'+MENU.map(m=>`<div class="admin-card"><b>${m.nom}</b> - <input value="${m.prix}" type="number" style="width:100px;display:inline-block" onchange="changerPrix(${m.id},this.value)"> FCFA<br><label><input type="checkbox" ${m.jour?'checked':''} onchange="togglePlat(${m.id},'jour',this.checked)" style="width:auto"> ☀️ Jour</label> <label><input type="checkbox" ${m.soir?'checked':''} onchange="togglePlat(${m.id},'soir',this.checked)" style="width:auto"> 🌙 Soir</label> <label><input type="checkbox" ${m.actif?'checked':''} onchange="togglePlat(${m.id},'actif',this.checked)" style="width:auto"> ✅ En vente</label></div>`).join('')+`<h3>➕ Ajouter un plat</h3><input id="newNom" placeholder="Nom"><input id="newPrix" placeholder="Prix" type="number"><input id="newImg" placeholder="Image ex: plat8.jpg.png"><button class="btn" onclick="ajouterPlat()">Ajouter</button>`;
+function notifierClientEtGerante(cmd, messageClient, messageGerante){
+  let telClean=cmd.tel.replace(/\s/g,''); if(!telClean.startsWith('226')) telClean='226'+telClean;
+  window.open(`https://wa.me/${telClean}?text=${encodeURIComponent(messageClient)}`,'_blank');
+  setTimeout(()=>{ window.open(`https://wa.me/22665471996?text=${encodeURIComponent(messageGerante)}`,'_blank'); }, 800);
 }
-function changerPrix(id,val){let m=MENU.find(x=>x.id==id);m.prix=parseInt(val);render();sauvegarderPlats();}
-function togglePlat(id,champ,val){let m=MENU.find(x=>x.id==id);m[champ]=val;render();sauvegarderPlats();}
-function ajouterPlat(){let nom=document.getElementById('newNom').value;let prix=parseInt(document.getElementById('newPrix').value);let img=document.getElementById('newImg').value||'plat1.jpg.png';if(!nom||!prix) return alert('Mets nom + prix');MENU.push({id:Date.now(),nom:nom,prix:prix,desc:'Nouveau plat',img:img,jour:true,soir:true,actif:true});render();renderAdmin();sauvegarderPlats();}
-function sauvegarderPlats(){localStorage.setItem('plats_regal',JSON.stringify(MENU));}
+function livreurRecupere(idx){
+  let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]'); let c=hist[idx];
+  c.code_livreur=utilisateurActuel.code_livreur; c.nom_livreur=utilisateurActuel.prenom+' '+utilisateurActuel.nom; c.etape='Pris par le livreur'; c.statut='En livraison';
+  localStorage.setItem('historique_commandes',JSON.stringify(hist));
+  notifierClientEtGerante(c, `Ton colis a été récupéré par ${c.nom_livreur} (${c.code_livreur}) 🛵\nCommande: ${c.items}\nIl arrive ! Ton code réception : ${c.code_confirmation}`, `🛵 LIVREUR A RÉCUPÉRÉ\nCommande #${idx+1} - ${c.nom_client}\nLivreur: ${c.nom_livreur} (${c.code_livreur})\nCommande: ${c.items}`);
+  alert('Tu as récupéré la commande ✅ Client + Gérante notifiés.'); chargerMissionsLivreur();
+}
+function livreurEnRoute(idx){let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]'); let c=hist[idx]; c.etape='En route vers le client'; localStorage.setItem('historique_commandes',JSON.stringify(hist)); notifierClientEtGerante(c, `Ton livreur ${c.nom_livreur} est EN ROUTE vers toi 🛵\nReste prêt !`, `🛵 EN ROUTE\nCommande #${idx+1} - ${c.nom_client} - Livreur ${c.nom_livreur}`); alert('En route ✅'); chargerMissionsLivreur();}
+function livreurArrive(idx){let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]'); let c=hist[idx]; c.etape='Arrivé chez le client'; localStorage.setItem('historique_commandes',JSON.stringify(hist)); notifierClientEtGerante(c, `Ton livreur est ARRIVÉ 📍\nDonne-lui ton code ${c.code_confirmation} pour confirmer.`, `📍 LIVREUR ARRIVÉ\nCommande #${idx+1} - ${c.nom_client}`); alert('Arrivé ✅'); chargerMissionsLivreur();}
+function livreurLivre(idx){let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]'); let c=hist[idx]; let code=prompt('Demande le code à 4 chiffres au client pour confirmer :'); if(code!==c.code_confirmation) return alert('Mauvais code. Demande le vrai code au client.'); c.etape='Livré - Confirmé'; c.statut='Livrée'; localStorage.setItem('historique_commandes',JSON.stringify(hist)); notifierClientEtGerante(c, `Merci ${c.nom_client} ❤️ Ton plat a été LIVRÉ ! Bon appétit !`, `✅ COMMANDE LIVRÉE\nCommande #${idx+1} - ${c.nom_client}\nLivrée par ${c.nom_livreur} (${c.code_livreur})`); alert('Livrée ✅ Gérante + Client notifiés.'); chargerMissionsLivreur();}
+
+// ===== ADMIN : VOIT TOUT =====
+function showAdminTab(tab){document.getElementById('aTabPlats').className=tab==='plats'?'active':'';document.getElementById('aTabCmd').className=tab==='cmd'?'active':'';document.getElementById('aTabLiv').className=tab==='liv'?'active':'';document.getElementById('aTabHist').className=tab==='hist'?'active':'';document.getElementById('adminPlats').style.display=tab==='plats'?'block':'none';document.getElementById('adminCmd').style.display=tab==='cmd'?'block':'none';document.getElementById('adminLiv').style.display=tab==='liv'?'block':'none';document.getElementById('adminHist').style.display=tab==='hist'?'block':'none'; if(tab==='cmd') chargerCommandesAdmin(); if(tab==='liv') chargerLivreursAdmin(); if(tab==='hist') afficherHistorique();}
+function renderAdmin(){document.getElementById('adminPlats').innerHTML='<h3>🍽️ Plats - Jour / Soir</h3>'+MENU.map(m=>`<div class="admin-card"><b>${m.nom}</b> - <input value="${m.prix}" type="number" style="width:100px;display:inline-block" onchange="changerPrix(${m.id},this.value)"> FCFA<br><label><input type="checkbox" ${m.jour?'checked':''} onchange="togglePlat(${m.id},'jour',this.checked)" style="width:auto"> ☀️ Jour</label> <label><input type="checkbox" ${m.soir?'checked':''} onchange="togglePlat(${m.id},'soir',this.checked)" style="width:auto"> 🌙 Soir</label> <label><input type="checkbox" ${m.actif?'checked':''} onchange="togglePlat(${m.id},'actif',this.checked)" style="width:auto"> ✅ En vente</label></div>`).join('')+`<h3>➕ Ajouter un plat</h3><input id="newNom" placeholder="Nom"><input id="newPrix" placeholder="Prix" type="number"><input id="newImg" placeholder="Image"><button class="btn" onclick="ajouterPlat()">Ajouter</button>`;}
+function changerPrix(id,val){let m=MENU.find(x=>x.id==id);m.prix=parseInt(val);render();localStorage.setItem('plats_regal',JSON.stringify(MENU));}
+function togglePlat(id,champ,val){let m=MENU.find(x=>x.id==id);m[champ]=val;render();localStorage.setItem('plats_regal',JSON.stringify(MENU));}
+function ajouterPlat(){let nom=document.getElementById('newNom').value;let prix=parseInt(document.getElementById('newPrix').value);let img=document.getElementById('newImg').value||'plat1.jpg.png';if(!nom||!prix) return alert('Mets nom + prix');MENU.push({id:Date.now(),nom:nom,prix:prix,desc:'Nouveau plat',img:img,jour:true,soir:true,actif:true});render();renderAdmin();}
 async function chargerCommandesAdmin(){
   let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]');
-  try{if(supabaseClient){let {data}=await supabaseClient.from('commandes').select('*').order('created_at',{ascending:false}).limit(50); if(data&&data.length) hist=data.map(d=>({nom_client:d.nom_client,tel:d.tel,items:d.items,total:d.total,zone:d.zone,statut:d.statut,heure_souhaitee:d.heure_souhaitee,code_confirmation:d.code_confirmation,etape:d.etape,created_at:d.created_at}))}}catch(e){}
+  try{if(supabaseClient){let {data}=await supabaseClient.from('commandes').select('*').order('created_at',{ascending:false}).limit(50); if(data&&data.length) hist=data.map(d=>({nom_client:d.nom_client,tel:d.tel,items:d.items,total:d.total,zone:d.zone,statut:d.statut,heure_souhaitee:d.heure_souhaitee,code_confirmation:d.code_confirmation,etape:d.etape}))}}catch(e){}
   if(!hist.length){document.getElementById('adminCmd').innerHTML='Aucune commande.';return;}
-  let livreurs=JSON.parse(localStorage.getItem('livreurs')||'[]');
-  document.getElementById('adminCmd').innerHTML='<h3>📦 Commandes</h3>'+hist.slice().reverse().map((c,i)=>`
-  <div class="admin-card"><b>#${i+1} - ${c.nom_client} - ${c.tel}</b><br>${c.items}<br>Total: ${c.total} F - Zone: ${c.zone||''} - Heure: ${c.heure_souhaitee||''}<br>Statut: <b>${c.statut||'Reçue'}</b> - Code réception: <b>${c.code_confirmation||'-'}</b><br>
-  <label>Assigner un livreur :</label><select id="assign_${i}">${livreurs.map(l=>`<option value="${l.code_livreur}|${l.prenom} ${l.nom}">${l.prenom} ${l.nom} - ${l.code_livreur}</option>`).join('')||'<option value="">Aucun livreur inscrit</option>'}</select>
-  <button class="btn btn-gold" onclick="assignerLivreur(${i},document.getElementById('assign_${i}').value)">🛵 Assigner</button><br><br>
-  <button class="btn btn-gold" onclick="changerStatut('${c.tel}','${c.nom_client}','${c.items}','Validée')">✅ Validée</button>
-  <button class="btn" onclick="changerStatut('${c.tel}','${c.nom_client}','${c.items}','Prête')">🍽️ Prête</button>
-  <button class="btn btn-outline" onclick="changerStatut('${c.tel}','${c.nom_client}','${c.items}','En livraison')">🛵 En livraison</button>
-  <button class="btn" style="background:#22c55e" onclick="changerStatut('${c.tel}','${c.nom_client}','${c.items}','Livrée')">✔️ Livrée</button>
-  </div>`).join('');
+  document.getElementById('adminCmd').innerHTML='<h3>📦 Toutes les commandes</h3>'+hist.slice().reverse().map((c,i)=>`<div class="admin-card"><b>#${i+1} - ${c.nom_client} - ${c.tel}</b><br>${c.items}<br>Total: ${c.total} F - Zone: ${c.zone||''} - Heure: ${c.heure_souhaitee||''}<br>Statut: <b>${c.statut}</b> - Étape: ${c.etape} - Livreur: ${c.nom_livreur||'Non assigné'} (${c.code_livreur||'-'}) - Code: ${c.code_confirmation||'-'}<br><button class="btn btn-gold" onclick="adminValider(${i})">✅ Passer en PRÊTE (envoyer au livreur)</button></div>`).join('');
 }
-function assignerLivreur(index, val){
-  if(!val) return alert('Aucun livreur inscrit');
-  let [code, nomLiv]=val.split('|');
-  let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]');
-  let realIdx=hist.length-1-index; hist[realIdx].code_livreur=code; hist[realIdx].nom_livreur=nomLiv; hist[realIdx].etape='Pris par le livreur'; hist[realIdx].statut='En livraison';
-  localStorage.setItem('historique_commandes',JSON.stringify(hist));
+function adminValider(idxReverse){
+  let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]'); let realIdx=hist.length-1-idxReverse; hist[realIdx].statut='Prête'; hist[realIdx].etape='Colis préparé'; localStorage.setItem('historique_commandes',JSON.stringify(hist));
   let c=hist[realIdx]; let telClean=c.tel.replace(/\s/g,''); if(!telClean.startsWith('226')) telClean='226'+telClean;
-  window.open(`https://wa.me/${telClean}?text=${encodeURIComponent(`Ton colis a été pris par ${nomLiv} (${code}) 🛵\nCommande: ${c.items}\nCode réception : ${c.code_confirmation}`)}`,'_blank');
-  alert('Livreur '+nomLiv+' assigné ✅'); chargerCommandesAdmin();
+  window.open(`https://wa.me/${telClean}?text=${encodeURIComponent('Ta commande est PRÊTE 🍽️\n'+c.items+'\nUn livreur va la récupérer.')}`,'_blank');
+  alert('Commande passée en PRÊTE ✅ Elle apparaît maintenant chez les livreurs.'); chargerCommandesAdmin();
 }
-function changerStatut(tel,nom,items,statut){
-  let msgs={'Validée':`Bonjour ${nom} 👋 Commande VALIDÉE ✅\n${items}`, 'Prête':`Bonne nouvelle ${nom} 🎉 Commande PRÊTE !`, 'En livraison':`Ton livreur est EN ROUTE 🛵 ${nom} !`, 'Livrée':`Merci ${nom} ❤️ Colis LIVRÉ !`};
-  let telClean=tel.replace(/\s/g,''); if(!telClean.startsWith('226')) telClean='226'+telClean;
-  window.open(`https://wa.me/${telClean}?text=${encodeURIComponent(msgs[statut])}`,'_blank');
-}
-function chargerLivreursAdmin(){
-  let list=JSON.parse(localStorage.getItem('livreurs')||'[]');
-  let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]');
-  document.getElementById('adminLiv').innerHTML='<h3>🛵 Livreurs inscrits</h3>'+(list.length?list.map(l=>{
-    let nb=hist.filter(h=>h.code_livreur===l.code_livreur).length;
-    return `<div class="admin-card"><b>${l.prenom} ${l.nom}</b> - Code: <b style="color:#FF6B00">${l.code_livreur}</b><br>📞 ${l.tel} - 📧 ${l.email}<br>📦 Livraisons: ${nb}</div>`
-  }).join(''):'<p>Aucun livreur inscrit.</p>');
-}
-function afficherHistorique(){
-  let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]');
-  let caJour=hist.filter(h=>h.date===new Date().toISOString().slice(0,10)).reduce((s,h)=>s+(h.total||0),0);
-  document.getElementById('adminHist').innerHTML=`<h3>📊 Stats</h3><p>💰 CA du jour : <b>${caJour.toLocaleString()} F</b> | Total : <b>${hist.length}</b></p><p style="font-size:12px">Dans Supabase > Table commandes, tu vois les commandes d'il y a 1 mois.</p><h3>📜 Historique (20 dernières)</h3>`+hist.slice(-20).reverse().map(h=>`<div class="admin-card">${h.date||''} - ${h.nom_client} - ${h.items} - ${h.total} F - ${h.statut||''} - Livreur: ${h.nom_livreur||'-'}</div>`).join('');
-}
+function chargerLivreursAdmin(){let list=JSON.parse(localStorage.getItem('livreurs')||'[]');let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]');document.getElementById('adminLiv').innerHTML='<h3>🛵 Tous les livreurs</h3>'+(list.length?list.map(l=>{let nb=hist.filter(h=>h.code_livreur===l.code_livreur).length;return `<div class="admin-card"><b>${l.prenom} ${l.nom}</b> - Code: <b>${l.code_livreur}</b><br>📞 ${l.tel} - 📧 ${l.email}<br>📦 Livraisons: ${nb}</div>`}).join(''):'<p>Aucun livreur inscrit.</p>');}
+function afficherHistorique(){let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]');let caJour=hist.filter(h=>h.date===new Date().toISOString().slice(0,10)).reduce((s,h)=>s+(h.total||0),0);document.getElementById('adminHist').innerHTML=`<h3>📊 Stats</h3><p>💰 CA du jour : <b>${caJour.toLocaleString()} F</b> | Total : <b>${hist.length}</b></p><h3>📜 Historique</h3>`+hist.slice(-20).reverse().map(h=>`<div class="admin-card">${h.date||''} - ${h.nom_client} - ${h.items} - ${h.total} F - ${h.statut} - Livreur: ${h.nom_livreur||'-'}</div>`).join('');}
 let savedPlats=JSON.parse(localStorage.getItem('plats_regal')||'null'); if(savedPlats) MENU=savedPlats;
+let deja=JSON.parse(localStorage.getItem('utilisateur_regal')||'null'); if(deja){entrerDansEspace(deja);} else {document.getElementById('vueClient').style.display='none';}
 afficherDerniere(); render(); renderAdmin(); showAdminTab('plats');
 </script></body></html>
