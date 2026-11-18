@@ -36,19 +36,15 @@ footer{background:#0A2342;color:#fff;text-align:center;padding:20px}
 .pwd-strength{font-size:12px;margin-top:-4px}
 </style></head>
 <body>
-
-<!-- ===== PORTE D'ENTRÉE - CHOIX DU RÔLE ===== -->
 <div id="gate"><div class="box">
 <img src="logo.png.jpg" style="width:90px;height:90px;border-radius:50%;display:block;margin:auto;border:3px solid #FFC107;object-fit:cover">
 <h2 style="text-align:center;color:#0A2342">Bienvenue au Régal Express 👑</h2>
 <p style="text-align:center;font-size:14px;color:#555">Qui es-tu ? Choisis ton espace.</p>
-
 <div id="choixRole">
 <div class="role-btn" id="roleClient" onclick="choisirRole('client')">🍽️ <b>Je suis CLIENT</b><br><small>Commander, suivre mon plat</small></div>
 <div class="role-btn" id="roleLivreur" onclick="choisirRole('livreur')">🛵 <b>Je suis LIVREUR</b><br><small>Livrer les commandes prêtes</small></div>
 <div class="role-btn" id="roleAdmin" onclick="choisirRole('admin')">👩‍🍳 <b>Je suis GÉRANTE / ADMIN</b><br><small>Gérer tout le restaurant</small></div>
 </div>
-
 <div id="formInscription" style="display:none">
 <h3 id="titreForm">Inscription Client</h3>
 <input id="u_nom" placeholder="Nom *"><input id="u_prenom" placeholder="Prénom *">
@@ -60,12 +56,11 @@ footer{background:#0A2342;color:#fff;text-align:center;padding:20px}
 <p id="pwdMsg" class="pwd-strength"></p>
 <input id="u_pass2" type="password" placeholder="Confirme ton mot de passe *">
 <input id="u_code_verif" placeholder="Code de vérification SMS (pour test, mets 1234)">
-<p style="font-size:12px;color:#888">🔒 Mot de passe sécurisé. Téléphone vérifié par code. Tes données sont dans Supabase.</p>
+<p style="font-size:12px;color:#888">🔒 Mot de passe sécurisé. Téléphone vérifié par code.</p>
 <button class="btn" onclick="inscrire()" style="width:100%;padding:15px">✅ Créer mon compte & Entrer</button>
 <button class="btn btn-outline" onclick="afficherConnexion()" style="width:100%;margin-top:8px">Déjà inscrit ? Se connecter</button>
 <button class="btn btn-outline" onclick="retourRole()" style="width:100%;margin-top:8px">← Changer de rôle</button>
 </div>
-
 <div id="formConnexion" style="display:none">
 <h3>Connexion</h3>
 <input id="c_tel" placeholder="Téléphone"><input id="c_pass" type="password" placeholder="Mot de passe">
@@ -73,12 +68,8 @@ footer{background:#0A2342;color:#fff;text-align:center;padding:20px}
 <button class="btn btn-outline" onclick="retourInscription()" style="width:100%;margin-top:8px">← Retour inscription</button>
 </div>
 </div></div>
-
-<!-- ===== HEADER ===== -->
 <header><div style="display:flex;gap:10px;align-items:center"><img src="logo.png.jpg"><div><b>LE RÉGAL EXPRESS</b><br><small style="color:#FFC107" id="headerRole">ESPACE CLIENT • LA DAÏSHI DU CHOUKOUYA</small></div></div>
 <div><span id="userBadge" style="background:#FFC107;color:#111;padding:6px 10px;border-radius:999px;font-weight:800;font-size:13px"></span> <button class="btn btn-outline" onclick="deconnexion()">Déconnexion</button></div></header>
-
-<!-- ===== ESPACE CLIENT - VISIBLE QUE PAR CLIENT ===== -->
 <div id="vueClient">
 <div class="banner-jour" id="platJour">🍽️ Chargement...</div>
 <div class="hero">
@@ -91,9 +82,53 @@ footer{background:#0A2342;color:#fff;text-align:center;padding:20px}
 <div class="cart">
 <h2>🛒 Votre Commande</h2><div id="cartList">Panier vide</div>
 <h3>Total plats : <span id="totalPlats">0</span> FCFA</h3>
-<h3>🚚 Zone de livraison</h3>
-<select id="zone" onchange="render()"><option value="Somgandé|500">Somgandé - 500 FCFA</option><option value="Karpala|1000">Karpala - 1 000 FCFA</option><option value="Centre-ville|1500">Centre-ville - 1 500 FCFA</option><option value="Autre quartier|1500">Autre quartier - 1 500 FCFA</option><option value="Sur place|0">Sur place / À emporter - 0 FCFA</option></select>
-<p>🚚 Livraison : <b><span id="fraisLiv">500</span> FCFA</b> | <b>Total à payer : <span id="total">0</span> FCFA</b></p>
+<h3>🚚 Zone de livraison - Grille officielle</h3>
+<select id="zone" onchange="render()">
+<option value="Somgandé|1000">Somgandé - 1 000 FCFA</option>
+<option value="Tanghin|1500">Tanghin - 1 000F à 1 500F</option>
+<option value="Toubwéogo|1500">Toubwéogo - 1 000F à 1 500F</option>
+<option value="Zone du bois|1000">Zone du bois - 1 000 FCFA</option>
+<option value="Zone 1|1500">Zone 1 - 1 500 FCFA</option>
+<option value="Wayalghin|1000">Wayalghin - 1 000 FCFA</option>
+<option value="Kossodo|1500">Kossodo - 1 000F à 1 500F</option>
+<option value="Samkari Yaaré|1000">Samkari Yaaré - 1 000 FCFA</option>
+<option value="Noncin|1500">Noncin - 1 500 FCFA</option>
+<option value="Dassasgho|1000">Dassasgho - 1 000 FCFA</option>
+<option value="Wemtenga|1500">Wemtenga - 1 500 FCFA</option>
+<option value="Bendogo|1500">Bendogo - 1 500 FCFA</option>
+<option value="Saaba|2000">Saaba - 2 000 FCFA</option>
+<option value="Nioko 2|2000">Nioko 2 - 1 500F à 2 000F</option>
+<option value="Nioko 1|2000">Nioko 1 - 2 000 FCFA</option>
+<option value="Goudrin|1500">Goudrin - 1 000F à 1 500F</option>
+<option value="Karpala|2000">Karpala - 1 500F à 2 000F</option>
+<option value="Goughin|1500">Goughin - 1 500 FCFA</option>
+<option value="Koulba|1500">Koulba - 1 000F à 1 500F</option>
+<option value="Larlé|1500">Larlé - 1 500 FCFA</option>
+<option value="Boulmigou|2000">Boulmigou - 2 000 FCFA</option>
+<option value="Sondogo|2500">Sondogo - 2 000F à 2 500F</option>
+<option value="Boassa|2500">Boassa - 2 500 FCFA</option>
+<option value="Baonamé|2000">Baonamé - 2 000 FCFA</option>
+<option value="Wapassi|2500">Wapassi - 2 000F à 2 500F</option>
+<option value="Zaktouili|2500">Zaktouili - 2 500 FCFA</option>
+<option value="Bonheur Ville|2500">Bonheur Ville - 2 000F à 2 500F</option>
+<option value="Cissin|1500">Cissin - 1 500 FCFA</option>
+<option value="Ouaga 2000|2000">Ouaga 2000 - 2 000 FCFA</option>
+<option value="Nadrin|2000">Nadrin - 2 000 FCFA</option>
+<option value="Tengandogo|2500">Tengandogo - 2 000F à 2 500F</option>
+<option value="Balkuy|2500">Balkuy - 2 000F à 2 500F</option>
+<option value="Patte d'Oie|1500">Patte d'Oie - 1 500 FCFA</option>
+<option value="Samandin|1500">Samandin - 1 500 FCFA</option>
+<option value="Yamtenga|2000">Yamtenga - 1 500F à 2 000F</option>
+<option value="Bassinko|2500">Bassinko - 2 000F à 2 500F</option>
+<option value="Kamboinsin|2000">Kamboinsin - 1 500F à 2 000F</option>
+<option value="Kilwin|2000">Kilwin - 1 500F à 2 000F</option>
+<option value="Zogona|1500">Zogona - 1 000F à 1 500F</option>
+<option value="1200 Logement|1500">1200 Logement - 1 500 FCFA</option>
+<option value="Extension Sud|2500">Extension Sud - 2 000F à 2 500F</option>
+<option value="Kouba|3000">Kouba - 2 500F à 3 000F</option>
+<option value="Sur place|0">Sur place / À emporter - 0 FCFA</option>
+</select>
+<p>🚚 Livraison : <b><span id="fraisLiv">1000</span> FCFA</b> | <b>Total à payer : <span id="total">0</span> FCFA</b></p>
 <h3>⏰ Quand tu veux manger ?</h3>
 <select id="heureProg"><option value="Le plus vite possible">Le plus vite possible (30-45 min)</option><option value="12h00">Aujourd'hui à 12h00</option><option value="13h00">Aujourd'hui à 13h00</option><option value="18h00">Aujourd'hui à 18h00</option><option value="19h00">Aujourd'hui à 19h00</option><option value="20h00">Aujourd'hui à 20h00</option></select>
 <input id="nom" placeholder="Votre nom *"><input id="tel" placeholder="Votre téléphone WhatsApp *">
@@ -124,31 +159,25 @@ footer{background:#0A2342;color:#fff;text-align:center;padding:20px}
 <div class="avis"><h2>⭐ Avis Clients - 4.9/5</h2><div class="avis-card"><div class="stars">⭐⭐⭐⭐⭐</div><b>Awa - Somgandé</b><p>"Le meilleur Choukouya de Somgandé !"</p></div><div class="avis-card"><div class="stars">⭐⭐⭐⭐⭐</div><b>Ibrahim - Karpala</b><p>"Poulet Mayo + Alloco, grosse portion."</p></div></div>
 <div class="map"><h2>📍 Nous Trouver - Somgandé</h2><p>Somgandé, Secteur 19 - Près du Groupe Scolaire Ihsan (GSI)</p><iframe src="https://www.google.com/maps?q=Somgandé,+Ouagadougou&output=embed" width="100%" height="280" style="border:0;border-radius:14px" loading="lazy"></iframe></div>
 </div>
-
-<!-- ===== ESPACE LIVREUR - VISIBLE QUE PAR LIVREUR ===== -->
 <div id="vueLivreur" style="display:none">
 <div class="cart">
 <h2>🛵 Espace Livreur - Bonjour <span id="livNomAffiche"></span></h2>
-<p>Ton Code Livreur : <b id="livCodeAffiche" style="color:#FF6B00;font-size:20px"></b> • C'est avec ce code que la gérante te reconnaît.</p>
+<p>Ton Code Livreur : <b id="livCodeAffiche" style="color:#FF6B00;font-size:20px"></b></p>
 <div class="code-box" id="livStatutBox">🟢 EN LIGNE - En attente de commandes prêtes</div>
 <h3>📦 Commandes PRÊTES à livrer - Uniquement celles-là</h3>
-<p style="font-size:13px;color:#666">Tu ne vois QUE les commandes prêtes. Tu ne vois pas les autres clients, ni les prix secrets, ni les modifications de la gérante.</p>
+<p style="font-size:13px;color:#666">Tu ne vois QUE les commandes prêtes. Tu ne vois pas les autres clients, ni les modifications de la gérante.</p>
 <div id="livMissions"></div>
 <button class="btn" onclick="chargerMissionsLivreur()">🔄 Actualiser les commandes prêtes</button>
 </div>
 </div>
-
-<!-- ===== ESPACE ADMIN - VISIBLE QUE PAR GÉRANTE ===== -->
 <div id="vueAdmin" style="display:none">
 <div class="cart"><h2>👩‍🍳 Espace Gérante - Tu vois TOUT</h2>
 <div class="tabs"><button id="aTabPlats" class="active" onclick="showAdminTab('plats')">🍽️ Menus Jour / Soir</button><button id="aTabCmd" onclick="showAdminTab('cmd')">📦 Commandes</button><button id="aTabLiv" onclick="showAdminTab('liv')">🛵 Livreurs & Suivi</button><button id="aTabHist" onclick="showAdminTab('hist')">📊 Historique</button></div>
 <div id="adminPlats"></div><div id="adminCmd" style="display:none"></div><div id="adminLiv" style="display:none"></div><div id="adminHist" style="display:none"></div>
 </div>
 </div>
-
 <footer>© 2026 Le Régal Express - Somgandé • TikTok @regal_35express • Paiement : *144*10*55441010# • WhatsApp : 65 47 19 96</footer>
 <a class="whatsapp-float" href="https://wa.me/22665471996?text=Bonjour%20Le%20R%C3%A9gal%20Express%2C%20je%20veux%20commander" target="_blank">💬</a>
-
 <script>
 const SUPABASE_URL="https://ezbbgwzzmexfmcsjtoyh.supabase.co";
 const SUPABASE_KEY="sb_publishable_AC7ulunN2GPCYHXP6L6HFQ_bFFjxN26";
@@ -167,29 +196,25 @@ function afficherConnexion(){document.getElementById('formInscription').style.di
 function retourInscription(){document.getElementById('formConnexion').style.display='none'; document.getElementById('formInscription').style.display='block';}
 function checkPwd(){let p=document.getElementById('u_pass').value; let msg=document.getElementById('pwdMsg'); if(p.length<8) msg.innerText='❌ Trop court - min 8 caractères'; else if(!/[A-Z]/.test(p)) msg.innerText='❌ Il faut 1 MAJUSCULE'; else if(!/[0-9]/.test(p)) msg.innerText='❌ Il faut 1 CHIFFRE'; else msg.innerText='✅ Mot de passe coriace, parfait !'; msg.style.color=msg.innerText.startsWith('✅')?'green':'red';}
 function estPwdFort(p){return p.length>=8 && /[A-Z]/.test(p) && /[0-9]/.test(p) && /[a-z]/.test(p);}
-
 async function inscrire(){
   let nom=document.getElementById('u_nom').value.trim(), prenom=document.getElementById('u_prenom').value.trim(), tel=document.getElementById('u_tel').value.trim(), email=document.getElementById('u_email').value.trim(), pass=document.getElementById('u_pass').value, pass2=document.getElementById('u_pass2').value, codeVerif=document.getElementById('u_code_verif').value.trim(), quartier=document.getElementById('u_quartier').value.trim(), adresse=document.getElementById('u_adresse').value.trim();
   if(!nom||!prenom||!tel||!email||!pass) return alert('Remplis Nom, Prénom, Téléphone, Email, Mot de passe');
   if(!estPwdFort(pass)) return alert('Mot de passe pas assez fort ! Min 8 caractères, 1 MAJUSCULE, 1 minuscule, 1 chiffre. Ex: Regal2026');
   if(pass!==pass2) return alert('Les 2 mots de passe ne correspondent pas');
-  if(!email.includes('@')||!email.includes('.')) return alert('Email invalide');
+  if(!email.includes('@')) return alert('Email invalide');
   if(tel.replace(/\D/g,'').length<8) return alert('Téléphone invalide');
-  if(codeVerif!=='1234') return alert('Code de vérification incorrect. Pour le test, mets 1234. En vrai, ce sera un code SMS.');
-  // Si Admin, seul la gérante peut s'inscrire en admin
-  if(roleChoisi==='admin' && !(email==='admin@regalexpress.bf' && pass==='Admin2026!')) return alert('Accès Gérante uniquement. Email + mot de passe gérante requis.');
+  if(codeVerif!=='1234') return alert('Code de vérification incorrect. Pour le test, mets 1234.');
+  if(roleChoisi==='admin' && !(email==='admin@regalexpress.bf' && pass==='Admin2026!')) return alert('Accès Gérante uniquement.');
   let codeLivreur = roleChoisi==='livreur' ? 'LIV-'+Math.floor(1000+Math.random()*9000) : null;
   let codeParrain = roleChoisi==='client' ? 'DAISHI-'+Math.floor(1000+Math.random()*9000) : null;
   let user={nom,prenom,tel,email,mot_de_passe:pass,role:roleChoisi,code_livreur:codeLivreur,code_parrain:codeParrain,quartier,adresse,statut_verif:'Vérifié'};
   try{if(supabaseClient){let r=await supabaseClient.from('utilisateurs').insert([user]); if(r.error) console.log('Supabase:',r.error.message);}}catch(e){}
   localStorage.setItem('utilisateur_regal',JSON.stringify(user));
-  // Sauvegarde aussi dans anciennes tables pour compatibilité
   if(roleChoisi==='livreur'){let l=JSON.parse(localStorage.getItem('livreurs')||'[]'); l.push({nom,prenom,tel,email,code_livreur:codeLivreur}); localStorage.setItem('livreurs',JSON.stringify(l));}
   entrerDansEspace(user);
 }
 async function seConnecter(){
   let tel=document.getElementById('c_tel').value.trim(), pass=document.getElementById('c_pass').value;
-  // Admin test
   if(tel==='admin@regalexpress.bf' || tel==='65471996'){ if(pass==='Admin2026!'||pass==='admin123'){ entrerDansEspace({nom:'Gérante',prenom:'Daïshi',tel:tel,email:'admin@regalexpress.bf',role:'admin'}); return; } }
   let saved=JSON.parse(localStorage.getItem('utilisateur_regal')||'null');
   if(saved && saved.tel===tel && saved.mot_de_passe===pass){ entrerDansEspace(saved); return; }
@@ -210,13 +235,12 @@ function entrerDansEspace(user){
   alert('Bienvenue '+user.prenom+' ! Tu es sur ton espace '+user.role.toUpperCase()+' ✅'+(user.code_livreur?'\nTon code livreur : '+user.code_livreur:''));
 }
 function deconnexion(){localStorage.removeItem('utilisateur_regal'); location.reload();}
-
 function setPeriode(p){periode=p; document.getElementById('tabJour').className=p==='jour'?'active':''; document.getElementById('tabSoir').className=p==='soir'?'active':''; render();}
 let hNow=new Date().getHours(); if(hNow>=18) periode='soir';
 const PLATS_JOUR=["Poulet Choukouya + Attiéké - 8 500F","Poulet Mayo + Attiéké - 9 000F","Pastel - 2 500F","Poulet Choukouya + Attiéké + Alloco - 10 500F","Poulet Mayo + Attiéké + Alloco - 11 000F","Poulet Choukouya + Attiéké - 8 500F","Pastel - 2 500F"];
 let jour=new Date().getDay();
 document.getElementById('platJour').innerHTML="🔥 PLAT DU JOUR - "+["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"][jour]+" : <span style='background:#fff;color:#111;padding:4px 10px;border-radius:999px'>"+PLATS_JOUR[jour]+"</span>";
-function getFrais(){return parseInt(document.getElementById('zone').value.split('|')[1]||500)}
+function getFrais(){return parseInt(document.getElementById('zone').value.split('|')[1]||1000)}
 function platsVisibles(){return MENU.filter(m=>m.actif && (periode==='jour'?m.jour:m.soir))}
 function render(){let list=platsVisibles();document.getElementById('menu').innerHTML=list.map(m=>`<div class="card"><img src="${m.img}"><div class="card-body"><h3>${m.nom}</h3><p>${m.desc}</p><div class="price">${m.prix.toLocaleString()} FCFA</div><div class="qty"><button onclick="chg(${m.id},-1)">-</button><b>${panier[m.id]||0}</b><button onclick="chg(${m.id},1)">+</button><button class="btn" onclick="chg(${m.id},1)">Ajouter</button></div></div></div>`).join('');let html='',totalPlats=0;for(let id in panier){if(panier[id]>0){let m=MENU.find(x=>x.id==id);totalPlats+=m.prix*panier[id];html+=`${m.nom} x ${panier[id]} = ${(m.prix*panier[id]).toLocaleString()} FCFA<br>`}}document.getElementById('cartList').innerHTML=html||'Panier vide';let frais=getFrais();document.getElementById('fraisLiv').innerText=frais.toLocaleString();document.getElementById('totalPlats').innerText=totalPlats.toLocaleString();document.getElementById('total').innerText=(totalPlats+frais).toLocaleString();}
 function chg(id,d){panier[id]=Math.max(0,(panier[id]||0)+d);render()}
@@ -225,7 +249,6 @@ let monCode='DAISHI-'+Math.floor(1000+Math.random()*9000);
 function parrainer(){let ami=document.getElementById('parrainInvite').value.trim();if(!ami) return alert('Mets le numéro de ton ami');let msg=`Salut ! Je te parraine au Régal Express 👑 Utilise mon code ${utilisateurActuel?.code_parrain||monCode} et on gagne 500F chacun !`;window.open(`https://wa.me/226${ami.replace(/\s/g,'')}?text=${encodeURIComponent(msg)}`,'_blank');}
 function afficherDerniere(){let d=JSON.parse(localStorage.getItem('derniere_commande')||'null');if(d){document.getElementById('derniereCmd').innerText='Dernière commande : '+d.items+' - '+d.total+' FCFA';}}
 function recommander(){let d=JSON.parse(localStorage.getItem('derniere_commande')||'null');if(!d) return alert('Pas encore de commande.');panier={};d.ids.forEach(id=>panier[id]=1);render();alert('Même commande remise ✅');}
-
 async function commander(){
 let nom=document.getElementById('nom').value,tel=document.getElementById('tel').value,tx=document.getElementById('txid').value,adr=document.getElementById('adresse').value,type=document.getElementById('type').value;
 if(!nom||!tel||!tx)return alert('Remplissez nom, téléphone et ID transaction');
@@ -238,12 +261,12 @@ localStorage.setItem('derniere_commande',JSON.stringify(commande));
 let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]');hist.push(commande);localStorage.setItem('historique_commandes',JSON.stringify(hist));
 try{if(supabaseClient) await supabaseClient.from('commandes').insert([{nom_client:nom,tel:tel,items:items,total:commande.total,zone:zone,adresse:adr,transaction_id:tx,heure_souhaitee:heure,statut:'Reçue',code_confirmation:codeConfirm,etape:'Colis préparé'}]);}catch(e){}
 let msg=`🔥 NOUVELLE COMMANDE - LE REGAL EXPRESS\nNom: ${nom}\nTel: ${tel}\nZone: ${zone} - Livraison: ${frais} FCFA\nAdresse: ${adr}\nCommande: ${items}\nTotal: ${total} FCFA\nID: ${tx}\n⏰ Heure: ${heure}\n📸 Photo: ${photo}\n🎁 Parrain: ${codeP}\n🔐 Code réception: ${codeConfirm}`;
-window.open(`https://wa.me/22665471996?text=${encodeURIComponent(msg)}`,'_blank');statut=1;afficherSuiviClient();alert('Commande envoyée ✅\nTon code réception : '+codeConfirm+'\nGarde-le pour le livreur.');}
+window.open(`https://wa.me/22665471996?text=${encodeURIComponent(msg)}`,'_blank');statut=1;afficherSuiviClient();alert('Commande envoyée ✅\nTon code réception : '+codeConfirm);}
 function afficherSuiviClient(){
   let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]');
   let tel=utilisateurActuel?.tel||document.getElementById('tel').value;
   let cmd=hist.slice().reverse().find(h=>h.tel===tel) || JSON.parse(localStorage.getItem('derniere_commande')||'null');
-  if(!cmd){document.getElementById('resultatSuivi').innerHTML='<p>Pas encore de commande. Commande d\'abord.</p>';return;}
+  if(!cmd){document.getElementById('resultatSuivi').innerHTML='<p>Pas encore de commande.</p>';return;}
   let etapes=['Colis préparé','Pris par le livreur','En route vers le client','Arrivé chez le client','Livré - Confirmé'];
   let idx=etapes.indexOf(cmd.etape||'Colis préparé'); if(idx<0) idx=0;
   document.getElementById('resultatSuivi').innerHTML=`<div style="border-left:4px solid #FF6B00;padding-left:12px"><b>📦 ${cmd.items}</b><br>Zone: ${cmd.zone} - Total: ${cmd.total} F<br>Livreur: ${cmd.nom_livreur||'En attente'} (${cmd.code_livreur||'-'})<br>Code réception: <b>${cmd.code_confirmation}</b></div>${etapes.map((e,i)=>`<div style="padding:8px;border-left:4px solid ${i<=idx?'#22c55e':'#ddd'};margin-left:8px">${i<=idx?'✅':'⏳'} ${e} ${i===idx?'<b>← TU ES ICI</b>':''}</div>`).join('')}<button class="btn btn-outline" onclick="afficherSuiviClient()">🔄 Actualiser mon suivi</button>`;
@@ -257,12 +280,10 @@ function confirmerReceptionClient(){
   window.open(`https://wa.me/22665471996?text=${encodeURIComponent('✅ COLIS REÇU\nClient: '+hist[idx].nom_client+'\nCommande: '+hist[idx].items)}`,'_blank');
   afficherSuiviClient();
 }
-// ===== LIVREUR : VOIT QUE LES PRÊTES =====
 function chargerMissionsLivreur(){
   let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]');
-  // Le livreur ne voit QUE les commandes PRÊTES ou qui lui sont assignées, pas les autres
   let pretes=hist.filter(h=>h.statut==='Prête' || h.code_livreur===utilisateurActuel?.code_livreur);
-  if(!pretes.length){document.getElementById('livMissions').innerHTML='<p>Aucune commande prête pour le moment. Reste en ligne, la gérante va te notifier.</p>';return;}
+  if(!pretes.length){document.getElementById('livMissions').innerHTML='<p>Aucune commande prête pour le moment.</p>';return;}
   document.getElementById('livMissions').innerHTML=pretes.map((c,i)=>{
     let realIdx=hist.indexOf(c);
     return `<div class="admin-card"><b>Commande #${realIdx+1} - ${c.nom_client} - ${c.tel}</b><br>🍽️ ${c.items}<br>📍 ${c.adresse} - Zone: ${c.zone}<br>⏰ Heure: ${c.heure_souhaitee}<br>Étape: <b>${c.etape}</b><br>
@@ -284,11 +305,9 @@ function livreurRecupere(idx){
   notifierClientEtGerante(c, `Ton colis a été récupéré par ${c.nom_livreur} (${c.code_livreur}) 🛵\nCommande: ${c.items}\nIl arrive ! Ton code réception : ${c.code_confirmation}`, `🛵 LIVREUR A RÉCUPÉRÉ\nCommande #${idx+1} - ${c.nom_client}\nLivreur: ${c.nom_livreur} (${c.code_livreur})\nCommande: ${c.items}`);
   alert('Tu as récupéré la commande ✅ Client + Gérante notifiés.'); chargerMissionsLivreur();
 }
-function livreurEnRoute(idx){let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]'); let c=hist[idx]; c.etape='En route vers le client'; localStorage.setItem('historique_commandes',JSON.stringify(hist)); notifierClientEtGerante(c, `Ton livreur ${c.nom_livreur} est EN ROUTE vers toi 🛵\nReste prêt !`, `🛵 EN ROUTE\nCommande #${idx+1} - ${c.nom_client} - Livreur ${c.nom_livreur}`); alert('En route ✅'); chargerMissionsLivreur();}
-function livreurArrive(idx){let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]'); let c=hist[idx]; c.etape='Arrivé chez le client'; localStorage.setItem('historique_commandes',JSON.stringify(hist)); notifierClientEtGerante(c, `Ton livreur est ARRIVÉ 📍\nDonne-lui ton code ${c.code_confirmation} pour confirmer.`, `📍 LIVREUR ARRIVÉ\nCommande #${idx+1} - ${c.nom_client}`); alert('Arrivé ✅'); chargerMissionsLivreur();}
-function livreurLivre(idx){let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]'); let c=hist[idx]; let code=prompt('Demande le code à 4 chiffres au client pour confirmer :'); if(code!==c.code_confirmation) return alert('Mauvais code. Demande le vrai code au client.'); c.etape='Livré - Confirmé'; c.statut='Livrée'; localStorage.setItem('historique_commandes',JSON.stringify(hist)); notifierClientEtGerante(c, `Merci ${c.nom_client} ❤️ Ton plat a été LIVRÉ ! Bon appétit !`, `✅ COMMANDE LIVRÉE\nCommande #${idx+1} - ${c.nom_client}\nLivrée par ${c.nom_livreur} (${c.code_livreur})`); alert('Livrée ✅ Gérante + Client notifiés.'); chargerMissionsLivreur();}
-
-// ===== ADMIN : VOIT TOUT =====
+function livreurEnRoute(idx){let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]'); let c=hist[idx]; c.etape='En route vers le client'; localStorage.setItem('historique_commandes',JSON.stringify(hist)); notifierClientEtGerante(c, `Ton livreur ${c.nom_livreur} est EN ROUTE vers toi 🛵`, `🛵 EN ROUTE\nCommande #${idx+1} - ${c.nom_client} - Livreur ${c.nom_livreur}`); alert('En route ✅'); chargerMissionsLivreur();}
+function livreurArrive(idx){let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]'); let c=hist[idx]; c.etape='Arrivé chez le client'; localStorage.setItem('historique_commandes',JSON.stringify(hist)); notifierClientEtGerante(c, `Ton livreur est ARRIVÉ 📍\nDonne-lui ton code ${c.code_confirmation}`, `📍 LIVREUR ARRIVÉ\nCommande #${idx+1} - ${c.nom_client}`); alert('Arrivé ✅'); chargerMissionsLivreur();}
+function livreurLivre(idx){let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]'); let c=hist[idx]; let code=prompt('Demande le code à 4 chiffres au client :'); if(code!==c.code_confirmation) return alert('Mauvais code.'); c.etape='Livré - Confirmé'; c.statut='Livrée'; localStorage.setItem('historique_commandes',JSON.stringify(hist)); notifierClientEtGerante(c, `Merci ${c.nom_client} ❤️ Ton plat a été LIVRÉ !`, `✅ COMMANDE LIVRÉE\nCommande #${idx+1} - ${c.nom_client}\nLivrée par ${c.nom_livreur} (${c.code_livreur})`); alert('Livrée ✅ Gérante + Client notifiés.'); chargerMissionsLivreur();}
 function showAdminTab(tab){document.getElementById('aTabPlats').className=tab==='plats'?'active':'';document.getElementById('aTabCmd').className=tab==='cmd'?'active':'';document.getElementById('aTabLiv').className=tab==='liv'?'active':'';document.getElementById('aTabHist').className=tab==='hist'?'active':'';document.getElementById('adminPlats').style.display=tab==='plats'?'block':'none';document.getElementById('adminCmd').style.display=tab==='cmd'?'block':'none';document.getElementById('adminLiv').style.display=tab==='liv'?'block':'none';document.getElementById('adminHist').style.display=tab==='hist'?'block':'none'; if(tab==='cmd') chargerCommandesAdmin(); if(tab==='liv') chargerLivreursAdmin(); if(tab==='hist') afficherHistorique();}
 function renderAdmin(){document.getElementById('adminPlats').innerHTML='<h3>🍽️ Plats - Jour / Soir</h3>'+MENU.map(m=>`<div class="admin-card"><b>${m.nom}</b> - <input value="${m.prix}" type="number" style="width:100px;display:inline-block" onchange="changerPrix(${m.id},this.value)"> FCFA<br><label><input type="checkbox" ${m.jour?'checked':''} onchange="togglePlat(${m.id},'jour',this.checked)" style="width:auto"> ☀️ Jour</label> <label><input type="checkbox" ${m.soir?'checked':''} onchange="togglePlat(${m.id},'soir',this.checked)" style="width:auto"> 🌙 Soir</label> <label><input type="checkbox" ${m.actif?'checked':''} onchange="togglePlat(${m.id},'actif',this.checked)" style="width:auto"> ✅ En vente</label></div>`).join('')+`<h3>➕ Ajouter un plat</h3><input id="newNom" placeholder="Nom"><input id="newPrix" placeholder="Prix" type="number"><input id="newImg" placeholder="Image"><button class="btn" onclick="ajouterPlat()">Ajouter</button>`;}
 function changerPrix(id,val){let m=MENU.find(x=>x.id==id);m.prix=parseInt(val);render();localStorage.setItem('plats_regal',JSON.stringify(MENU));}
