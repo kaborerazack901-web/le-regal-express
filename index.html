@@ -32,12 +32,11 @@ footer{background:#0A2342;color:#fff;text-align:center;padding:20px}
 .role-btn{border:2px solid #ddd;border-radius:14px;padding:14px;cursor:pointer;text-align:center;margin:6px 0}
 .role-btn.sel{border-color:#FF6B00;background:#FFF8F0}
 .pwd-strength{font-size:12px;margin-top:-4px}
-/* ===== ANIMATION 3D - CARROUSEL PLATS ===== */
 .scene-3d{perspective:1000px;width:100%;max-width:420px;height:240px;margin:18px auto 6px;overflow:hidden}
 .carousel-3d{width:100%;height:100%;position:relative;transform-style:preserve-3d;animation:spin3d 12s linear infinite}
 .carousel-3d:hover{animation-play-state:paused}
 @keyframes spin3d{from{transform:rotateY(0deg)}to{transform:rotateY(360deg)}}
-.slide-3d{position:absolute;left:50%;top:50%;width:180px;height:180px;margin:-90px 0 0 -90px;border-radius:18px;overflow:hidden;border:3px solid #FFC107;box-shadow:0 12px 30px rgba(0,0,0,.5);backface-visibility:visible}
+.slide-3d{position:absolute;left:50%;top:50%;width:180px;height:180px;margin:-90px 0 0 -90px;border-radius:18px;overflow:hidden;border:3px solid #FFC107;box-shadow:0 12px 30px rgba(0,0,0,.5)}
 .slide-3d img{width:100%;height:100%;object-fit:cover}
 .slide-3d span{position:absolute;left:0;right:0;bottom:0;background:rgba(0,0,0,.75);color:#fff;font-size:12px;font-weight:800;padding:6px;text-align:center}
 .slide-3d:nth-child(1){transform:rotateY(0deg) translateZ(160px)}
@@ -45,6 +44,11 @@ footer{background:#0A2342;color:#fff;text-align:center;padding:20px}
 .slide-3d:nth-child(3){transform:rotateY(240deg) translateZ(160px)}
 .badge-3d{background:#FFC107;color:#111;display:inline-block;padding:6px 14px;border-radius:999px;font-weight:900;font-size:13px;margin-top:4px;animation:pulse3d 1.5s ease-in-out infinite}
 @keyframes pulse3d{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.pay-box{border:2px solid #FF6B00;border-radius:16px;padding:14px;background:#FFF8F0;margin:10px 0}
+.pay-opt{border:2px solid #ddd;border-radius:12px;padding:12px;margin:6px 0;cursor:pointer;background:#fff}
+.pay-opt.sel{border-color:#FF6B00;background:#FFF8F0}
+.pay-opt b{font-size:16px}
+.capture-preview img{width:100%;max-height:220px;object-fit:contain;border-radius:12px;border:2px solid #22c55e;margin-top:8px}
 </style></head>
 <body>
 <div id="gate"><div class="box">
@@ -80,12 +84,10 @@ footer{background:#0A2342;color:#fff;text-align:center;padding:20px}
 </div></div>
 <header><div style="display:flex;gap:10px;align-items:center"><img src="logo.png.jpg"><div><b>LE RÉGAL EXPRESS</b><br><small style="color:#FFC107" id="headerRole">ESPACE CLIENT • LA DAÏSHI DU CHOUKOUYA</small></div></div>
 <div><span id="userBadge" style="background:#FFC107;color:#111;padding:6px 10px;border-radius:999px;font-weight:800;font-size:13px"></span> <button class="btn btn-outline" onclick="deconnexion()">Déconnexion</button></div></header>
-
 <div id="vueClient">
 <div class="banner-jour" id="platJour">🍽️ Chargement...</div>
 <div class="hero">
 <img src="logo.png.jpg"><h1>LE RÉGAL <span>EXPRESS</span></h1><p>🏆 La Daïshi du Choukouya 🏅</p><p>Poulet Choukouya • Poulet Mayo • Pastel • Alloco</p>
-<!-- ===== ANIMATION 3D CLIENT ===== -->
 <div class="scene-3d"><div class="carousel-3d">
 <div class="slide-3d"><img src="plat1.jpg.png"><span>🔥 CHOUKOUYA + ATTIÉKÉ - 8 500F</span></div>
 <div class="slide-3d"><img src="plat3.jpg.png"><span>🍗 POULET MAYO - 9 000F</span></div>
@@ -153,10 +155,26 @@ footer{background:#0A2342;color:#fff;text-align:center;padding:20px}
 <select id="type"><option value="Livraison">Livraison à domicile</option><option value="Sur place / À emporter">Sur place / À emporter</option></select>
 <input id="adresse" placeholder="Quartier, rue, repère">
 <button class="btn btn-outline" onclick="geo()">📍 Utiliser ma position GPS</button>
-<input id="txid" placeholder="ID transaction Orange Money *">
-<div style="background:#FFF3CD;padding:12px;border-radius:12px;margin:10px 0"><b>💳 Paiement Orange Money :</b> Composez <b>*144*10*55441010#</b> et payez le total. Puis collez votre ID.</div>
+
+<!-- ===== PAIEMENT MOBILE MONEY BURKINA ===== -->
+<div class="pay-box">
+<h2>💳 Payer directement - Orange / Moov / Telecel</h2>
+<p style="font-size:13px">Choisis ton réseau, paie, puis envoie ta capture. C'est fini, plus d'ID à copier.</p>
+<div class="pay-opt" id="payOrange" onclick="choisirPay('Orange Money')"><b>🧡 Orange Money</b><br><small>Envoyer à : <b>55 44 10 10</b> - Code : <b>*144*10*55441010#</b></small></div>
+<div class="pay-opt" id="payMoov" onclick="choisirPay('Moov Money')"><b>💙 Moov Money</b><br><small>Envoyer à : <b id="moovNumAffiche">65 47 19 96</b> - Dis-moi si c'est un autre numéro</small></div>
+<div class="pay-opt" id="payTelecel" onclick="choisirPay('Telecel Money')"><b>❤️ Telecel Money</b><br><small>Envoyer à : <b id="telecelNumAffiche">-- -- -- --</b> - Mets ton numéro Telecel ici</small></div>
+<div class="pay-opt" id="payEspece" onclick="choisirPay('Espèces à la livraison')"><b>💵 Espèces à la livraison</b><br><small>Tu paies au livreur quand il arrive</small></div>
+<div id="payDetail" style="background:#fff;padding:12px;border-radius:12px;margin-top:8px;display:none"></div>
+<div style="margin-top:10px">
+<label style="font-weight:800">📸 1. Fais ta capture d'écran du paiement, puis envoie-la ici :</label>
+<input type="file" id="captureFile" accept="image/*" onchange="lireCapture(event)">
+<div id="capturePreview" class="capture-preview"></div>
+<p style="font-size:12px;color:#666">Ta capture sera jointe à ta commande et la gérante la verra dans son espace Admin.</p>
+</div>
 <label style="font-size:14px"><input type="checkbox" id="photoAvant" checked style="width:auto"> 📸 Oui, envoie-moi la photo avant livraison</label>
-<button class="btn" style="width:100%;padding:15px" onclick="commander()">Valider & Envoyer sur WhatsApp ✅</button>
+</div>
+<input id="txid" placeholder="ID transaction (optionnel - si tu l'as)">
+<button class="btn" style="width:100%;padding:15px" onclick="commander()">✅ Valider ma commande + Envoyer ma capture</button>
 <button class="btn btn-gold" style="width:100%;padding:13px;margin-top:10px" onclick="recommander()">🔁 Recommander mon dernier plat</button>
 <p id="derniereCmd" style="text-align:center;font-size:13px;color:#666"></p>
 </div>
@@ -189,7 +207,6 @@ footer{background:#0A2342;color:#fff;text-align:center;padding:20px}
 </div>
 <div id="vueAdmin" style="display:none">
 <div class="cart"><h2>👩‍🍳 Espace Gérante - Tu vois TOUT</h2>
-<!-- ===== ANIMATION 3D ADMIN ===== -->
 <div style="background:#0A2342;border-radius:16px;padding:10px 10px 16px;text-align:center">
 <p style="color:#FFC107;font-weight:900;margin:6px 0">✨ TES 3 PLATS STARS EN 3D ✨</p>
 <div class="scene-3d"><div class="carousel-3d">
@@ -205,6 +222,11 @@ footer{background:#0A2342;color:#fff;text-align:center;padding:20px}
 <footer>© 2026 Le Régal Express - Somgandé • TikTok @regal_35express • Paiement : *144*10*55441010# • WhatsApp : 65 47 19 96</footer>
 <a class="whatsapp-float" href="https://wa.me/22665471996?text=Bonjour%20Le%20R%C3%A9gal%20Express%2C%20je%20veux%20commander" target="_blank">💬</a>
 <script>
+// ===== CONFIG PAIEMENT - CHANGE ICI TES NUMEROS =====
+const NUMERO_ORANGE="55441010";
+const NUMERO_MOOV="65471996";
+const NUMERO_TELECEL=""; // <-- Mets ton numéro Telecel ici, ex: "77123456"
+const CINETPAY_API_KEY=""; // <-- Quand tu auras CinetPay, mets ta clé ici pour le paiement automatique
 const SUPABASE_URL="https://ezbbgwzzmexfmcsjtoyh.supabase.co";
 const SUPABASE_KEY="sb_publishable_AC7ulunN2GPCYHXP6L6HFQ_bFFjxN26";
 let supabaseClient=null; try{supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY)}catch(e){}
@@ -215,7 +237,9 @@ let MENU=[
 {id:4,nom:"Poulet Choukouya + Attiéké + Alloco",prix:10500,desc:"Menu complet",img:"plat6.jpg.png",jour:true,soir:true,actif:true},
 {id:5,nom:"Poulet Mayo + Attiéké + Alloco",prix:11000,desc:"Le favori",img:"plat7.jpg.png",jour:false,soir:true,actif:true},
 ];
-let periode='jour', panier={}, statut=0, utilisateurActuel=null, roleChoisi='client';
+let periode='jour', panier={}, statut=0, utilisateurActuel=null, roleChoisi='client', methodePay='Orange Money', captureBase64='';
+function choisirPay(methode){methodePay=methode; document.querySelectorAll('.pay-opt').forEach(e=>e.classList.remove('sel')); document.getElementById(methode==='Orange Money'?'payOrange':methode==='Moov Money'?'payMoov':methode==='Telecel Money'?'payTelecel':'payEspece').classList.add('sel'); let total=document.getElementById('total').innerText||'0'; let num=methode==='Orange Money'?NUMERO_ORANGE:methode==='Moov Money'?NUMERO_MOOV:NUMERO_TELECEL; let detail=document.getElementById('payDetail'); detail.style.display='block'; if(methode==='Espèces à la livraison'){detail.innerHTML=`💵 <b>Tu paies ${total} FCFA en espèces au livreur.</b><br>Pas besoin de capture.`} else {detail.innerHTML=`✅ Tu as choisi <b>${methode}</b><br>Montant à envoyer : <b>${total} FCFA</b> au <b>${num||'Numéro à compléter'}</b><br>1. Compose le code sur ton téléphone<br>2. Fais la capture d'écran<br>3. Envoie-la juste en dessous 👇`}}
+function lireCapture(e){let f=e.target.files[0]; if(!f) return; let r=new FileReader(); r.onload=function(ev){captureBase64=ev.target.result; document.getElementById('capturePreview').innerHTML=`<p style="color:#22c55e;font-weight:800">✅ Capture reçue ! Elle sera envoyée à la gérante.</p><img src="${captureBase64}">`}; r.readAsDataURL(f);}
 function choisirRole(role){roleChoisi=role; document.querySelectorAll('.role-btn').forEach(b=>b.classList.remove('sel')); document.getElementById(role==='client'?'roleClient':role==='livreur'?'roleLivreur':'roleAdmin').classList.add('sel'); document.getElementById('choixRole').style.display='none'; document.getElementById('formInscription').style.display='block'; document.getElementById('titreForm').innerText=role==='client'?'Inscription CLIENT 🍽️':role==='livreur'?'Inscription LIVREUR PRO 🛵':'Inscription GÉRANTE 👩‍🍳'; document.getElementById('champQuartier').style.display=role==='livreur'?'none':'block'; document.getElementById('champCodeLivreur').style.display=role==='livreur'?'block':'none';}
 function retourRole(){document.getElementById('choixRole').style.display='block'; document.getElementById('formInscription').style.display='none'; document.getElementById('formConnexion').style.display='none';}
 function afficherConnexion(){document.getElementById('formInscription').style.display='none'; document.getElementById('formConnexion').style.display='block';}
@@ -268,7 +292,7 @@ let jour=new Date().getDay();
 document.getElementById('platJour').innerHTML="🔥 PLAT DU JOUR - "+["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"][jour]+" : <span style='background:#fff;color:#111;padding:4px 10px;border-radius:999px'>"+PLATS_JOUR[jour]+"</span>";
 function getFrais(){return parseInt(document.getElementById('zone').value.split('|')[1]||1000)}
 function platsVisibles(){return MENU.filter(m=>m.actif && (periode==='jour'?m.jour:m.soir))}
-function render(){let list=platsVisibles();document.getElementById('menu').innerHTML=list.map(m=>`<div class="card"><img src="${m.img}"><div class="card-body"><h3>${m.nom}</h3><p>${m.desc}</p><div class="price">${m.prix.toLocaleString()} FCFA</div><div class="qty"><button onclick="chg(${m.id},-1)">-</button><b>${panier[m.id]||0}</b><button onclick="chg(${m.id},1)">+</button><button class="btn" onclick="chg(${m.id},1)">Ajouter</button></div></div></div>`).join('');let html='',totalPlats=0;for(let id in panier){if(panier[id]>0){let m=MENU.find(x=>x.id==id);totalPlats+=m.prix*panier[id];html+=`${m.nom} x ${panier[id]} = ${(m.prix*panier[id]).toLocaleString()} FCFA<br>`}}document.getElementById('cartList').innerHTML=html||'Panier vide';let frais=getFrais();document.getElementById('fraisLiv').innerText=frais.toLocaleString();document.getElementById('totalPlats').innerText=totalPlats.toLocaleString();document.getElementById('total').innerText=(totalPlats+frais).toLocaleString();}
+function render(){let list=platsVisibles();document.getElementById('menu').innerHTML=list.map(m=>`<div class="card"><img src="${m.img}"><div class="card-body"><h3>${m.nom}</h3><p>${m.desc}</p><div class="price">${m.prix.toLocaleString()} FCFA</div><div class="qty"><button onclick="chg(${m.id},-1)">-</button><b>${panier[m.id]||0}</b><button onclick="chg(${m.id},1)">+</button><button class="btn" onclick="chg(${m.id},1)">Ajouter</button></div></div></div>`).join('');let html='',totalPlats=0;for(let id in panier){if(panier[id]>0){let m=MENU.find(x=>x.id==id);totalPlats+=m.prix*panier[id];html+=`${m.nom} x ${panier[id]} = ${(m.prix*panier[id]).toLocaleString()} FCFA<br>`}}document.getElementById('cartList').innerHTML=html||'Panier vide';let frais=getFrais();document.getElementById('fraisLiv').innerText=frais.toLocaleString();document.getElementById('totalPlats').innerText=totalPlats.toLocaleString();document.getElementById('total').innerText=(totalPlats+frais).toLocaleString(); if(methodePay) choisirPay(methodePay);}
 function chg(id,d){panier[id]=Math.max(0,(panier[id]||0)+d);render()}
 function geo(){if(navigator.geolocation){navigator.geolocation.getCurrentPosition(p=>{document.getElementById('adresse').value=`GPS: ${p.coords.latitude}, ${p.coords.longitude}`;alert('Position ajoutée ✅')})}}
 let monCode='DAISHI-'+Math.floor(1000+Math.random()*9000);
@@ -277,17 +301,18 @@ function afficherDerniere(){let d=JSON.parse(localStorage.getItem('derniere_comm
 function recommander(){let d=JSON.parse(localStorage.getItem('derniere_commande')||'null');if(!d) return alert('Pas encore de commande.');panier={};d.ids.forEach(id=>panier[id]=1);render();alert('Même commande remise ✅');}
 async function commander(){
 let nom=document.getElementById('nom').value,tel=document.getElementById('tel').value,tx=document.getElementById('txid').value,adr=document.getElementById('adresse').value,type=document.getElementById('type').value;
-if(!nom||!tel||!tx)return alert('Remplissez nom, téléphone et ID transaction');
+if(!nom||!tel)return alert('Remplissez nom et téléphone');
 let items=Object.keys(panier).filter(k=>panier[k]>0).map(k=>{let m=MENU.find(x=>x.id==k);return `${m.nom} x ${panier[k]}`}).join(', ');
 if(!items) return alert('Choisis au moins 1 plat');
+if(methodePay!=='Espèces à la livraison' && !captureBase64 && !tx) return alert('Envoie ta capture d’écran du paiement pour valider. Ou choisis Espèces à la livraison.');
 let total=document.getElementById('total').innerText;let frais=document.getElementById('fraisLiv').innerText;let zone=document.getElementById('zone').value.split('|')[0];let heure=document.getElementById('heureProg').value;let photo=document.getElementById('photoAvant').checked?'OUI':'NON';let codeP=document.getElementById('codeParrainUtilise').value||'Aucun';
 let codeConfirm=Math.floor(1000+Math.random()*9000).toString();
-let commande={nom_client:nom,tel:tel,items:items,ids:Object.keys(panier).filter(k=>panier[k]>0),total:parseInt(total.replace(/\D/g,'')),zone:zone,adresse:adr,transaction_id:tx,heure_souhaitee:heure,statut:'Reçue',code_confirmation:codeConfirm,etape:'Colis préparé',date:new Date().toISOString().slice(0,10),created_at:new Date().toISOString()};
+let commande={nom_client:nom,tel:tel,items:items,ids:Object.keys(panier).filter(k=>panier[k]>0),total:parseInt(total.replace(/\D/g,'')),zone:zone,adresse:adr,transaction_id:tx||'Capture envoyée',heure_souhaitee:heure,statut:'Reçue',code_confirmation:codeConfirm,etape:'Colis préparé',date:new Date().toISOString().slice(0,10),created_at:new Date().toISOString(),methode_pay:methodePay,capture:captureBase64};
 localStorage.setItem('derniere_commande',JSON.stringify(commande));
 let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]');hist.push(commande);localStorage.setItem('historique_commandes',JSON.stringify(hist));
-try{if(supabaseClient) await supabaseClient.from('commandes').insert([{nom_client:nom,tel:tel,items:items,total:commande.total,zone:zone,adresse:adr,transaction_id:tx,heure_souhaitee:heure,statut:'Reçue',code_confirmation:codeConfirm,etape:'Colis préparé'}]);}catch(e){}
-let msg=`🔥 NOUVELLE COMMANDE - LE REGAL EXPRESS\nNom: ${nom}\nTel: ${tel}\nZone: ${zone} - Livraison: ${frais} FCFA\nAdresse: ${adr}\nCommande: ${items}\nTotal: ${total} FCFA\nID: ${tx}\n⏰ Heure: ${heure}\n📸 Photo: ${photo}\n🎁 Parrain: ${codeP}\n🔐 Code réception: ${codeConfirm}`;
-window.open(`https://wa.me/22665471996?text=${encodeURIComponent(msg)}`,'_blank');statut=1;afficherSuiviClient();alert('Commande envoyée ✅\nTon code réception : '+codeConfirm);}
+try{if(supabaseClient) await supabaseClient.from('commandes').insert([{nom_client:nom,tel:tel,items:items,total:commande.total,zone:zone,adresse:adr,transaction_id:commande.transaction_id,heure_souhaitee:heure,statut:'Reçue',code_confirmation:codeConfirm,etape:'Colis préparé'}]);}catch(e){}
+let msg=`🔥 NOUVELLE COMMANDE - LE REGAL EXPRESS\nNom: ${nom}\nTel: ${tel}\nZone: ${zone} - Livraison: ${frais} FCFA\nAdresse: ${adr}\nCommande: ${items}\nTotal: ${total} FCFA\n💳 Paiement: ${methodePay}\nID: ${commande.transaction_id}\n📸 Capture: ${captureBase64?'OUI - Voir dans Espace Gérante': 'NON - Espèces'}\n⏰ Heure: ${heure}\n📸 Photo: ${photo}\n🎁 Parrain: ${codeP}\n🔐 Code réception: ${codeConfirm}`;
+window.open(`https://wa.me/22665471996?text=${encodeURIComponent(msg)}`,'_blank');statut=1;afficherSuiviClient();alert('Commande envoyée ✅\nPaiement: '+methodePay+'\n'+(captureBase64?'Capture envoyée à la gérante ✅':'')+'\nTon code réception : '+codeConfirm);}
 function afficherSuiviClient(){
   let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]');
   let tel=utilisateurActuel?.tel||document.getElementById('tel').value;
@@ -295,7 +320,7 @@ function afficherSuiviClient(){
   if(!cmd){document.getElementById('resultatSuivi').innerHTML='<p>Pas encore de commande.</p>';return;}
   let etapes=['Colis préparé','Pris par le livreur','En route vers le client','Arrivé chez le client','Livré - Confirmé'];
   let idx=etapes.indexOf(cmd.etape||'Colis préparé'); if(idx<0) idx=0;
-  document.getElementById('resultatSuivi').innerHTML=`<div style="border-left:4px solid #FF6B00;padding-left:12px"><b>📦 ${cmd.items}</b><br>Zone: ${cmd.zone} - Total: ${cmd.total} F<br>Livreur: ${cmd.nom_livreur||'En attente'} (${cmd.code_livreur||'-'})<br>Code réception: <b>${cmd.code_confirmation}</b></div>${etapes.map((e,i)=>`<div style="padding:8px;border-left:4px solid ${i<=idx?'#22c55e':'#ddd'};margin-left:8px">${i<=idx?'✅':'⏳'} ${e} ${i===idx?'<b>← TU ES ICI</b>':''}</div>`).join('')}<button class="btn btn-outline" onclick="afficherSuiviClient()">🔄 Actualiser mon suivi</button>`;
+  document.getElementById('resultatSuivi').innerHTML=`<div style="border-left:4px solid #FF6B00;padding-left:12px"><b>📦 ${cmd.items}</b><br>Zone: ${cmd.zone} - Total: ${cmd.total} F - Paiement: ${cmd.methode_pay||'Orange Money'}<br>Livreur: ${cmd.nom_livreur||'En attente'} (${cmd.code_livreur||'-'})<br>Code réception: <b>${cmd.code_confirmation}</b></div>${etapes.map((e,i)=>`<div style="padding:8px;border-left:4px solid ${i<=idx?'#22c55e':'#ddd'};margin-left:8px">${i<=idx?'✅':'⏳'} ${e} ${i===idx?'<b>← TU ES ICI</b>':''}</div>`).join('')}<button class="btn btn-outline" onclick="afficherSuiviClient()">🔄 Actualiser mon suivi</button>`;
 }
 function confirmerReceptionClient(){
   let code=document.getElementById('codeConfirmClient').value.trim(); if(!code) return alert('Mets le code donné par le livreur');
@@ -343,17 +368,19 @@ async function chargerCommandesAdmin(){
   let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]');
   try{if(supabaseClient){let {data}=await supabaseClient.from('commandes').select('*').order('created_at',{ascending:false}).limit(50); if(data&&data.length) hist=data.map(d=>({nom_client:d.nom_client,tel:d.tel,items:d.items,total:d.total,zone:d.zone,statut:d.statut,heure_souhaitee:d.heure_souhaitee,code_confirmation:d.code_confirmation,etape:d.etape}))}}catch(e){}
   if(!hist.length){document.getElementById('adminCmd').innerHTML='Aucune commande.';return;}
-  document.getElementById('adminCmd').innerHTML='<h3>📦 Toutes les commandes</h3>'+hist.slice().reverse().map((c,i)=>`<div class="admin-card"><b>#${i+1} - ${c.nom_client} - ${c.tel}</b><br>${c.items}<br>Total: ${c.total} F - Zone: ${c.zone||''} - Heure: ${c.heure_souhaitee||''}<br>Statut: <b>${c.statut}</b> - Étape: ${c.etape} - Livreur: ${c.nom_livreur||'Non assigné'} (${c.code_livreur||'-'}) - Code: ${c.code_confirmation||'-'}<br><button class="btn btn-gold" onclick="adminValider(${i})">✅ Passer en PRÊTE (envoyer au livreur)</button></div>`).join('');
+  document.getElementById('adminCmd').innerHTML='<h3>📦 Toutes les commandes - Vérifie la capture avant de valider</h3>'+hist.slice().reverse().map((c,i)=>`<div class="admin-card"><b>#${i+1} - ${c.nom_client} - ${c.tel}</b><br>${c.items}<br>Total: ${c.total} F - Zone: ${c.zone||''} - Heure: ${c.heure_souhaitee||''}<br>💳 Paiement: <b>${c.methode_pay||'Orange Money'}</b> - ID: ${c.transaction_id||'-'}<br>Statut: <b>${c.statut}</b> - Étape: ${c.etape} - Livreur: ${c.nom_livreur||'Non assigné'} (${c.code_livreur||'-'}) - Code: ${c.code_confirmation||'-'}<br>${c.capture?`<p>📸 Capture du client :</p><img src="${c.capture}" style="width:100%;max-height:250px;object-fit:contain;border:2px solid #22c55e;border-radius:12px">`:'<p style="color:#888">📸 Pas de capture - Espèces ou à vérifier sur ton Mobile Money</p>'}<br><button class="btn btn-gold" onclick="adminValider(${i})">✅ Paiement vérifié - Passer en PRÊTE (envoyer au livreur)</button></div>`).join('');
 }
 function adminValider(idxReverse){
   let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]'); let realIdx=hist.length-1-idxReverse; hist[realIdx].statut='Prête'; hist[realIdx].etape='Colis préparé'; localStorage.setItem('historique_commandes',JSON.stringify(hist));
   let c=hist[realIdx]; let telClean=c.tel.replace(/\s/g,''); if(!telClean.startsWith('226')) telClean='226'+telClean;
-  window.open(`https://wa.me/${telClean}?text=${encodeURIComponent('Ta commande est PRÊTE 🍽️\n'+c.items+'\nUn livreur va la récupérer.')}`,'_blank');
-  alert('Commande passée en PRÊTE ✅ Elle apparaît maintenant chez les livreurs.'); chargerCommandesAdmin();
+  window.open(`https://wa.me/${telClean}?text=${encodeURIComponent('Ta commande est PRÊTE 🍽️\n'+c.items+'\nPaiement '+c.methode_pay+' reçu ✅\nUn livreur va la récupérer.')}`,'_blank');
+  alert('Paiement vérifié ✅ Commande passée en PRÊTE. Elle apparaît chez les livreurs.'); chargerCommandesAdmin();
 }
 function chargerLivreursAdmin(){let list=JSON.parse(localStorage.getItem('livreurs')||'[]');let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]');document.getElementById('adminLiv').innerHTML='<h3>🛵 Tous les livreurs</h3>'+(list.length?list.map(l=>{let nb=hist.filter(h=>h.code_livreur===l.code_livreur).length;return `<div class="admin-card"><b>${l.prenom} ${l.nom}</b> - Code: <b>${l.code_livreur}</b><br>📞 ${l.tel} - 📧 ${l.email}<br>📦 Livraisons: ${nb}</div>`}).join(''):'<p>Aucun livreur inscrit.</p>');}
-function afficherHistorique(){let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]');let caJour=hist.filter(h=>h.date===new Date().toISOString().slice(0,10)).reduce((s,h)=>s+(h.total||0),0);document.getElementById('adminHist').innerHTML=`<h3>📊 Stats</h3><p>💰 CA du jour : <b>${caJour.toLocaleString()} F</b> | Total : <b>${hist.length}</b></p><h3>📜 Historique</h3>`+hist.slice(-20).reverse().map(h=>`<div class="admin-card">${h.date||''} - ${h.nom_client} - ${h.items} - ${h.total} F - ${h.statut} - Livreur: ${h.nom_livreur||'-'}</div>`).join('');}
+function afficherHistorique(){let hist=JSON.parse(localStorage.getItem('historique_commandes')||'[]');let caJour=hist.filter(h=>h.date===new Date().toISOString().slice(0,10)).reduce((s,h)=>s+(h.total||0),0);document.getElementById('adminHist').innerHTML=`<h3>📊 Stats</h3><p>💰 CA du jour : <b>${caJour.toLocaleString()} F</b> | Total : <b>${hist.length}</b></p><h3>📜 Historique</h3>`+hist.slice(-20).reverse().map(h=>`<div class="admin-card">${h.date||''} - ${h.nom_client} - ${h.items} - ${h.total} F - ${h.statut} - Paiement: ${h.methode_pay||''} - Livreur: ${h.nom_livreur||'-'}</div>`).join('');}
 let savedPlats=JSON.parse(localStorage.getItem('plats_regal')||'null'); if(savedPlats) MENU=savedPlats;
 let deja=JSON.parse(localStorage.getItem('utilisateur_regal')||'null'); if(deja){entrerDansEspace(deja);} else {document.getElementById('vueClient').style.display='none';}
-afficherDerniere(); render(); renderAdmin(); showAdminTab('plats');
+if(NUMERO_TELECEL) document.getElementById('telecelNumAffiche').innerText=NUMERO_TELECEL;
+document.getElementById('moovNumAffiche').innerText=NUMERO_MOOV;
+afficherDerniere(); render(); renderAdmin(); showAdminTab('plats'); choisirPay('Orange Money');
 </script></body></html>
