@@ -392,4 +392,32 @@ let deja=JSON.parse(localStorage.getItem('utilisateur_regal')||'null'); if(deja)
 if(NUMERO_TELECEL) document.getElementById('telecelNumAffiche').innerText=NUMERO_TELECEL;
 document.getElementById('moovNumAffiche').innerText=NUMERO_MOOV;
 afficherDerniere(); render(); renderAdmin(); showAdminTab('plats'); choisirPay('Orange Money');
+
+// --- INSTALL APP PWA - AJOUTÉ, RIEN D'AUTRE MODIFIÉ ---
+let deferredPrompt;
+const installBtn = document.getElementById('installBtn');
+const installTxt = document.getElementById('installTxt');
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installBtn.style.display = 'block';
+  installTxt.style.display = 'block';
+});
+installBtn.addEventListener('click', async () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      installBtn.style.display = 'none';
+      installTxt.style.display = 'none';
+    }
+    deferredPrompt = null;
+  } else {
+    alert('Sur Android : Menu ⋮ > Ajouter à l\'écran d\'accueil\nSur iPhone : Partager > Sur l\'écran d\'accueil');
+  }
+});
+window.addEventListener('appinstalled', () => {
+  installBtn.style.display = 'none';
+  installTxt.style.display = 'none';
+});
 </script></body></html>
