@@ -104,8 +104,8 @@ footer{background:#0A2342;color:#fff;text-align:center;padding:20px}
 <p>📍 Somgandé, Secteur 19 - Près du Groupe Scolaire Ihsan<br>📞 WhatsApp 65 47 19 96 • Orange Money 55 44 10 10</p>
 <div class="tabs" style="max-width:400px;margin:14px auto"><button id="tabJour" class="active" onclick="setPeriode('jour')">☀️ MENU JOUR</button><button id="tabSoir" onclick="setPeriode('soir')">🌙 MENU SOIR</button></div>
 <button class="btn btn-gold" onclick="document.getElementById('menu').scrollIntoView()">Voir le Menu & Commander →</button>
-  <button id="installBtn" class="btn" style="display:none; margin-top:10px; background:#25D366; width:100%; padding:14px;">📲 Installer l'Appli Régal Express</button>
-<p id="installTxt" style="display:none; font-size:13px; color:#FFC107; margin-top:6px;">Installe l'appli pour commander plus vite, sans taper le lien !</p>
+<button id="installBtn" class="btn" style="display:block; margin-top:10px; background:#25D366; width:100%; padding:14px;">📲 Installer l'Appli Régal Express</button>
+<p id="installTxt" style="display:block; font-size:13px; color:#FFC107; margin-top:6px;">Installe l'appli pour commander plus vite, sans taper le lien !</p>
 </div>
 <div id="menu" class="grid"></div>
 <div class="cart">
@@ -164,8 +164,6 @@ footer{background:#0A2342;color:#fff;text-align:center;padding:20px}
 <select id="type"><option value="Livraison">Livraison à domicile</option><option value="Sur place / À emporter">Sur place / À emporter</option></select>
 <input id="adresse" placeholder="Quartier, rue, repère">
 <button class="btn btn-outline" onclick="geo()">📍 Utiliser ma position GPS</button>
-
-<!-- ===== PAIEMENT MOBILE MONEY BURKINA ===== -->
 <div class="pay-box">
 <h2>💳 Payer directement - Orange / Moov / Telecel</h2>
 <p style="font-size:13px">Choisis ton réseau, paie, puis envoie ta capture. C'est fini, plus d'ID à copier.</p>
@@ -234,8 +232,8 @@ footer{background:#0A2342;color:#fff;text-align:center;padding:20px}
 // ===== CONFIG PAIEMENT - CHANGE ICI TES NUMEROS =====
 const NUMERO_ORANGE="55441010";
 const NUMERO_MOOV="65471996";
-const NUMERO_TELECEL=""; // <-- Mets ton numéro Telecel ici, ex: "77123456"
-const CINETPAY_API_KEY=""; // <-- Quand tu auras CinetPay, mets ta clé ici pour le paiement automatique
+const NUMERO_TELECEL="";
+const CINETPAY_API_KEY="";
 const SUPABASE_URL="https://ezbbgwzzmexfmcsjtoyh.supabase.co";
 const SUPABASE_KEY="sb_publishable_AC7ulunN2GPCYHXP6L6HFQ_bFFjxN26";
 let supabaseClient=null; try{supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY)}catch(e){}
@@ -393,31 +391,30 @@ if(NUMERO_TELECEL) document.getElementById('telecelNumAffiche').innerText=NUMERO
 document.getElementById('moovNumAffiche').innerText=NUMERO_MOOV;
 afficherDerniere(); render(); renderAdmin(); showAdminTab('plats'); choisirPay('Orange Money');
 
-// --- INSTALL APP PWA - AJOUTÉ, RIEN D'AUTRE MODIFIÉ ---
-let deferredPrompt;
+// --- INSTALL APP PWA - BOUTON PERMANENT ---
+let deferredPrompt = null;
 const installBtn = document.getElementById('installBtn');
 const installTxt = document.getElementById('installTxt');
+installBtn.style.display = 'block';
+installTxt.style.display = 'block';
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
-  installBtn.style.display = 'block';
-  installTxt.style.display = 'block';
 });
 installBtn.addEventListener('click', async () => {
+  if (window.matchMedia('(display-mode: standalone)').matches) {
+    alert('Tu es déjà dans l\'appli Régal Express 👑 Merci !');
+    return;
+  }
   if (deferredPrompt) {
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
     if (outcome === 'accepted') {
-      installBtn.style.display = 'none';
-      installTxt.style.display = 'none';
+      alert('Merci ! Appli installée 👑 Regarde ton écran d\'accueil.');
     }
     deferredPrompt = null;
   } else {
-    alert('Sur Android : Menu ⋮ > Ajouter à l\'écran d\'accueil\nSur iPhone : Partager > Sur l\'écran d\'accueil');
+    alert('Pour installer :\n\nSur Android : Appuie sur les 3 points ⋮ en haut > Ajouter à l\'écran d\'accueil > Installer\n\nSur iPhone : Appuie sur Partager ⬆️ > Sur l\'écran d\'accueil > Ajouter\n\nSi tu l\'as déjà, cherche le logo Régal Express sur ton téléphone.');
   }
-});
-window.addEventListener('appinstalled', () => {
-  installBtn.style.display = 'none';
-  installTxt.style.display = 'none';
 });
 </script></body></html>
