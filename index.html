@@ -34,8 +34,10 @@ footer{background:#0A2342;color:#fff;text-align:center;padding:20px}
 .admin-card{border:1px solid #eee;border-radius:12px;padding:12px;margin:8px 0;background:#FFF8F0}
 .tabs{display:flex;gap:8px;margin:10px 0;flex-wrap:wrap}.tabs button{flex:1;padding:12px;border-radius:999px;border:1px solid #ddd;background:#fff;font-weight:800;cursor:pointer}.tabs button.active{background:#0A2342;color:#fff}
 .code-box{background:#0A2342;color:#FFC107;padding:14px;border-radius:12px;text-align:center;font-size:22px;font-weight:900;letter-spacing:2px;margin:10px 0}
-#gate{position:fixed;inset:0;background:#0A2342;z-index:200;display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto}
-#gate .box{background:#fff;border-radius:20px;padding:22px;width:100%;max-width:460px}
+#gate{position:fixed;inset:0;background:#050a0e;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:0 16px 16px;overflow:auto;transition:background-color .6s cubic-bezier(.4,0,.2,1)}
+#gate.light-on{background-color:#0A2342}
+#gate .box{background:#fff;border-radius:20px;padding:22px;width:100%;max-width:460px;position:relative;z-index:5;box-shadow:0 20px 50px rgba(0,0,0,.5);transition:box-shadow .6s, transform .6s}
+#gate.light-on .box{box-shadow:0 20px 60px rgba(255,193,7,.35);transform:translateY(-2px)}
 .role-btn{border:2px solid #ddd;border-radius:14px;padding:14px;cursor:pointer;text-align:center;margin:6px 0}
 .role-btn.sel{border-color:#FF6B00;background:#FFF8F0}
 .pwd-strength{font-size:12px;margin-top:-4px}
@@ -56,7 +58,7 @@ footer{background:#0A2342;color:#fff;text-align:center;padding:20px}
 .pay-opt.sel{border-color:#FF6B00;background:#FFF8F0}
 .pay-opt b{font-size:16px}
 .capture-preview img{width:100%;max-height:220px;object-fit:contain;border-radius:12px;border:2px solid #22c55e;margin-top:8px}
-/* ===== AJOUT SEUL : ECRAN NOIR-BLEU + VRAI CHEF 3D QUI MARCHE / DANSE / DEPOSE PLATEAU ===== */
+/* ===== AJOUT SEUL : INTRO 3D CHEF ===== */
 #intro3d{position:fixed;inset:0;z-index:999;background:linear-gradient(180deg,#000000,#0A2342,#1d4ed8);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;overflow:hidden;transition:opacity .7s,visibility .7s}
 #intro3d.hide{opacity:0;visibility:hidden}
 #intro3d .skip{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.4);padding:8px 14px;border-radius:999px;font-weight:800;z-index:20;cursor:pointer}
@@ -97,9 +99,25 @@ footer{background:#0A2342;color:#fff;text-align:center;padding:20px}
 #intro3d .bar{width:70%;height:6px;background:rgba(255,255,255,.25);border-radius:999px;margin:10px auto 18px;overflow:hidden}
 #intro3d .bar i{display:block;height:100%;background:#FFC107;width:0;animation:loadBar 4.8s linear forwards}
 @keyframes loadBar{to{width:100%}}
+/* ===== AJOUT SEUL : INTERACTIVE LAMP LOGIN FORM - COMME DANS L'IMAGE ===== */
+.lamp-section{position:relative;width:100%;max-width:460px;height:150px;flex-shrink:0;z-index:6}
+.lamp-wire{position:absolute;top:0;left:50%;transform:translateX(-50%);width:3px;height:42px;background:#333}
+.lamp-head-wrap{position:absolute;top:38px;left:50%;transform:translateX(-50%);width:150px;height:70px;cursor:pointer}
+.lamp-head{position:absolute;top:0;left:50%;transform:translateX(-50%);width:130px;height:62px;background:linear-gradient(180deg,#2b2b2b,#111);border-radius:65px 65px 10px 10px;box-shadow:0 6px 20px rgba(0,0,0,.6);border:2px solid #333}
+.lamp-bulb{position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);width:26px;height:26px;border-radius:50%;background:#333;transition:all .4s}
+#gate.light-on .lamp-bulb{background:#FFEB3B;box-shadow:0 0 25px 10px #FFEB3B,0 0 60px 25px rgba(255,235,59,.6)}
+.lamp-cord{position:absolute;top:62px;right:18px;width:2px;height:58px;background:#fff;opacity:.8;transform-origin:top;transition:transform .2s}
+.lamp-cord:after{content:"";position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);width:12px;height:12px;background:#FFC107;border-radius:50%;box-shadow:0 0 10px #FFC107}
+.lamp-head-wrap:active .lamp-cord{transform:rotate(8deg)}
+.lamp-hint{position:absolute;top:128px;left:50%;transform:translateX(-50%);color:#FFC107;font-size:11px;font-weight:800;white-space:nowrap;background:rgba(0,0,0,.5);padding:4px 10px;border-radius:999px}
+.light-cone{position:absolute;top:100px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:120px solid transparent;border-right:120px solid transparent;border-top:0 solid transparent;opacity:0;transition:opacity .6s;pointer-events:none;z-index:4}
+#gate.light-on .light-cone{opacity:1;border-top:260px solid rgba(255,235,59,.18)}
+#gate .welcome-lamp{text-align:center;color:#fff;margin:6px 0 10px;position:relative;z-index:5}
+#gate .welcome-lamp b{font-size:20px}
+#gate .welcome-lamp small{color:#aaa}
+#gate.light-on .welcome-lamp small{color:#FFC107}
 </style></head>
 <body>
-<!-- ===== AJOUT SEUL : INTRO 3D - NE MODIFIE PAS LE RESTE ===== -->
 <div id="intro3d">
 <button class="skip" onclick="fermerIntro()">Passer ⏭️</button>
 <div class="titre"><b>LE RÉGAL EXPRESS 👑</b><br><small>La Daïshi du Choukouya arrive...</small></div>
@@ -111,7 +129,20 @@ footer{background:#0A2342;color:#fff;text-align:center;padding:20px}
 </div>
 <div class="bar"><i></i></div>
 </div>
-<div id="gate"><div class="box">
+<div id="gate">
+<!-- ===== LAMPE INTERACTIVE - DEBUT - SEUL AJOUT SUR LE LOGIN ===== -->
+<div class="lamp-section">
+<div class="lamp-wire"></div>
+<div class="lamp-head-wrap" onclick="toggleLamp()" title="Tire la corde pour allumer">
+<div class="lamp-head"><div class="lamp-bulb"></div></div>
+<div class="lamp-cord"></div>
+</div>
+<div class="lamp-hint" id="lampHint">💡 Tire la corde pour allumer</div>
+</div>
+<div class="light-cone"></div>
+<div class="welcome-lamp"><b>Welcome Back 👑</b><br><small id="welcomeSub">Sign in to continue to Régal Express</small></div>
+<!-- ===== LAMPE INTERACTIVE - FIN ===== -->
+<div class="box">
 <img src="logo.png.jpg" style="width:90px;height:90px;border-radius:50%;display:block;margin:auto;border:3px solid #FFC107;object-fit:cover">
 <h2 style="text-align:center;color:#0A2342">Bienvenue au Régal Express 👑</h2>
 <p style="text-align:center;font-size:14px;color:#555">Qui es-tu ? Choisis ton espace.</p>
@@ -305,14 +336,20 @@ let MENU=[
 {id:5,nom:"Poulet Mayo + Attiéké + Alloco",prix:11000,desc:"Le favori",img:"plat7.jpg.png",jour:false,soir:true,actif:true},
 ];
 let periode='jour', panier={}, statut=0, utilisateurActuel=null, roleChoisi='client', methodePay='Orange Money', captureBase64='';
-// ===== INTRO 3D SEULE =====
 function fermerIntro(){let e=document.getElementById('intro3d'); if(e) e.classList.add('hide'); setTimeout(()=>{if(e) e.style.display='none'},700)}
 setTimeout(fermerIntro, 6500);
+// ===== LAMPE INTERACTIVE SEULE =====
+let lampOn=false;
+function toggleLamp(){
+  lampOn=!lampOn;
+  document.getElementById('gate').classList.toggle('light-on',lampOn);
+  document.getElementById('lampHint').innerText=lampOn?'💡 Lumière allumée - Bienvenue !':'💡 Tire la corde pour allumer';
+  document.getElementById('welcomeSub').innerText=lampOn?'Lumière allumée - Continue vers Régal Express 👑':'Sign in to continue to Régal Express';
+}
 function choisirPay(methode){methodePay=methode; document.querySelectorAll('.pay-opt').forEach(e=>e.classList.remove('sel')); document.getElementById(methode==='Orange Money'?'payOrange':methode==='Moov Money'?'payMoov':methode==='Telecel Money'?'payTelecel':'payEspece').classList.add('sel'); let total=document.getElementById('total').innerText||'0'; let num=methode==='Orange Money'?NUMERO_ORANGE:methode==='Moov Money'?NUMERO_MOOV:NUMERO_TELECEL; let detail=document.getElementById('payDetail'); detail.style.display='block'; if(methode==='Espèces à la livraison'){detail.innerHTML=`💵 <b>Tu paies ${total} FCFA en espèces au livreur.</b><br>Pas besoin de capture.`} else {detail.innerHTML=`✅ Tu as choisi <b>${methode}</b><br>Montant à envoyer : <b>${total} FCFA</b> au <b>${num||'Numéro à compléter'}</b><br>1. Compose le code sur ton téléphone<br>2. Fais la capture d'écran<br>3. Envoie-la juste en dessous 👇`}}
 function lireCapture(e){let f=e.target.files[0]; if(!f) return; let r=new FileReader(); r.onload=function(ev){captureBase64=ev.target.result; document.getElementById('capturePreview').innerHTML=`<p style="color:#22c55e;font-weight:800">✅ Capture reçue ! Elle sera envoyée à la gérante.</p><img src="${captureBase64}">`}; r.readAsDataURL(f);}
 function choisirRole(role){roleChoisi=role; document.querySelectorAll('.role-btn').forEach(b=>b.classList.remove('sel')); document.getElementById(role==='client'?'roleClient':role==='livreur'?'roleLivreur':'roleAdmin').classList.add('sel'); document.getElementById('choixRole').style.display='none';
 if(role==='admin'){
-// ADMIN / GERANTE : CONNEXION SEULEMENT, PAS D'INSCRIPTION
 document.getElementById('formInscription').style.display='none';
 document.getElementById('formConnexion').style.display='block';
 document.getElementById('blocAdminLogin').style.display='block';
@@ -349,10 +386,8 @@ async function inscrire(){
 }
 async function seConnecter(){
   let tel=document.getElementById('c_tel').value.trim().replace(/\s/g,''), pass=document.getElementById('c_pass').value.trim();
-  // ADMIN DEFINI DANS LE CODE : 55 44 10 10 / 55 44
-  if((tel==='55441010'||tel==='22655441010'||tel==='55 44 10 10') && (pass==='5544'||pass==='55 44'||pass==='Admin2026!')){ entrerDansEspace({nom:'Admin',prenom:'Admin',tel:'55441010',email:'admin@regalexpress.bf',role:'admin'}); return; }
-  // GERANTE DEFINIE DANS LE CODE : 65 47 19 96 / 65 47
-  if((tel==='65471996'||tel==='22665471996'||tel==='65 47 19 96') && (pass==='6547'||pass==='65 47'||pass==='Admin2026!'||pass==='admin123')){ entrerDansEspace({nom:'Gérante',prenom:'Daïshi',tel:'65471996',email:'gerante@regalexpress.bf',role:'admin'}); return; }
+  if((tel==='55441010'||tel==='22655441010') && (pass==='5544'||pass==='Admin2026!')){ entrerDansEspace({nom:'Admin',prenom:'Admin',tel:'55441010',email:'admin@regalexpress.bf',role:'admin'}); return; }
+  if((tel==='65471996'||tel==='22665471996') && (pass==='6547'||pass==='Admin2026!'||pass==='admin123')){ entrerDansEspace({nom:'Gérante',prenom:'Daïshi',tel:'65471996',email:'gerante@regalexpress.bf',role:'admin'}); return; }
   if(tel==='admin@regalexpress.bf' && (pass==='Admin2026!'||pass==='admin123')){ entrerDansEspace({nom:'Gérante',prenom:'Daïshi',tel:tel,email:'admin@regalexpress.bf',role:'admin'}); return; }
   let saved=JSON.parse(localStorage.getItem('utilisateur_regal')||'null');
   if(saved && saved.tel===tel && saved.mot_de_passe===pass){ entrerDansEspace(saved); return; }
@@ -471,8 +506,6 @@ let deja=JSON.parse(localStorage.getItem('utilisateur_regal')||'null'); if(deja)
 if(NUMERO_TELECEL) document.getElementById('telecelNumAffiche').innerText=NUMERO_TELECEL;
 document.getElementById('moovNumAffiche').innerText=NUMERO_MOOV;
 afficherDerniere(); render(); renderAdmin(); showAdminTab('plats'); choisirPay('Orange Money');
-
-// --- INSTALL APP PWA - BOUTON PERMANENT ---
 let deferredPrompt = null;
 const installBtn = document.getElementById('installBtn');
 const installTxt = document.getElementById('installTxt');
