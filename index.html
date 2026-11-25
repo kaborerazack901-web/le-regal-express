@@ -56,49 +56,69 @@ footer{background:#0A2342;color:#fff;text-align:center;padding:20px}
 .pay-opt.sel{border-color:#FF6B00;background:#FFF8F0}
 .pay-opt b{font-size:16px}
 .capture-preview img{width:100%;max-height:220px;object-fit:contain;border-radius:12px;border:2px solid #22c55e;margin-top:8px}
-/* === ANIMATION AWESOME LOGIN FORM - COMME DANS LE REEL === */
-#gate{background:linear-gradient(135deg,#0A2342,#1a4b8f,#0A2342);background-size:300% 300%;animation:gateBg 6s ease infinite}
-@keyframes gateBg{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-#gate .box{animation:loginPop .6s ease;position:relative;overflow:hidden}
-@keyframes loginPop{from{opacity:0;transform:translateY(30px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
-.login-anim-wrap{background:linear-gradient(135deg,#3b82f6,#1d4ed8);border-radius:16px;padding:14px 12px 10px;margin-bottom:12px;position:relative;overflow:hidden}
-.login-anim-wrap:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);animation:shine 2.5s linear infinite}
-@keyframes shine{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
-.login-top-txt{text-align:center;color:#fff;font-weight:900;font-size:15px;margin:0}
-.login-top-sub{text-align:center;color:#dbeafe;font-size:11px;margin:2px 0 8px}
-.login-flex{display:flex;align-items:center;gap:10px;position:relative;z-index:2}
-.dancing-chef{font-size:68px;line-height:1;flex-shrink:0;filter:drop-shadow(0 8px 12px rgba(0,0,0,.4));animation:danceAwesome 1.1s ease-in-out infinite;transform-origin:bottom center}
-@keyframes danceAwesome{0%,100%{transform:translateY(0) rotate(-6deg) scale(1)}25%{transform:translateY(-14px) rotate(6deg) scale(1.05)}50%{transform:translateY(0) rotate(-8deg) scale(1)}75%{transform:translateY(-10px) rotate(8deg) scale(1.08)}}
-.login-mini-form{flex:1}
-.login-mini-form input{margin:4px 0 !important;padding:9px 10px !important;font-size:12px !important;border-radius:10px !important;border:0 !important}
-.login-mini-btn{background:#22c55e !important;color:#fff !important;width:100%;padding:9px !important;font-size:12px !important;border-radius:10px !important;font-weight:900 !important}
-.login-bubble{position:absolute;top:6px;right:8px;background:#FFC107;color:#111;font-size:10px;font-weight:900;padding:4px 8px;border-radius:999px;animation:bubbleFloat 2s ease-in-out infinite;z-index:3}
-@keyframes bubbleFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+/* ===== AJOUT SEUL : ECRAN NOIR-BLEU + VRAI CHEF 3D QUI MARCHE / DANSE / DEPOSE PLATEAU ===== */
+#intro3d{position:fixed;inset:0;z-index:999;background:linear-gradient(180deg,#000000,#0A2342,#1d4ed8);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;overflow:hidden;transition:opacity .7s,visibility .7s}
+#intro3d.hide{opacity:0;visibility:hidden}
+#intro3d .skip{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.4);padding:8px 14px;border-radius:999px;font-weight:800;z-index:20;cursor:pointer}
+#intro3d .titre{position:absolute;top:16px;left:0;right:0;text-align:center;color:#fff;z-index:10}
+#intro3d .titre b{font-size:23px}
+#intro3d .titre small{color:#FFC107;font-weight:800}
+#intro3d .bulle{position:absolute;top:92px;left:50%;transform:translateX(-50%);background:#fff;color:#111;padding:10px 14px;border-radius:16px;font-weight:900;font-size:14px;white-space:nowrap;z-index:10;opacity:0;animation:bulleIn 6.5s ease forwards;box-shadow:0 10px 25px rgba(0,0,0,.4)}
+@keyframes bulleIn{0%,68%{opacity:0;transform:translateX(-50%) translateY(10px)}75%,100%{opacity:1;transform:translateX(-50%) translateY(0)}}
+#intro3d .stage{position:relative;width:100%;max-width:480px;height:76vh}
+#intro3d .sol{position:absolute;left:0;right:0;bottom:0;height:68px;background:rgba(0,0,0,.45);border-top:3px solid #FFC107}
+#intro3d .plateau{position:absolute;bottom:62px;left:50%;transform:translateX(-50%);font-size:54px;z-index:2;opacity:0;animation:depose 6.5s ease forwards}
+@keyframes depose{0%,70%{opacity:0;transform:translateX(-50%) translateY(-90px) scale(.6)}78%{opacity:1;transform:translateX(-50%) translateY(0) scale(1.15)}85%,100%{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}}
+.chef3d{position:absolute;bottom:62px;left:-45%;width:150px;height:280px;z-index:3;animation:chefMarche 6.5s ease forwards}
+@keyframes chefMarche{0%{left:-45%}25%{left:32%}40%,100%{left:32%}}
+.chef3d .corps{position:absolute;left:50%;top:0;transform:translateX(-50%);width:150px;height:280px;transform-style:preserve-3d;animation:chefDanseCorps .65s ease-in-out infinite}
+@keyframes chefDanseCorps{0%,100%{transform:translateX(-50%) translateY(0) rotate(-4deg)}25%{transform:translateX(-50%) translateY(-16px) rotate(4deg)}50%{transform:translateX(-50%) translateY(0) rotate(-5deg)}75%{transform:translateX(-50%) translateY(-12px) rotate(5deg)}}
+.chef3d .chapeau{position:absolute;top:0;left:50%;transform:translateX(-50%);width:62px;height:48px;background:#fff;border-radius:10px 10px 0 0;border:2px solid #ddd;z-index:5}
+.chef3d .chapeau:after{content:"";position:absolute;bottom:-8px;left:-6px;right:-6px;height:10px;background:#fff;border-radius:6px;border:2px solid #ddd}
+.chef3d .tete{position:absolute;top:52px;left:50%;transform:translateX(-50%);width:58px;height:58px;background:#f1c27d;border-radius:50%;z-index:4;animation:teteDanse .65s ease-in-out infinite}
+@keyframes teteDanse{0%,100%{transform:translateX(-50%) rotate(-6deg)}50%{transform:translateX(-50%) rotate(6deg)}}
+.chef3d .tete i{position:absolute;top:22px;width:7px;height:7px;background:#111;border-radius:50%}
+.chef3d .tete i:first-child{left:14px}.chef3d .tete i:last-child{right:14px}
+.chef3d .tete b{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);width:20px;height:6px;background:#111;border-radius:0 0 10px 10px}
+.chef3d .torse{position:absolute;top:110px;left:50%;transform:translateX(-50%);width:78px;height:78px;background:#fff;border:2px solid #ddd;border-radius:14px;z-index:3}
+.chef3d .torse:after{content:"👑";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:26px}
+.chef3d .bras{position:absolute;top:116px;width:18px;height:72px;background:#fff;border:2px solid #ddd;border-radius:10px;z-index:2;transform-origin:top center}
+.chef3d .bras.g{left:22px;animation:brasG .65s ease-in-out infinite}
+.chef3d .bras.d{right:22px;animation:brasD .65s ease-in-out infinite}
+@keyframes brasG{0%,100%{transform:rotate(28deg)}50%{transform:rotate(-42deg)}}
+@keyframes brasD{0%,100%{transform:rotate(-28deg)}50%{transform:rotate(42deg)}}
+.chef3d .bras:after{content:"";position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);width:20px;height:16px;background:#f1c27d;border-radius:50%}
+.chef3d .jambe{position:absolute;top:186px;width:20px;height:78px;background:#111;border-radius:10px;z-index:2;transform-origin:top center}
+.chef3d .jambe.g{left:44px;animation:jambeG .65s ease-in-out infinite}
+.chef3d .jambe.d{right:44px;animation:jambeD .65s ease-in-out infinite}
+@keyframes jambeG{0%,100%{transform:rotate(18deg) translateY(0)}50%{transform:rotate(-22deg) translateY(-8px)}}
+@keyframes jambeD{0%,100%{transform:rotate(-18deg) translateY(-8px)}50%{transform:rotate(22deg) translateY(0)}}
+.chef3d .jambe:after{content:"";position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);width:26px;height:10px;background:#FF6B00;border-radius:6px}
+#intro3d .bar{width:70%;height:6px;background:rgba(255,255,255,.25);border-radius:999px;margin:10px auto 18px;overflow:hidden}
+#intro3d .bar i{display:block;height:100%;background:#FFC107;width:0;animation:loadBar 4.8s linear forwards}
+@keyframes loadBar{to{width:100%}}
 </style></head>
 <body>
+<!-- ===== AJOUT SEUL : INTRO 3D - NE MODIFIE PAS LE RESTE ===== -->
+<div id="intro3d">
+<button class="skip" onclick="fermerIntro()">Passer ⏭️</button>
+<div class="titre"><b>LE RÉGAL EXPRESS 👑</b><br><small>La Daïshi du Choukouya arrive...</small></div>
+<div class="bulle">🍽️ Voilà ton Choukouya ! Bon appétit 👑</div>
+<div class="stage">
+<div class="chef3d"><div class="corps"><div class="chapeau"></div><div class="tete"><i></i><i></i><b></b></div><div class="torse"></div><div class="bras g"></div><div class="bras d"></div><div class="jambe g"></div><div class="jambe d"></div></div></div>
+<div class="plateau">🍽️</div>
+<div class="sol"></div>
+</div>
+<div class="bar"><i></i></div>
+</div>
 <div id="gate"><div class="box">
-<!-- ANIMATION AWESOME LOGIN - DEBUT -->
-<div class="login-anim-wrap">
-<div class="login-bubble">👋 Register now</div>
-<p class="login-top-txt">✨ Awesome Login Form ✨</p>
-<p class="login-top-sub">Secure your spot - Régal Express 👑</p>
-<div class="login-flex">
-<div class="dancing-chef">👨‍🍳</div>
-<div class="login-mini-form">
-<input placeholder="What's your name? *">
-<input placeholder="Enter your email address *">
-<button class="btn login-mini-btn" onclick="document.getElementById('choixRole').scrollIntoView()">Next →</button>
-</div>
-</div>
-</div>
-<!-- ANIMATION AWESOME LOGIN - FIN -->
 <img src="logo.png.jpg" style="width:90px;height:90px;border-radius:50%;display:block;margin:auto;border:3px solid #FFC107;object-fit:cover">
 <h2 style="text-align:center;color:#0A2342">Bienvenue au Régal Express 👑</h2>
 <p style="text-align:center;font-size:14px;color:#555">Qui es-tu ? Choisis ton espace.</p>
 <div id="choixRole">
 <div class="role-btn" id="roleClient" onclick="choisirRole('client')">🍽️ <b>Je suis CLIENT</b><br><small>Commander, suivre mon plat</small></div>
 <div class="role-btn" id="roleLivreur" onclick="choisirRole('livreur')">🛵 <b>Je suis LIVREUR</b><br><small>Livrer les commandes prêtes</small></div>
-<div class="role-btn" id="roleAdmin" onclick="choisirRole('admin')">👩‍🍳 <b>Je suis GÉRANTE / ADMIN</b><br><small>Gérer tout le restaurant</small></div>
+<div class="role-btn" id="roleAdmin" onclick="choisirRole('admin')">👩‍🍳 <b>Je suis GÉRANTE / ADMIN</b><br><small>Se connecter seulement - pas d'inscription</small></div>
 </div>
 <div id="formInscription" style="display:none">
 <h3 id="titreForm">Inscription Client</h3>
@@ -117,9 +137,16 @@ footer{background:#0A2342;color:#fff;text-align:center;padding:20px}
 </div>
 <div id="formConnexion" style="display:none">
 <h3>Connexion</h3>
-<input id="c_tel" placeholder="Téléphone"><input id="c_pass" type="password" placeholder="Mot de passe">
+<div id="blocAdminLogin" style="display:none;background:#FFF8F0;border:2px solid #FFC107;border-radius:14px;padding:12px;margin-bottom:10px">
+<p style="font-weight:900;margin:0 0 8px;text-align:center">👩‍🍳 Gérante / Admin - Connexion seulement</p>
+<button class="btn" style="width:100%;background:#0A2342;margin-bottom:6px" onclick="connexionRapideAdmin()">🧑‍💼 Entrer comme ADMIN - 55 44 10 10</button>
+<button class="btn btn-gold" style="width:100%" onclick="connexionRapideGerante()">👩‍🍳 Entrer comme GÉRANTE - 65 47 19 96</button>
+<p style="font-size:12px;text-align:center;color:#666;margin:6px 0 0">Ou tape ton numéro + ton code d'accès ci-dessous.</p>
+</div>
+<input id="c_tel" placeholder="Téléphone"><input id="c_pass" type="password" placeholder="Mot de passe / Code d'accès">
 <button class="btn" onclick="seConnecter()" style="width:100%;padding:15px">🔓 Se connecter</button>
-<button class="btn btn-outline" onclick="retourInscription()" style="width:100%;margin-top:8px">← Retour inscription</button>
+<button class="btn btn-outline" onclick="retourInscription()" id="btnRetourInscription" style="width:100%;margin-top:8px">← Retour inscription</button>
+<button class="btn btn-outline" onclick="retourRole()" style="width:100%;margin-top:8px">← Changer de rôle</button>
 </div>
 </div></div>
 <header><div style="display:flex;gap:10px;align-items:center"><img src="logo.png.jpg"><div><b>LE RÉGAL EXPRESS</b><br><small style="color:#FFC107" id="headerRole">ESPACE CLIENT • LA DAÏSHI DU CHOUKOUYA</small></div></div>
@@ -262,7 +289,7 @@ footer{background:#0A2342;color:#fff;text-align:center;padding:20px}
 <footer>© 2026 Le Régal Express - Somgandé • TikTok @regal_35express • Paiement : *144*10*55441010# • WhatsApp : 65 47 19 96</footer>
 <a class="whatsapp-float" href="https://wa.me/22665471996?text=Bonjour%20Le%20R%C3%A9gal%20Express%2C%20je%20veux%20commander" target="_blank">💬</a>
 <script>
-// ===== CONFIG PAIEMENT - CHANGE ICI TES NUMEROS =====
+// ===== CONFIG PAIEMENT =====
 const NUMERO_ORANGE="55441010";
 const NUMERO_MOOV="65471996";
 const NUMERO_TELECEL="";
@@ -278,15 +305,33 @@ let MENU=[
 {id:5,nom:"Poulet Mayo + Attiéké + Alloco",prix:11000,desc:"Le favori",img:"plat7.jpg.png",jour:false,soir:true,actif:true},
 ];
 let periode='jour', panier={}, statut=0, utilisateurActuel=null, roleChoisi='client', methodePay='Orange Money', captureBase64='';
+// ===== INTRO 3D SEULE =====
+function fermerIntro(){let e=document.getElementById('intro3d'); if(e) e.classList.add('hide'); setTimeout(()=>{if(e) e.style.display='none'},700)}
+setTimeout(fermerIntro, 6500);
 function choisirPay(methode){methodePay=methode; document.querySelectorAll('.pay-opt').forEach(e=>e.classList.remove('sel')); document.getElementById(methode==='Orange Money'?'payOrange':methode==='Moov Money'?'payMoov':methode==='Telecel Money'?'payTelecel':'payEspece').classList.add('sel'); let total=document.getElementById('total').innerText||'0'; let num=methode==='Orange Money'?NUMERO_ORANGE:methode==='Moov Money'?NUMERO_MOOV:NUMERO_TELECEL; let detail=document.getElementById('payDetail'); detail.style.display='block'; if(methode==='Espèces à la livraison'){detail.innerHTML=`💵 <b>Tu paies ${total} FCFA en espèces au livreur.</b><br>Pas besoin de capture.`} else {detail.innerHTML=`✅ Tu as choisi <b>${methode}</b><br>Montant à envoyer : <b>${total} FCFA</b> au <b>${num||'Numéro à compléter'}</b><br>1. Compose le code sur ton téléphone<br>2. Fais la capture d'écran<br>3. Envoie-la juste en dessous 👇`}}
 function lireCapture(e){let f=e.target.files[0]; if(!f) return; let r=new FileReader(); r.onload=function(ev){captureBase64=ev.target.result; document.getElementById('capturePreview').innerHTML=`<p style="color:#22c55e;font-weight:800">✅ Capture reçue ! Elle sera envoyée à la gérante.</p><img src="${captureBase64}">`}; r.readAsDataURL(f);}
-function choisirRole(role){roleChoisi=role; document.querySelectorAll('.role-btn').forEach(b=>b.classList.remove('sel')); document.getElementById(role==='client'?'roleClient':role==='livreur'?'roleLivreur':'roleAdmin').classList.add('sel'); document.getElementById('choixRole').style.display='none'; document.getElementById('formInscription').style.display='block'; document.getElementById('titreForm').innerText=role==='client'?'Inscription CLIENT 🍽️':role==='livreur'?'Inscription LIVREUR PRO 🛵':'Inscription GÉRANTE 👩‍🍳'; document.getElementById('champQuartier').style.display=role==='livreur'?'none':'block'; document.getElementById('champCodeLivreur').style.display=role==='livreur'?'block':'none';}
+function choisirRole(role){roleChoisi=role; document.querySelectorAll('.role-btn').forEach(b=>b.classList.remove('sel')); document.getElementById(role==='client'?'roleClient':role==='livreur'?'roleLivreur':'roleAdmin').classList.add('sel'); document.getElementById('choixRole').style.display='none';
+if(role==='admin'){
+// ADMIN / GERANTE : CONNEXION SEULEMENT, PAS D'INSCRIPTION
+document.getElementById('formInscription').style.display='none';
+document.getElementById('formConnexion').style.display='block';
+document.getElementById('blocAdminLogin').style.display='block';
+document.getElementById('btnRetourInscription').style.display='none';
+document.getElementById('c_tel').placeholder='Numéro Admin 55 44 10 10 ou Gérante 65 47 19 96';
+document.getElementById('c_pass').placeholder='Code Admin 55 44 ou Gérante 65 47';
+return;
+}
+document.getElementById('blocAdminLogin').style.display='none'; document.getElementById('btnRetourInscription').style.display='block';
+document.getElementById('formInscription').style.display='block'; document.getElementById('titreForm').innerText=role==='client'?'Inscription CLIENT 🍽️':'Inscription LIVREUR PRO 🛵'; document.getElementById('champQuartier').style.display=role==='livreur'?'none':'block'; document.getElementById('champCodeLivreur').style.display=role==='livreur'?'block':'none';}
 function retourRole(){document.getElementById('choixRole').style.display='block'; document.getElementById('formInscription').style.display='none'; document.getElementById('formConnexion').style.display='none';}
-function afficherConnexion(){document.getElementById('formInscription').style.display='none'; document.getElementById('formConnexion').style.display='block';}
-function retourInscription(){document.getElementById('formConnexion').style.display='none'; document.getElementById('formInscription').style.display='block';}
+function afficherConnexion(){document.getElementById('formInscription').style.display='none'; document.getElementById('formConnexion').style.display='block'; if(roleChoisi==='admin'){document.getElementById('blocAdminLogin').style.display='block'; document.getElementById('btnRetourInscription').style.display='none';} else {document.getElementById('blocAdminLogin').style.display='none'; document.getElementById('btnRetourInscription').style.display='block';}}
+function retourInscription(){if(roleChoisi==='admin'){afficherConnexion(); return;} document.getElementById('formConnexion').style.display='none'; document.getElementById('formInscription').style.display='block';}
 function checkPwd(){let p=document.getElementById('u_pass').value; let msg=document.getElementById('pwdMsg'); if(p.length<8) msg.innerText='❌ Trop court - min 8 caractères'; else if(!/[A-Z]/.test(p)) msg.innerText='❌ Il faut 1 MAJUSCULE'; else if(!/[0-9]/.test(p)) msg.innerText='❌ Il faut 1 CHIFFRE'; else msg.innerText='✅ Mot de passe coriace, parfait !'; msg.style.color=msg.innerText.startsWith('✅')?'green':'red';}
 function estPwdFort(p){return p.length>=8 && /[A-Z]/.test(p) && /[0-9]/.test(p) && /[a-z]/.test(p);}
+function connexionRapideAdmin(){entrerDansEspace({nom:'Admin',prenom:'Admin',tel:'55441010',email:'admin@regalexpress.bf',role:'admin'});}
+function connexionRapideGerante(){entrerDansEspace({nom:'Gérante',prenom:'Daïshi',tel:'65471996',email:'gerante@regalexpress.bf',role:'admin'});}
 async function inscrire(){
+  if(roleChoisi==='admin') return alert('Admin / Gérante : pas d\'inscription. Connecte-toi seulement avec ton numéro + ton code.');
   let nom=document.getElementById('u_nom').value.trim(), prenom=document.getElementById('u_prenom').value.trim(), tel=document.getElementById('u_tel').value.trim(), email=document.getElementById('u_email').value.trim(), pass=document.getElementById('u_pass').value, pass2=document.getElementById('u_pass2').value, codeVerif=document.getElementById('u_code_verif').value.trim(), quartier=document.getElementById('u_quartier').value.trim(), adresse=document.getElementById('u_adresse').value.trim();
   if(!nom||!prenom||!tel||!email||!pass) return alert('Remplis Nom, Prénom, Téléphone, Email, Mot de passe');
   if(!estPwdFort(pass)) return alert('Mot de passe pas assez fort ! Min 8 caractères, 1 MAJUSCULE, 1 minuscule, 1 chiffre. Ex: Regal2026');
@@ -294,7 +339,6 @@ async function inscrire(){
   if(!email.includes('@')) return alert('Email invalide');
   if(tel.replace(/\D/g,'').length<8) return alert('Téléphone invalide');
   if(codeVerif!=='1234') return alert('Code de vérification incorrect. Pour le test, mets 1234.');
-  if(roleChoisi==='admin' && !(email==='admin@regalexpress.bf' && pass==='Admin2026!')) return alert('Accès Gérante uniquement.');
   let codeLivreur = roleChoisi==='livreur' ? 'LIV-'+Math.floor(1000+Math.random()*9000) : null;
   let codeParrain = roleChoisi==='client' ? 'DAISHI-'+Math.floor(1000+Math.random()*9000) : null;
   let user={nom,prenom,tel,email,mot_de_passe:pass,role:roleChoisi,code_livreur:codeLivreur,code_parrain:codeParrain,quartier,adresse,statut_verif:'Vérifié'};
@@ -304,8 +348,12 @@ async function inscrire(){
   entrerDansEspace(user);
 }
 async function seConnecter(){
-  let tel=document.getElementById('c_tel').value.trim(), pass=document.getElementById('c_pass').value;
-  if(tel==='admin@regalexpress.bf' || tel==='65471996'){ if(pass==='Admin2026!'||pass==='admin123'){ entrerDansEspace({nom:'Gérante',prenom:'Daïshi',tel:tel,email:'admin@regalexpress.bf',role:'admin'}); return; } }
+  let tel=document.getElementById('c_tel').value.trim().replace(/\s/g,''), pass=document.getElementById('c_pass').value.trim();
+  // ADMIN DEFINI DANS LE CODE : 55 44 10 10 / 55 44
+  if((tel==='55441010'||tel==='22655441010'||tel==='55 44 10 10') && (pass==='5544'||pass==='55 44'||pass==='Admin2026!')){ entrerDansEspace({nom:'Admin',prenom:'Admin',tel:'55441010',email:'admin@regalexpress.bf',role:'admin'}); return; }
+  // GERANTE DEFINIE DANS LE CODE : 65 47 19 96 / 65 47
+  if((tel==='65471996'||tel==='22665471996'||tel==='65 47 19 96') && (pass==='6547'||pass==='65 47'||pass==='Admin2026!'||pass==='admin123')){ entrerDansEspace({nom:'Gérante',prenom:'Daïshi',tel:'65471996',email:'gerante@regalexpress.bf',role:'admin'}); return; }
+  if(tel==='admin@regalexpress.bf' && (pass==='Admin2026!'||pass==='admin123')){ entrerDansEspace({nom:'Gérante',prenom:'Daïshi',tel:tel,email:'admin@regalexpress.bf',role:'admin'}); return; }
   let saved=JSON.parse(localStorage.getItem('utilisateur_regal')||'null');
   if(saved && saved.tel===tel && saved.mot_de_passe===pass){ entrerDansEspace(saved); return; }
   try{if(supabaseClient){let {data}=await supabaseClient.from('utilisateurs').select('*').eq('tel',tel).eq('mot_de_passe',pass).single(); if(data){entrerDansEspace(data); return;}}}catch(e){}
